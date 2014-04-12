@@ -15,17 +15,9 @@ import android.widget.TextView;
 
 
 @SuppressWarnings("ALL")
-public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
     @Override
@@ -97,20 +89,9 @@ public class MainActivity extends Activity
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
