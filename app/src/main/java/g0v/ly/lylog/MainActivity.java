@@ -11,7 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import g0v.ly.lylog.rest.RESTFunctionManager;
 
 
 @SuppressWarnings("ALL")
@@ -102,7 +105,19 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 			View 		rootView = inflater.inflate(R.layout.fragment_main, container, false);
 			assert rootView != null;
-			TextView 	textView = (TextView) rootView.findViewById(R.id.section_label);
+			TextView 	textView 	= (TextView) rootView.findViewById(R.id.section_label);
+			Button		btnGet		= (Button) rootView.findViewById(R.id.btn_get);
+
+			final RESTFunctionManager restFunctionManager = new RESTFunctionManager();
+			btnGet.setOnClickListener(new Button.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					restFunctionManager.restGet("http://54.85.157.89:8000//api/babymonitor/v1/devices/.json");
+					//https://twly.herokuapp.com/api/legislator/.json
+					//http://54.85.157.89:8000//api/babymonitor/v1/devices/.json
+				}
+			});
+
 			textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
 			return rootView;
 		}
