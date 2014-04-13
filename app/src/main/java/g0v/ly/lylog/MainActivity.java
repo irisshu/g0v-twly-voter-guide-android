@@ -112,9 +112,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 			btnGet.setOnClickListener(new Button.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					restFunctionManager.restGet("http://54.85.157.89:8000//api/babymonitor/v1/devices/.json");
-					//https://twly.herokuapp.com/api/legislator/.json
-					//http://54.85.157.89:8000//api/babymonitor/v1/devices/.json
+					restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json");
 				}
 			});
 

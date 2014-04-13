@@ -15,7 +15,7 @@ public class RESTFunctionManager {
 		// TODO return response String
 
 
-		Log.e("RESTFunctionManager :: restGet", "in restGet");
+		Log.e("RESTFunctionManager :: restGet", "(0) in restGet");
 		ThreadRESTGet threadRESTGet = new ThreadRESTGet(getUrl);
 		threadRESTGet.start();
 
@@ -52,18 +52,19 @@ public class RESTFunctionManager {
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
 
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "getUrl: " + getUrl);
+			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
 
 			try {
 				HttpResponse response 	= client.execute(request);
-				String responseStr = EntityUtils.toString(response.getEntity());
+				String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-				Log.e("RESTFunctionManager :: ThreadRESTGet", "responseStr: " + responseStr);
+				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) responseStr: " + responseStr);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "spend " + (System.currentTimeMillis() - startTime) / 1000 + " sec to get response.");
+			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + (System.currentTimeMillis() - startTime) / 1000 +
+					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
 		}
 	}
 }
