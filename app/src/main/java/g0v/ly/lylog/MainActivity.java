@@ -2,10 +2,13 @@ package g0v.ly.lylog;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.Fragment;
+
+import android.support.v4.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,11 +17,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import g0v.ly.lylog.legislator.Profile;
 import g0v.ly.lylog.rest.RESTFunctionManager;
 
 
 @SuppressWarnings("ALL")
-public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	private NavigationDrawerFragment 	mNavigationDrawerFragment;
 	private CharSequence 				mTitle;
@@ -38,8 +42,24 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+
+		FragmentManager 	fragmentManager 	= getSupportFragmentManager();
+		//FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+		// XXX
+		switch (position){
+			case 0:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 1:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 2:
+				Profile fragment = new Profile();
+				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+				break;
+		}
+
 	}
 
 	public void onSectionAttached(int number) {
