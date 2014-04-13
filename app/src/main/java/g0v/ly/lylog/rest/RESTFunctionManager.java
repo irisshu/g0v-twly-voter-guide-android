@@ -1,5 +1,6 @@
 package g0v.ly.lylog.rest;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -65,6 +66,25 @@ public class RESTFunctionManager {
 
 			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + (System.currentTimeMillis() - startTime) / 1000 +
 					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
+		}
+	}
+
+	private class RESTGetAsyncTask extends AsyncTask<Void, Integer, Void> {
+
+		String getUrl;
+
+		public RESTGetAsyncTask(String url) {
+			getUrl = url;
+		}
+
+		@Override
+		protected Void doInBackground(Void... voids) {
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
 		}
 	}
 }

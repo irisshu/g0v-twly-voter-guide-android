@@ -103,7 +103,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-			View 		rootView = inflater.inflate(R.layout.fragment_main, container, false);
+			View 		rootView 	= inflater.inflate(R.layout.fragment_main, container, false);
 			assert rootView != null;
 			TextView 	textView 	= (TextView) rootView.findViewById(R.id.section_label);
 			Button		btnGet		= (Button) rootView.findViewById(R.id.btn_get);
