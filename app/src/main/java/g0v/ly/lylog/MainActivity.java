@@ -14,11 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import g0v.ly.lylog.legislator.Profile;
-import g0v.ly.lylog.rest.RESTFunctionManager;
 
 
 @SuppressWarnings("ALL")
@@ -126,16 +124,6 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 			View 		rootView 	= inflater.inflate(R.layout.fragment_main, container, false);
 			assert rootView != null;
 			TextView 	textView 	= (TextView) rootView.findViewById(R.id.section_label);
-			Button		btnGet		= (Button) rootView.findViewById(R.id.btn_get);
-
-			final RESTFunctionManager restFunctionManager = new RESTFunctionManager();
-			btnGet.setOnClickListener(new Button.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json");
-				}
-			});
-
 			textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
 			return rootView;
 		}

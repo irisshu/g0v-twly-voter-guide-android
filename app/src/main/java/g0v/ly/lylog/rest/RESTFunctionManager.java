@@ -12,36 +12,66 @@ import java.io.IOException;
 
 public class RESTFunctionManager {
 
-	public void restGet(String getUrl) {
-		// TODO return response String
-
-
+	public void restGet(String getUrl, RestApiCallback restApiCallback) {
 		Log.e("RESTFunctionManager :: restGet", "(0) in restGet");
-		ThreadRESTGet threadRESTGet = new ThreadRESTGet(getUrl);
-		threadRESTGet.start();
+		//ThreadRESTGet threadRESTGet = new ThreadRESTGet(getUrl, restApiCallback);
+		//threadRESTGet.start();
 
-		/*
-		DefaultHttpClient 	client 	= new DefaultHttpClient();
-		HttpGet 			request = new HttpGet(getUrl);
-		try {
-			HttpResponse response 	= client.execute(request);
-			responseStr 			= EntityUtils.toString(response.getEntity());
-
-			Log.e("RESTFunctionManager :: restGet", "responseStr: " + responseStr);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		*/
-		//return responseStr;
+		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
+		restGetAsyncTask.execute();
 	}
 
+	private class RESTGetAsyncTask extends AsyncTask<Void, Integer, Void> {
+		long 			startTime;
+		String 			getUrl;
+		String 			responseStr;
+		RestApiCallback restApiCallback;
+
+		public RESTGetAsyncTask(String url, RestApiCallback callback) {
+			getUrl 			= url;
+			restApiCallback = callback;
+		}
+
+		@Override
+		protected Void doInBackground(Void... voids) {
+			startTime = System.currentTimeMillis();
+
+			DefaultHttpClient 	client 	= new DefaultHttpClient();
+			HttpGet 			request = new HttpGet(getUrl);
+
+			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
+
+			try {
+				HttpResponse response 	= client.execute(request);
+				responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+				restApiCallback.getDone(responseStr);
+
+				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) responseStr: " + responseStr);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + (System.currentTimeMillis() - startTime) / 1000 +
+					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			restApiCallback.getDone(responseStr);
+		}
+	}
+	/*
 	private class ThreadRESTGet  extends Thread {
 
-		private String 	getUrl;
-		private long	startTime;
+		private String 			getUrl;
+		private long			startTime;
+		private RestApiCallback restApiCallback;
 
-		public ThreadRESTGet(String url) {
+		public ThreadRESTGet(String url, RestApiCallback callback) {
 			getUrl = url;
+			restApiCallback = callback;
 		}
 
 		@Override
@@ -58,6 +88,7 @@ public class RESTFunctionManager {
 			try {
 				HttpResponse response 	= client.execute(request);
 				String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+				restApiCallback.getDone(responseStr);
 
 				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) responseStr: " + responseStr);
 			} catch (IOException e) {
@@ -68,23 +99,5 @@ public class RESTFunctionManager {
 					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
 		}
 	}
-
-	private class RESTGetAsyncTask extends AsyncTask<Void, Integer, Void> {
-
-		String getUrl;
-
-		public RESTGetAsyncTask(String url) {
-			getUrl = url;
-		}
-
-		@Override
-		protected Void doInBackground(Void... voids) {
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void aVoid) {
-			super.onPostExecute(aVoid);
-		}
-	}
+	*/
 }
