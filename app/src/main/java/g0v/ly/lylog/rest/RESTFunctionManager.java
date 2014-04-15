@@ -14,9 +14,6 @@ public class RESTFunctionManager {
 
 	public void restGet(String getUrl, RestApiCallback restApiCallback) {
 		Log.e("RESTFunctionManager :: restGet", "(0) in restGet");
-		//ThreadRESTGet threadRESTGet = new ThreadRESTGet(getUrl, restApiCallback);
-		//threadRESTGet.start();
-
 		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
 		restGetAsyncTask.execute();
 	}
@@ -38,7 +35,6 @@ public class RESTFunctionManager {
 
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
-
 			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
 
 			try {
@@ -46,7 +42,7 @@ public class RESTFunctionManager {
 				responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 				restApiCallback.getDone(responseStr);
 
-				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) responseStr: " + responseStr);
+				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -62,42 +58,4 @@ public class RESTFunctionManager {
 			restApiCallback.getDone(responseStr);
 		}
 	}
-	/*
-	private class ThreadRESTGet  extends Thread {
-
-		private String 			getUrl;
-		private long			startTime;
-		private RestApiCallback restApiCallback;
-
-		public ThreadRESTGet(String url, RestApiCallback callback) {
-			getUrl = url;
-			restApiCallback = callback;
-		}
-
-		@Override
-		public void run() {
-			super.run();
-
-			startTime = System.currentTimeMillis();
-
-			DefaultHttpClient 	client 	= new DefaultHttpClient();
-			HttpGet 			request = new HttpGet(getUrl);
-
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
-
-			try {
-				HttpResponse response 	= client.execute(request);
-				String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
-				restApiCallback.getDone(responseStr);
-
-				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) responseStr: " + responseStr);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + (System.currentTimeMillis() - startTime) / 1000 +
-					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
-		}
-	}
-	*/
 }

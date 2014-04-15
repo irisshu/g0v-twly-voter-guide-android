@@ -39,10 +39,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
-
-		FragmentManager 	fragmentManager 	= getSupportFragmentManager();
-		//FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		FragmentManager fragmentManager = getSupportFragmentManager();
 
 		// XXX
 		switch (position){
