@@ -2,7 +2,6 @@ package g0v.ly.lylog.legislator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +29,8 @@ public class Profile extends Fragment implements RestApiCallback {
 		View view = inflater.inflate(R.layout.fragment_profile, container, false);
 		assert view != null;
 
-		Button 		btnGet 		= (Button) view.findViewById(R.id.btn_get);
-		 tvResponse 	= (TextView) view.findViewById(R.id.tv_response);
+		Button 	btnGet 	= (Button) view.findViewById(R.id.btn_get);
+		tvResponse 		= (TextView) view.findViewById(R.id.tv_response);
 
 		final RESTFunctionManager restFunctionManager = new RESTFunctionManager();
 		btnGet.setOnClickListener(new Button.OnClickListener() {
@@ -40,7 +39,6 @@ public class Profile extends Fragment implements RestApiCallback {
 				restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
 			}
 		});
-
         return view;
     }
 
@@ -53,6 +51,5 @@ public class Profile extends Fragment implements RestApiCallback {
 				tvResponse.setText(response);
 			}
 		});
-		Log.e("Profile :: getDone", "response: " + response);
 	}
 }

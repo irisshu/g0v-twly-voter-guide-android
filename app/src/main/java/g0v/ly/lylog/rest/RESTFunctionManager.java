@@ -36,17 +36,14 @@ public class RESTFunctionManager {
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
 			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
-
 			try {
 				HttpResponse response 	= client.execute(request);
-				responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
 				restApiCallback.getDone(responseStr);
-
 				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + (System.currentTimeMillis() - startTime) / 1000 +
 					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
 			return null;
