@@ -8,13 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import g0v.ly.lylog.R;
 import g0v.ly.lylog.rest.RESTFunctionManager;
 import g0v.ly.lylog.rest.RestApiCallback;
 
 public class Profile extends Fragment implements RestApiCallback {
 
-	TextView tvResponse;
+	TextView 	tvResponse;
+	String[]	legislatorsName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,8 +50,44 @@ public class Profile extends Fragment implements RestApiCallback {
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				tvResponse.setText(response);
+				//updateTextView(response);
+
+				try {
+					JSONObject apiResponse = new JSONObject(response);
+					JSONArray results = apiResponse.getJSONArray("results");
+
+					for (int i = 0 ; i < results.length() ; i++) {
+						//JSONArray each_terms = results.getJSONArray(i);
+						JSONObject object = results.getJSONObject(i);
+						updateTextView(object.getString("name"));
+					}
+
+
+					/*
+					List<DiaryStructure> diaryList = new ArrayList<DiaryStructure>();
+
+					for (int j = 0; j < responseAry.length(); j++) {
+						JSONObject obj = responseAry.getJSONObject(j);
+						String time = obj.getString("diary_date_hour");
+						String url = obj.getString("download_url");
+						DiaryStructure diaryStructure = new DiaryStructure();
+						diaryStructure.time = time;
+						diaryStructure.url = url;
+						diaryList.add(diaryStructure);
+					}
+					allDevicesDiaryLists.put(satDevicesProfiles.get(i).uid, diaryList);
+					*/
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
 			}
 		});
+	}
+
+	private void updateTextView(String msg) {
+		CharSequence tempMsg = tvResponse.getText();
+		tvResponse.setText(msg + "\n");
+		tvResponse.append(tempMsg);
 	}
 }
