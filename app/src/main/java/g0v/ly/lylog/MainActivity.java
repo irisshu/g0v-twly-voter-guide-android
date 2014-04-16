@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.Fragment;
-
 import android.support.v4.app.FragmentManager;
 
 import android.view.LayoutInflater;
@@ -18,6 +17,10 @@ import android.widget.TextView;
 
 import g0v.ly.lylog.legislator.Profile;
 
+/**
+ * TODO
+ * Check android.support.v4.app.Fragment and android.app.Fragment useage.
+ */
 
 @SuppressWarnings("ALL")
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -39,9 +42,9 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentManager fragmentManager;
+		fragmentManager = getSupportFragmentManager();
 
-		// XXX
 		switch (position){
 			case 0:
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();

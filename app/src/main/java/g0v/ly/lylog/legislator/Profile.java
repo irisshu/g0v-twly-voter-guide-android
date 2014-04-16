@@ -5,8 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +22,9 @@ import g0v.ly.lylog.rest.RestApiCallback;
 
 public class Profile extends Fragment implements RestApiCallback {
 
-	TextView tvResponse;
+	TextView 	tvResponse;
+	String[]	legislatorNameStringArray;
+	Spinner		legislatorNameSpinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,8 +36,9 @@ public class Profile extends Fragment implements RestApiCallback {
 		View view = inflater.inflate(R.layout.fragment_profile, container, false);
 		assert view != null;
 
-		Button 	btnGet 	= (Button) view.findViewById(R.id.btn_get);
-		tvResponse 		= (TextView) view.findViewById(R.id.tv_response);
+		Button 	btnGet 			= (Button) view.findViewById(R.id.btn_get);
+		tvResponse 				= (TextView) view.findViewById(R.id.tv_response);
+		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
 
 		final RESTFunctionManager restFunctionManager = new RESTFunctionManager();
 		btnGet.setOnClickListener(new Button.OnClickListener() {
@@ -52,28 +59,31 @@ public class Profile extends Fragment implements RestApiCallback {
 				try {
 					JSONObject apiResponse = new JSONObject(response);
 					JSONArray results = apiResponse.getJSONArray("results");
+					legislatorNameStringArray = new String[results.length()];
 
 					for (int i = 0 ; i < results.length() ; i++) {
 						JSONObject object = results.getJSONObject(i);
+						legislatorNameStringArray[i] = object.getString("name");
 						updateTextView(object.getString("name"));
 					}
-					/*
-					List<DiaryStructure> diaryList = new ArrayList<DiaryStructure>();
-					for (int j = 0; j < responseAry.length(); j++) {
-						JSONObject obj = responseAry.getJSONObject(j);
-						String time = obj.getString("diary_date_hour");
-						String url = obj.getString("download_url");
-						DiaryStructure diaryStructure = new DiaryStructure();
-						diaryStructure.time = time;
-						diaryStructure.url = url;
-						diaryList.add(diaryStructure);
-					}
-					allDevicesDiaryLists.put(satDevicesProfiles.get(i).uid, diaryList);
-					*/
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				updateTextView("Spend " + spendTime/1000 + "." + spendTime%1000 + "s");
+			}
+		});
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameStringArray);
+		legislatorNameSpinner.setAdapter(arrayAdapter);
+		legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+				Toast.makeText(getActivity(), "你選的是" + legislatorNameStringArray[position], Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {
+
 			}
 		});
 	}
