@@ -16,9 +16,6 @@ public class Profile extends Fragment implements RestApiCallback {
 
 	TextView tvResponse;
 
-	public Profile() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
