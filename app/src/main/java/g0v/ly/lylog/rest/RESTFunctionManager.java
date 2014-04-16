@@ -19,7 +19,7 @@ public class RESTFunctionManager {
 	}
 
 	private class RESTGetAsyncTask extends AsyncTask<Void, Integer, Void> {
-		long 			startTime;
+		long 			spendTime;
 		String 			getUrl;
 		String 			responseStr;
 		RestApiCallback restApiCallback;
@@ -31,7 +31,7 @@ public class RESTFunctionManager {
 
 		@Override
 		protected Void doInBackground(Void... voids) {
-			startTime = System.currentTimeMillis();
+			spendTime = System.currentTimeMillis();
 
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
@@ -39,20 +39,21 @@ public class RESTFunctionManager {
 			try {
 				HttpResponse response 	= client.execute(request);
 				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
-				restApiCallback.getDone(responseStr);
+				//restApiCallback.getDone(responseStr);
 				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + (System.currentTimeMillis() - startTime) / 1000 +
-					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
+			spendTime = System.currentTimeMillis() - spendTime;
+			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + spendTime / 1000 +
+					"." + spendTime % 1000 + " sec to get response.");
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void aVoid) {
 			super.onPostExecute(aVoid);
-			restApiCallback.getDone(responseStr);
+			restApiCallback.getDone(responseStr, spendTime);
 		}
 	}
 }

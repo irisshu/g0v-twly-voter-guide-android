@@ -18,8 +18,7 @@ import g0v.ly.lylog.rest.RestApiCallback;
 
 public class Profile extends Fragment implements RestApiCallback {
 
-	TextView 	tvResponse;
-	String[]	legislatorsName;
+	TextView tvResponse;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,26 +45,20 @@ public class Profile extends Fragment implements RestApiCallback {
 
 	// XXX
 	@Override
-	public void getDone(final String response) {
+	public void getDone(final String response, final long spendTime) {
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				//updateTextView(response);
-
 				try {
 					JSONObject apiResponse = new JSONObject(response);
 					JSONArray results = apiResponse.getJSONArray("results");
 
 					for (int i = 0 ; i < results.length() ; i++) {
-						//JSONArray each_terms = results.getJSONArray(i);
 						JSONObject object = results.getJSONObject(i);
 						updateTextView(object.getString("name"));
 					}
-
-
 					/*
 					List<DiaryStructure> diaryList = new ArrayList<DiaryStructure>();
-
 					for (int j = 0; j < responseAry.length(); j++) {
 						JSONObject obj = responseAry.getJSONObject(j);
 						String time = obj.getString("diary_date_hour");
@@ -80,7 +73,7 @@ public class Profile extends Fragment implements RestApiCallback {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-
+				updateTextView("Spend " + spendTime/1000 + "." + spendTime%1000 + "s");
 			}
 		});
 	}
@@ -88,6 +81,8 @@ public class Profile extends Fragment implements RestApiCallback {
 	private void updateTextView(String msg) {
 		CharSequence tempMsg = tvResponse.getText();
 		tvResponse.setText(msg + "\n");
-		tvResponse.append(tempMsg);
+		if (tempMsg != null){
+			tvResponse.append(tempMsg);
+		}
 	}
 }
