@@ -2,23 +2,28 @@ package g0v.ly.lylog;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import g0v.ly.lylog.rest.RESTFunctionManager;
+import g0v.ly.lylog.legislator.Profile;
 
+/**
+ * TODO
+ * Check android.support.v4.app.Fragment and android.app.Fragment useage.
+ */
 
 @SuppressWarnings("ALL")
-public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	private NavigationDrawerFragment 	mNavigationDrawerFragment;
 	private CharSequence 				mTitle;
@@ -37,9 +42,22 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+		FragmentManager fragmentManager;
+		fragmentManager = getSupportFragmentManager();
+
+		switch (position){
+			case 0:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 1:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 2:
+				Profile fragment = new Profile();
+				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+				break;
+		}
+
 	}
 
 	public void onSectionAttached(int number) {
@@ -103,19 +121,9 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-			View 		rootView = inflater.inflate(R.layout.fragment_main, container, false);
+			View 		rootView 	= inflater.inflate(R.layout.fragment_main, container, false);
 			assert rootView != null;
 			TextView 	textView 	= (TextView) rootView.findViewById(R.id.section_label);
-			Button		btnGet		= (Button) rootView.findViewById(R.id.btn_get);
-
-			final RESTFunctionManager restFunctionManager = new RESTFunctionManager();
-			btnGet.setOnClickListener(new Button.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json");
-				}
-			});
-
 			textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
 			return rootView;
 		}
