@@ -4,23 +4,10 @@
     android:layout_height="match_parent"
     tools:context="g0v.ly.lylog.legislator.Profile">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-    <Button
-        android:id="@+id/btn_get"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_get_text"
-        android:layout_centerHorizontal="true"/>
-
     <Spinner
         android:id="@+id/spinner_legislator_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_get"
         android:layout_centerHorizontal="true"/>
 
     <TextView
@@ -28,6 +15,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinner_legislator_name"
+        android:layout_centerHorizontal="true"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#E6E6E6"
+        android:layout_below="@+id/tv_response"/>
+
+    <TextView
+        android:id="@+id/tv_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

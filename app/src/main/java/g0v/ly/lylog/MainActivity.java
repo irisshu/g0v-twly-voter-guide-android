@@ -47,14 +47,14 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 
 		switch (position){
 			case 0:
-				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				Profile fragment = new Profile();
+				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 				break;
 			case 1:
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 			case 2:
-				Profile fragment = new Profile();
-				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 		}
 
