@@ -12,33 +12,14 @@ import java.io.IOException;
 public class RESTFunctionManager {
 
 	public void restGet(String getUrl) {
-		// TODO return response String
-
-
 		Log.e("RESTFunctionManager :: restGet", "(0) in restGet");
 		ThreadRESTGet threadRESTGet = new ThreadRESTGet(getUrl);
 		threadRESTGet.start();
-
-		/*
-		DefaultHttpClient 	client 	= new DefaultHttpClient();
-		HttpGet 			request = new HttpGet(getUrl);
-		try {
-			HttpResponse response 	= client.execute(request);
-			responseStr 			= EntityUtils.toString(response.getEntity());
-
-			Log.e("RESTFunctionManager :: restGet", "responseStr: " + responseStr);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		*/
-		//return responseStr;
 	}
 
 	private class ThreadRESTGet  extends Thread {
-
 		private String 	getUrl;
 		private long	startTime;
-
 		public ThreadRESTGet(String url) {
 			getUrl = url;
 		}
@@ -46,18 +27,14 @@ public class RESTFunctionManager {
 		@Override
 		public void run() {
 			super.run();
-
-			startTime = System.currentTimeMillis();
-
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
-
 			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
 
+			startTime = System.currentTimeMillis();
 			try {
 				HttpResponse response 	= client.execute(request);
 				String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
-
 				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) responseStr: " + responseStr);
 			} catch (IOException e) {
 				e.printStackTrace();
