@@ -1,5 +1,6 @@
 package g0v.ly.lylog.rest;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -11,37 +12,48 @@ import java.io.IOException;
 
 public class RESTFunctionManager {
 
-	public void restGet(String getUrl) {
+	public void restGet(String getUrl, RestApiCallback restApiCallback) {
 		Log.e("RESTFunctionManager :: restGet", "(0) in restGet");
-		ThreadRESTGet threadRESTGet = new ThreadRESTGet(getUrl);
-		threadRESTGet.start();
+		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
+		restGetAsyncTask.execute();
 	}
 
-	private class ThreadRESTGet  extends Thread {
-		private String 	getUrl;
-		private long	startTime;
-		public ThreadRESTGet(String url) {
-			getUrl = url;
+	private class RESTGetAsyncTask extends AsyncTask<Void, Integer, Void> {
+		long 			spendTime;
+		String 			getUrl;
+		String 			responseStr;
+		RestApiCallback restApiCallback;
+
+		public RESTGetAsyncTask(String url, RestApiCallback callback) {
+			getUrl 			= url;
+			restApiCallback = callback;
 		}
 
 		@Override
-		public void run() {
-			super.run();
+		protected Void doInBackground(Void... voids) {
+			spendTime = System.currentTimeMillis();
+
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
 			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
-
-			startTime = System.currentTimeMillis();
 			try {
 				HttpResponse response 	= client.execute(request);
-				String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
-				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) responseStr: " + responseStr);
+				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
+				//restApiCallback.getDone(responseStr);
+				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			spendTime = System.currentTimeMillis() - spendTime;
+			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + spendTime / 1000 +
+					"." + spendTime % 1000 + " sec to get response.");
+			return null;
+		}
 
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + (System.currentTimeMillis() - startTime) / 1000 +
-					"." + (System.currentTimeMillis() - startTime) + " sec to get response.");
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			restApiCallback.getDone(responseStr, spendTime);
 		}
 	}
 }
