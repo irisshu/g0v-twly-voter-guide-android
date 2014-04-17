@@ -39,7 +39,6 @@ public class RESTFunctionManager {
 			try {
 				HttpResponse response 	= client.execute(request);
 				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
-				//restApiCallback.getDone(responseStr);
 				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
 				e.printStackTrace();
