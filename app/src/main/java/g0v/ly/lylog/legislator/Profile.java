@@ -2,6 +2,7 @@ package g0v.ly.lylog.legislator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +53,10 @@ public class Profile extends Fragment implements RestApiCallback {
 		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
 		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
 
+		/* TODO sd selectable */
 		RESTFunctionManager restFunctionManager = new RESTFunctionManager();
-		restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
+		//restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
+		restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/.json?ad=8", Profile.this);
 		setupOnclickListeners();
 
         return view;
@@ -70,13 +73,39 @@ public class Profile extends Fragment implements RestApiCallback {
 					JSONArray 	results 	= apiResponse.getJSONArray("results");
 					legislatorNameArray 	= new String[results.length()];
 
+					Log.e("getDone", "results.length(): " + results.length());
+
 					for (int i = 0 ; i < results.length() ; i++) {
 						// get legislator's name
 						JSONObject legislator 	= results.getJSONObject(i);
 						legislatorNameArray[i] 	= legislator.getString("name");
-						legislatorProfileArray	= new String[4];
+						legislatorProfileArray	= new String[6];
 
 						// get legislator's profile
+						for (int j = 0 ; j < 6 ; j++) {
+							switch (j) {
+								case 0:
+									legislatorProfileArray[j] = legislator.getString("ad");
+									break;
+								case 1:
+									legislatorProfileArray[j] = legislator.getString("gender");
+									break;
+								case 2:
+									legislatorProfileArray[j] = legislator.getString("party");
+									break;
+								case 3:
+									legislatorProfileArray[j] = legislator.getString("county");
+									break;
+								case 4:
+									legislatorProfileArray[j] = legislator.getString("education");
+									break;
+								case 5:
+									legislatorProfileArray[j] = legislator.getString("experience");
+									break;
+							}
+						}
+
+						/*
 						JSONArray 	eachTerms 		= legislator.getJSONArray("each_terms");
 						JSONObject 	eachTermsObj 	= eachTerms.getJSONObject(0);
 						for (int j = 0 ; j < 4 ; j++) {
@@ -95,6 +124,7 @@ public class Profile extends Fragment implements RestApiCallback {
 									break;
 							}
 						}
+						*/
 						legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
 					}
 					updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
@@ -117,10 +147,12 @@ public class Profile extends Fragment implements RestApiCallback {
 				Toast.makeText(getActivity(), "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
 				if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
 					updateTextView(tvProfile, legislatorNameArray[position] + "\n"
-							+ "性別：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
-							+ "黨籍：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
-							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[2] + "\n"
-							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[3], TvUpdateType.OVERWRITE);
+							+ "屆期：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
+							+ "性別：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
+							+ "黨籍：" + legislatorListWithProfile.get(legislatorNameArray[position])[2] + "\n"
+							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
+							+ "學歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
+							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
 				}
 			}
 			@Override
