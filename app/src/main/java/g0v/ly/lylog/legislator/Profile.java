@@ -28,10 +28,10 @@ public class Profile extends Fragment implements RestApiCallback {
 	TextView	tvProfile;
 	String[]	legislatorNameArray;
 	Spinner		legislatorNameSpinner;
+	String[]	legislatorProfileArray;
 
 	// Key => legislator's name, Value => legislator's profile
 	Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
-	String[]	legislatorProfileArray;
 
 	public enum TvUpdateType {
 		APPEND,
@@ -59,7 +59,7 @@ public class Profile extends Fragment implements RestApiCallback {
         return view;
     }
 
-	// Received response from REST GET.
+	// [Callback] Received response from REST GET. [start]
 	@Override
 	public void getDone(final String response, final long spendTime) {
 		getActivity().runOnUiThread(new Runnable() {
@@ -106,11 +106,11 @@ public class Profile extends Fragment implements RestApiCallback {
 		});
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
 		legislatorNameSpinner.setAdapter(arrayAdapter);
-	}
+	}// [Callback] Received response from REST GET. [end]
 
 	private void setupOnclickListeners() {
 
-		// Setup spinner's onclick listener.
+		// Setup spinner's onclick listener. [start]
 		legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -127,7 +127,7 @@ public class Profile extends Fragment implements RestApiCallback {
 			public void onNothingSelected(AdapterView<?> adapterView) {
 
 			}
-		});
+		});// Setup spinner's onclick listener. [end]
 	}
 
 	private void updateTextView(TextView tv, String msg, TvUpdateType updateType) {
