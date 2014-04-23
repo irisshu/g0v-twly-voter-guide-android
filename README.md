@@ -1,4 +1,17 @@
 g0v-twly-voter-guide-android
 ==============================
 
-g0v taiwan legislative yuan voter guide android project
+此為 g0v [立委投票指南](http://vote.ly.g0v.tw/) Android 版 project
+
+立委投票指南 Android 版 project [trello] (https://trello.com/b/laylhlfd/legislative-yuan-log)
+
+
+## git clone
+```
+git clone https://github.com/Jajoba/g0v-twly-voter-guide-android.git
+```
+
+
+## Requirement
+
+Android API level 14 (Android 4.0 Ice Cream Sandwich) and above.
