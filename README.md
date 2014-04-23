@@ -5,7 +5,7 @@ g0v-twly-voter-guide-android
 
 立委投票指南 Android 版 project [trello] (https://trello.com/b/laylhlfd/legislative-yuan-log)
 
-## git clone
+## Git clone
 ```
 git clone https://github.com/Jajoba/g0v-twly-voter-guide-android.git
 ```
