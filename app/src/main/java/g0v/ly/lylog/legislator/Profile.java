@@ -25,17 +25,16 @@ import g0v.ly.lylog.rest.RestApiCallback;
 
 public class Profile extends Fragment implements RestApiCallback {
 
-	TextView 			tvResponse;
-	TextView			tvProfile;
-	Spinner				legislatorNameSpinner;
-	String				getUrl					 = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
-	RESTFunctionManager restFunctionManager;
-
-	String[]	legislatorNameArray;
-	String[]	legislatorProfileArray;
+	private long				totalSpendTime			 = 0;
+	private TextView 			tvResponse;
+	private TextView			tvProfile;
+	private Spinner				legislatorNameSpinner;
+	private RESTFunctionManager restFunctionManager;
+	private String[]			legislatorNameArray;
+	private String[]			legislatorProfileArray;
 
 	// Key => legislator's name, Value => legislator's profile
-	Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
+	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
 
 	public enum TvUpdateType {
 		APPEND,
@@ -60,6 +59,7 @@ public class Profile extends Fragment implements RestApiCallback {
 		restFunctionManager = new RESTFunctionManager();
 		//https://twly.herokuapp.com/api/legislator_terms/?page=2&ad=8
 		//restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
+		String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
 		restFunctionManager.restGet(getUrl, Profile.this);
 		setupOnclickListeners();
 
@@ -119,9 +119,11 @@ public class Profile extends Fragment implements RestApiCallback {
 			}
 		});
 
+		totalSpendTime += spendTime;
+
 		if (page == 12) {
 			updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
-			updateTextView(tvResponse, "Spend " + spendTime/1000 + "." + spendTime%1000 + "s", TvUpdateType.APPEND);
+			updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
 
 			//legislatorNameArray
 			Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
