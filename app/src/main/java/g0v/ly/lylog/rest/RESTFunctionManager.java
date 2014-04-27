@@ -13,7 +13,7 @@ import java.io.IOException;
 public class RESTFunctionManager {
 
 	public void restGet(String getUrl, RestApiCallback restApiCallback) {
-		Log.e("RESTFunctionManager :: restGet", "(0) in restGet");
+		Log.i("RESTFunctionManager :: restGet", "(0) in restGet");
 		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
 		restGetAsyncTask.execute();
 	}
@@ -54,7 +54,9 @@ public class RESTFunctionManager {
 			super.onPostExecute(aVoid);
 			String[] temp;
 			temp = getUrl.split("=");
-			restApiCallback.getDone(responseStr, spendTime, Integer.valueOf(temp[1].substring(0, 1)));
+			int page = Integer.valueOf(temp[1].substring(0, temp[1].lastIndexOf("&")));
+			Log.e("RESTFunctionManager :: ThreadRESTGet", "page: " + page);
+			restApiCallback.getDone(responseStr, spendTime, page);
 		}
 	}
 }

@@ -42,13 +42,13 @@ public class Profile extends Fragment implements RestApiCallback {
 		OVERWRITE
 	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_profile, container, false);
 		assert view != null;
 
@@ -63,25 +63,15 @@ public class Profile extends Fragment implements RestApiCallback {
 		restFunctionManager.restGet(getUrl, Profile.this);
 		setupOnclickListeners();
 
-        return view;
-    }
+		return view;
+	}
 
 	// [Callback] Received response from REST GET. [start]
 	@Override
 	public void getDone(final String response, final long spendTime, int page) {
 
-		//Map<Integer, JSONObject> totalLegislatorInfo = new HashMap<Integer, JSONObject>();
-		String testString = null;
-		/*
-		if (page == 12) {
-		} else {
-			testString += response;
-			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
-		}
-		*/
+		Log.e("Profile", "page: " + page);
 
-
-		final String finalTestString = testString;
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -123,18 +113,27 @@ public class Profile extends Fragment implements RestApiCallback {
 						}
 						legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
 					}
-					updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				updateTextView(tvResponse, "Spend " + spendTime/1000 + "." + spendTime%1000 + "s", TvUpdateType.APPEND);
 			}
 		});
 
-		Log.e("Profile", "page: " + page);
+		if (page == 12) {
+			updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
+			updateTextView(tvResponse, "Spend " + spendTime/1000 + "." + spendTime%1000 + "s", TvUpdateType.APPEND);
 
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-		legislatorNameSpinner.setAdapter(arrayAdapter);
+			//legislatorNameArray
+			Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
+			legislatorNameArray = new String[legislatorListWithProfile.size()];
+			for (int i = 0 ; i < NameObjArray.length ; i++) {
+				legislatorNameArray[i] = NameObjArray[i].toString();
+			}
+			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
+			legislatorNameSpinner.setAdapter(arrayAdapter);
+		} else {
+			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
+		}
 	}// [Callback] Received response from REST GET. [end]
 
 	private void setupOnclickListeners() {
