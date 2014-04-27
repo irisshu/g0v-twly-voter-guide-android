@@ -35,16 +35,16 @@ public class RESTFunctionManager {
 
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
+			Log.i("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
 			try {
 				HttpResponse response 	= client.execute(request);
 				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
-				Log.e("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
+				Log.i("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			spendTime = System.currentTimeMillis() - spendTime;
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + spendTime / 1000 +
+			Log.i("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + spendTime / 1000 +
 					"." + spendTime % 1000 + " sec to get response.");
 			return null;
 		}
@@ -52,7 +52,9 @@ public class RESTFunctionManager {
 		@Override
 		protected void onPostExecute(Void aVoid) {
 			super.onPostExecute(aVoid);
-			restApiCallback.getDone(responseStr, spendTime);
+			String[] temp;
+			temp = getUrl.split("=");
+			restApiCallback.getDone(responseStr, spendTime, Integer.valueOf(temp[1].substring(0, 1)));
 		}
 	}
 }
