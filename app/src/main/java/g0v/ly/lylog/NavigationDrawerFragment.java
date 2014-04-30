@@ -73,6 +73,7 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
 		mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -89,6 +90,11 @@ public class NavigationDrawerFragment extends Fragment {
 						getString(R.string.title_section3),
 				}
 		));
+
+		/*
+		NavigationDrawerAdapter navigationDrawerAdapter = new NavigationDrawerAdapter(getActivity());
+		mDrawerListView.setAdapter(navigationDrawerAdapter);
+		*/
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
