@@ -55,7 +55,7 @@ public class Profile extends Fragment implements RestApiCallback {
 		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
 		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
 
-		/* TODO sd selectable */
+		/* TODO ad selectable */
 		restFunctionManager = new RESTFunctionManager();
 		//https://twly.herokuapp.com/api/legislator_terms/?page=2&ad=8
 		//restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
