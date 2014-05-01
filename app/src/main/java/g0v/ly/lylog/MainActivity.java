@@ -17,11 +17,6 @@ import android.widget.TextView;
 
 import g0v.ly.lylog.legislator.Profile;
 
-/**
- * TODO
- * Check android.support.v4.app.Fragment and android.app.Fragment useage.
- */
-
 @SuppressWarnings("ALL")
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
