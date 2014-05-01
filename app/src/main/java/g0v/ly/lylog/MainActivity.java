@@ -64,9 +64,9 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 				break;
 			case 1:
 				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
-				//Profile fragment = new Profile();
-				//fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				Profile fragment = new Profile();
+				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+				//fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 			case 2:
 				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
