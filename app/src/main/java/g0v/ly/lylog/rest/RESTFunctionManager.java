@@ -13,7 +13,7 @@ import java.io.IOException;
 public class RESTFunctionManager {
 
 	public void restGet(String getUrl, RestApiCallback restApiCallback) {
-		Log.i("RESTFunctionManager :: restGet", "(0) in restGet");
+		//Log.i("RESTFunctionManager :: restGet", "(0) in restGet");
 		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
 		restGetAsyncTask.execute();
 	}
@@ -35,17 +35,17 @@ public class RESTFunctionManager {
 
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
-			Log.i("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
+			//Log.i("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
 			try {
 				HttpResponse response 	= client.execute(request);
 				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
-				Log.i("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
+				//Log.i("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			spendTime = System.currentTimeMillis() - spendTime;
-			Log.i("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + spendTime / 1000 +
-					"." + spendTime % 1000 + " sec to get response.");
+			//Log.i("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + spendTime / 1000 +
+			//		"." + spendTime % 1000 + " sec to get response.");
 			return null;
 		}
 
@@ -55,7 +55,7 @@ public class RESTFunctionManager {
 			String[] temp;
 			temp = getUrl.split("=");
 			int page = Integer.valueOf(temp[1].substring(0, temp[1].lastIndexOf("&")));
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "page: " + page);
+			Log.d("RESTFunctionManager :: ThreadRESTGet", "page: " + page);
 			restApiCallback.getDone(responseStr, spendTime, page);
 		}
 	}

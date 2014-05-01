@@ -2,7 +2,6 @@ package g0v.ly.lylog.legislator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +77,7 @@ public class Profile extends Fragment implements RestApiCallback {
 				JSONArray 	results 	= apiResponse.getJSONArray("results");
 				legislatorNameArray 	= new String[results.length()];
 
-				Log.i("getDone", "results.length(): " + results.length());
+				//Log.i("getDone", "results.length(): " + results.length());
 
 				for (int i = 0 ; i < results.length() ; i++) {
 					// get legislator's name
