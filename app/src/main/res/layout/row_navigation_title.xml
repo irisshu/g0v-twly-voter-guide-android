@@ -2,12 +2,19 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="48dp"
+                android:clickable="false">
+    <View
+        android:id="@+id/blank_view"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"/>
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="true"/>
+        android:layout_below="@+id/blank_view"
+        android:textAllCaps="true"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

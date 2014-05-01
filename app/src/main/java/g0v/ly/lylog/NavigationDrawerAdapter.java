@@ -17,7 +17,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 5;
+		return 15;
 	}
 
 	@Override
@@ -51,15 +51,13 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 		}
 
 		assert row != null;
-        rowHolder.textView.setText(position + " : " + R.string.title_1);
 
-        /*
-		if (position == 1) {
-			rowHolder.textView.setText(R.string.title_1);
+		if (position == 0 || position == 5) {
+			rowHolder.textView.setText("Title");
 		} else {
-			rowHolder.textView.setText(position);
+			rowHolder.textView.setText("text");
 		}
-        */
+
 		return row;
 	}
 
