@@ -46,11 +46,12 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 				row	= inflater.inflate(R.layout.row_navigation_normal, viewGroup, false);
 				rowHolder.textView = (TextView) (row != null ? row.findViewById(R.id.tv_normal) : null);
 			}
+
+			assert row != null;
+			row.setTag(rowHolder);
 		} else {
 			rowHolder = (RowHolder) row.getTag();
 		}
-
-		assert row != null;
 
 		if (position == 0 || position == 5) {
 			rowHolder.textView.setText("Title");
