@@ -5,5 +5,8 @@
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
-    android:background="#cccc"
+    android:background="#FFFFFF"
     tools:context="g0v.ly.lylog.NavigationDrawerFragment" />
+<!--
+    android:background="#cccc"
+-->

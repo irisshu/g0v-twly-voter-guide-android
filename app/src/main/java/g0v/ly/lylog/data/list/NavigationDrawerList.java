@@ -5,11 +5,11 @@ public class NavigationDrawerList {
 
 	public NavigationDrawerList() {
 		drawerList = new String[] {
-			"委員",
+			"委員",			// title 1
 				"基本資料",
 				"出席紀錄",
 				"政治獻金",
-			"議案",
+			"議案",			// title 2
 				"基本資料",
 				"表決紀錄",
 		};

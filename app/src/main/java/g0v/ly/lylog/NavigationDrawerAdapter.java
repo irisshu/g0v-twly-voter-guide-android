@@ -1,12 +1,11 @@
 package g0v.ly.lylog;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.TextView;
 
 import g0v.ly.lylog.data.list.NavigationDrawerList;
 
@@ -45,13 +44,19 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 			// Apply different xml
 			if (position == 0 || position == 4) {
 				row = inflater.inflate(R.layout.row_navigation_title, viewGroup, false);
-				rowHolder.rowButton = (Button) (row != null ? row.findViewById(R.id.tv_title) : null);
+				rowHolder.textViewMain = (TextView) (row != null ? row.findViewById(R.id.tv_title) : null);
+
+				// set title clickable = false
+				assert rowHolder.textViewMain != null;
+				rowHolder.textViewMain.setEnabled(false);
+				rowHolder.textViewMain.setOnClickListener(null);
+
 			} else {
 				row	= inflater.inflate(R.layout.row_navigation_normal, viewGroup, false);
-				rowHolder.rowButton = (Button) (row != null ? row.findViewById(R.id.tv_normal) : null);
+				rowHolder.textViewMain = (TextView) (row != null ? row.findViewById(R.id.tv_normal) : null);
 			}
 
-			rowHolder.initOnclick();
+			//rowHolder.initOnclick();
 
 			assert row != null;
 			row.setTag(rowHolder);
@@ -59,7 +64,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 			rowHolder = (RowHolder) row.getTag();
 		}
 
-		rowHolder.rowButton.setText(drawerList[position]);
+		rowHolder.textViewMain.setText(drawerList[position]);
 
 		/*
 		if (position == 0 || position == 5) {
@@ -72,13 +77,13 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 	}
 
 	private class RowHolder {
-		int 	position;
-		Button 	rowButton;
+		int 		position;
+		TextView 	textViewMain;
 
 		RowHolder(int position) {
 			this.position = position;
 		}
-
+		/*
 		public void initOnclick() {
 			rowButton.setOnClickListener(new Button.OnClickListener() {
 				@Override
@@ -87,5 +92,6 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 				}
 			});
 		}
+		*/
 	}
 }

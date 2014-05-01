@@ -11,7 +11,7 @@
         android:src="@drawable/ic_launcher"
         android:contentDescription="@null"/>
 
-    <Button
+    <TextView
         android:id="@+id/tv_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

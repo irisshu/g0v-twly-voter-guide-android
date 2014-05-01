@@ -1,7 +1,6 @@
 package g0v.ly.lylog.rest;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -55,7 +54,7 @@ public class RESTFunctionManager {
 			String[] temp;
 			temp = getUrl.split("=");
 			int page = Integer.valueOf(temp[1].substring(0, temp[1].lastIndexOf("&")));
-			Log.d("RESTFunctionManager :: ThreadRESTGet", "page: " + page);
+			//Log.d("RESTFunctionManager :: ThreadRESTGet", "page: " + page);
 			restApiCallback.getDone(responseStr, spendTime, page);
 		}
 	}
