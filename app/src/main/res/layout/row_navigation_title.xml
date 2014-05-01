@@ -2,19 +2,30 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:clickable="false">
+                android:layout_height="50dp"
+    android:clickable="false">
+
     <View
         android:id="@+id/blank_view"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"/>
+        android:layout_height="10dp"/>
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         android:layout_below="@+id/blank_view"
+        android:background="#00000000"
         android:textAllCaps="true"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:gravity="center_vertical"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="-10dp"
+        android:background="#9EB3B8"/>
 
 </RelativeLayout>
