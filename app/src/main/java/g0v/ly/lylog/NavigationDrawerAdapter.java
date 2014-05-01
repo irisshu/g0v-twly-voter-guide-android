@@ -51,12 +51,14 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 		}
 
 		assert row != null;
+        rowHolder.textView.setText(position + " : " + R.string.title_1);
+        /*
 		if (position == 1) {
 			rowHolder.textView.setText(R.string.title_1);
 		} else {
 			rowHolder.textView.setText(position);
 		}
-
+        */
 		return row;
 	}
 
