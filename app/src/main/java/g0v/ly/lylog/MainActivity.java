@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +33,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		mTitle = getTitle();
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 	}
 
 	@Override
@@ -63,29 +62,22 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 				//Log.d("MainActivity", "Title row clicked");
 				break;
 			case 1:
-				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
-				//Profile fragment = new Profile();
-				//fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				Profile fragment = new Profile();
+				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 				break;
 			case 2:
-				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 			case 3:
-				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 			case 5:
-				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 			case 6:
-				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 			case 7:
-				//Log.d("MainActivity", "[" + (position+1) + "] row clicked");
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 
