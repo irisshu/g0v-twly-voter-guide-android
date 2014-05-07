@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class NavigationDrawerAdapter extends BaseAdapter {
+import g0v.ly.lylog.data.list.NavigationDrawerList;
 
-	private LayoutInflater inflater;
+public class NavigationDrawerAdapter extends BaseAdapter {
+	private LayoutInflater 			inflater;
+	private NavigationDrawerList 	navigationDrawerList 	= new NavigationDrawerList();
+	private String[]				drawerList 				= navigationDrawerList.getDrawerList();
 
 	public NavigationDrawerAdapter(Activity activity) {
 		inflater = LayoutInflater.from(activity);
@@ -17,7 +20,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 5;
+		return 7;
 	}
 
 	@Override
@@ -36,33 +39,59 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 		RowHolder 	rowHolder;
 
 		if (row == null) {
-			rowHolder = new RowHolder();
+			rowHolder = new RowHolder(position);
 
 			// Apply different xml
-			if (position == 1) {
+			if (position == 0 || position == 4) {
 				row = inflater.inflate(R.layout.row_navigation_title, viewGroup, false);
-				rowHolder.textView = (TextView) (row != null ? row.findViewById(R.id.tv_title) : null);
+				rowHolder.textViewMain = (TextView) (row != null ? row.findViewById(R.id.tv_title) : null);
+
+				// set title clickable = false
+				assert rowHolder.textViewMain != null;
+				rowHolder.textViewMain.setEnabled(false);
+				rowHolder.textViewMain.setOnClickListener(null);
+
 			} else {
 				row	= inflater.inflate(R.layout.row_navigation_normal, viewGroup, false);
-				rowHolder.textView = (TextView) (row != null ? row.findViewById(R.id.tv_normal) : null);
+				rowHolder.textViewMain = (TextView) (row != null ? row.findViewById(R.id.tv_normal) : null);
 			}
+
+			//rowHolder.initOnclick();
+
+			assert row != null;
+			row.setTag(rowHolder);
 		} else {
 			rowHolder = (RowHolder) row.getTag();
 		}
 
-		assert row != null;
-        rowHolder.textView.setText(position + " : " + R.string.title_1);
-        /*
-		if (position == 1) {
-			rowHolder.textView.setText(R.string.title_1);
+		rowHolder.textViewMain.setText(drawerList[position]);
+
+		/*
+		if (position == 0 || position == 5) {
+			rowHolder.rowButton.setText("Title");
 		} else {
-			rowHolder.textView.setText(position);
+			rowHolder.rowButton.setText("text");
 		}
-        */
+		*/
 		return row;
 	}
 
 	private class RowHolder {
-		TextView textView;
+		int 		position;
+		TextView 	textViewMain;
+
+		RowHolder(int position) {
+			this.position = position;
+		}
+		/*
+		public void initOnclick() {
+			rowButton.setOnClickListener(new Button.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Log.d("NavigationDrawerAdapter", "[" + position + "] row button clicked");
+				}
+			});
+		}
+		*/
 	}
 }

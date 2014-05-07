@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import g0v.ly.lylog.data.list.NavigationDrawerList;
 import g0v.ly.lylog.legislator.Profile;
 
 @SuppressWarnings("ALL")
@@ -32,7 +33,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		mTitle = getTitle();
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 	}
 
 	@Override
@@ -41,30 +42,67 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		fragmentManager = getSupportFragmentManager();
 
 		switch (position){
+/*
 			case 0:
+				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
+				mTitle = getString(R.string.title_section1);
+				break;
+			case 1:
+				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
+				mTitle = getString(R.string.title_section2);
+				break;
+			case 2:
+				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
+				mTitle = getString(R.string.title_section3);
+				break;
+*/
+
+			case 0:
+			case 4:
+				//Log.d("MainActivity", "Title row clicked");
+				break;
+			case 1:
 				Profile fragment = new Profile();
 				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 				break;
-			case 1:
-				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
-				break;
 			case 2:
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
-		}
+			case 3:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 5:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 6:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 7:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
 
+		}
 	}
 
 	public void onSectionAttached(int number) {
+		NavigationDrawerList 	navigationDrawerList 	= new NavigationDrawerList();
+		String[] 				titleStrArray 			= navigationDrawerList.getDrawerList();
 		switch (number) {
 			case 1:
-				mTitle = getString(R.string.title_section1);
+			case 5:
+				//mTitle = titleStrArray[number-1];
 				break;
 			case 2:
-				mTitle = getString(R.string.title_section2);
-				break;
 			case 3:
-				mTitle = getString(R.string.title_section3);
+			case 4:
+				//mTitle = getString(R.string.title_section1);
+				mTitle = titleStrArray[0] + " : " + titleStrArray[number-1];
+				break;
+
+			case 6:
+			case 7:
+				//mTitle = getString(R.string.title_section1);
+				mTitle = titleStrArray[4] + " : " + titleStrArray[number-1];
 				break;
 		}
 	}

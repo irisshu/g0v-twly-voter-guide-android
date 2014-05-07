@@ -2,7 +2,6 @@ package g0v.ly.lylog.legislator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,52 +69,50 @@ public class Profile extends Fragment implements RestApiCallback {
 	@Override
 	public void getDone(final String response, final long spendTime, int page) {
 
-		Log.e("Profile", "page: " + page);
-
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					JSONObject 	apiResponse = new JSONObject(response);				//response
-					JSONArray 	results 	= apiResponse.getJSONArray("results");
-					legislatorNameArray 	= new String[results.length()];
+			try {
+				JSONObject 	apiResponse = new JSONObject(response);				//response
+				JSONArray 	results 	= apiResponse.getJSONArray("results");
+				legislatorNameArray 	= new String[results.length()];
 
-					Log.i("getDone", "results.length(): " + results.length());
+				//Log.i("getDone", "results.length(): " + results.length());
 
-					for (int i = 0 ; i < results.length() ; i++) {
-						// get legislator's name
-						JSONObject legislator 	= results.getJSONObject(i);
-						legislatorNameArray[i] 	= legislator.getString("name");
-						legislatorProfileArray	= new String[6];
+				for (int i = 0 ; i < results.length() ; i++) {
+					// get legislator's name
+					JSONObject legislator 	= results.getJSONObject(i);
+					legislatorNameArray[i] 	= legislator.getString("name");
+					legislatorProfileArray	= new String[6];
 
-						// get legislator's profile
-						for (int j = 0 ; j < 6 ; j++) {
-							switch (j) {
-								case 0:
-									legislatorProfileArray[j] = legislator.getString("ad");
-									break;
-								case 1:
-									legislatorProfileArray[j] = legislator.getString("gender");
-									break;
-								case 2:
-									legislatorProfileArray[j] = legislator.getString("party");
-									break;
-								case 3:
-									legislatorProfileArray[j] = legislator.getString("county");
-									break;
-								case 4:
-									legislatorProfileArray[j] = legislator.getString("education");
-									break;
-								case 5:
-									legislatorProfileArray[j] = legislator.getString("experience");
-									break;
-							}
+					// get legislator's profile
+					for (int j = 0 ; j < 6 ; j++) {
+						switch (j) {
+							case 0:
+								legislatorProfileArray[j] = legislator.getString("ad");
+								break;
+							case 1:
+								legislatorProfileArray[j] = legislator.getString("gender");
+								break;
+							case 2:
+								legislatorProfileArray[j] = legislator.getString("party");
+								break;
+							case 3:
+								legislatorProfileArray[j] = legislator.getString("county");
+								break;
+							case 4:
+								legislatorProfileArray[j] = legislator.getString("education");
+								break;
+							case 5:
+								legislatorProfileArray[j] = legislator.getString("experience");
+								break;
 						}
-						legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
 					}
-				} catch (JSONException e) {
-					e.printStackTrace();
+					legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
 				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			}
 		});
 
