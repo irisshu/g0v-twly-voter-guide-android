@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import g0v.ly.lylog.bill.FragmentBillList;
 import g0v.ly.lylog.data.list.NavigationDrawerList;
 import g0v.ly.lylog.legislator.Profile;
 
@@ -62,8 +63,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 				//Log.d("MainActivity", "Title row clicked");
 				break;
 			case 1:
-				Profile fragment = new Profile();
-				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+				Profile fragmentProfile = new Profile();
+				fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
 				break;
 			case 2:
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
@@ -72,7 +73,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
 			case 5:
-				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				FragmentBillList fragmentBillList = new FragmentBillList();
+				fragmentManager.beginTransaction().replace(R.id.container, fragmentBillList).commit();
 				break;
 			case 6:
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
