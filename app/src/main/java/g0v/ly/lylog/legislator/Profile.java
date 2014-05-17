@@ -2,6 +2,7 @@ package g0v.ly.lylog.legislator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class Profile extends Fragment implements RestApiCallback {
 	private RESTFunctionManager restFunctionManager;
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
+	private boolean				hasNextPage 			= true;
 
 	// Key => legislator's name, Value => legislator's profile
 	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
@@ -65,7 +67,6 @@ public class Profile extends Fragment implements RestApiCallback {
 		return view;
 	}
 
-	// [Callback] Received response from REST GET. [start]
 	@Override
 	public void getDone(final String response, final long spendTime, int page) {
 
@@ -73,11 +74,13 @@ public class Profile extends Fragment implements RestApiCallback {
 			@Override
 			public void run() {
 			try {
-				JSONObject 	apiResponse = new JSONObject(response);				//response
+				JSONObject 	apiResponse = new JSONObject(response);
+				if (apiResponse.getString("next").equals("null")) {
+					hasNextPage = false;
+				}
+
 				JSONArray 	results 	= apiResponse.getJSONArray("results");
 				legislatorNameArray 	= new String[results.length()];
-
-				//Log.i("getDone", "results.length(): " + results.length());
 
 				for (int i = 0 ; i < results.length() ; i++) {
 					// get legislator's name
@@ -117,27 +120,32 @@ public class Profile extends Fragment implements RestApiCallback {
 		});
 
 		totalSpendTime += spendTime;
+		int legislatorCount = legislatorListWithProfile.keySet().size();
+		Log.d("[Profile]getDone", "legislatorCount= " + legislatorCount);
+		updateTextView(tvResponse, "Legislator count = " + legislatorCount, TvUpdateType.OVERWRITE);
+		updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
 
-		if (page == 12) {
-			updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
-			updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
+		Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
+		legislatorNameArray = new String[legislatorListWithProfile.size()]; // XXX, new 12 times
+		int nameArraySize = NameObjArray.length;
+		for (int i = 0 ; i < nameArraySize ; i++) {
+			legislatorNameArray[i] = NameObjArray[i].toString();
+		}
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
+		legislatorNameSpinner.setAdapter(arrayAdapter);
 
-			//legislatorNameArray
-			Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
-			legislatorNameArray = new String[legislatorListWithProfile.size()];
-			for (int i = 0 ; i < NameObjArray.length ; i++) {
-				legislatorNameArray[i] = NameObjArray[i].toString();
-			}
-			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-			legislatorNameSpinner.setAdapter(arrayAdapter);
-		} else {
+		// get rest profiles
+		if (hasNextPage) {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
-	}// [Callback] Received response from REST GET. [end]
+		else {
+			Log.d("[Profile]getDone", "hasNextPage= " + hasNextPage);
+		}
+
+	}
 
 	private void setupOnclickListeners() {
 
-		// Setup spinner's onclick listener. [start]
 		legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -154,9 +162,9 @@ public class Profile extends Fragment implements RestApiCallback {
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
-
+				// do nothing
 			}
-		});// Setup spinner's onclick listener. [end]
+		});
 	}
 
 	private void updateTextView(TextView tv, String msg, TvUpdateType updateType) {
