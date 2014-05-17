@@ -32,6 +32,7 @@ public class Profile extends Fragment implements RestApiCallback {
 	private RESTFunctionManager restFunctionManager;
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
+	private boolean				hasNextPage 			= true;
 
 	// Key => legislator's name, Value => legislator's profile
 	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
@@ -74,10 +75,12 @@ public class Profile extends Fragment implements RestApiCallback {
 			public void run() {
 			try {
 				JSONObject 	apiResponse = new JSONObject(response);
+				if (apiResponse.getString("next").equals("null")) {
+					hasNextPage = false;
+				}
+
 				JSONArray 	results 	= apiResponse.getJSONArray("results");
 				legislatorNameArray 	= new String[results.length()];
-
-				Log.d("getDone", "results.length(): " + results.length());
 
 				for (int i = 0 ; i < results.length() ; i++) {
 					// get legislator's name
@@ -117,7 +120,9 @@ public class Profile extends Fragment implements RestApiCallback {
 		});
 
 		totalSpendTime += spendTime;
-		updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
+		int legislatorCount = legislatorListWithProfile.keySet().size();
+		Log.d("[Profile]getDone", "legislatorCount= " + legislatorCount);
+		updateTextView(tvResponse, "Legislator count = " + legislatorCount, TvUpdateType.OVERWRITE);
 		updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
 
 		Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
@@ -130,8 +135,11 @@ public class Profile extends Fragment implements RestApiCallback {
 		legislatorNameSpinner.setAdapter(arrayAdapter);
 
 		// get rest profiles
-		if (page != 12) {
+		if (hasNextPage) {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
+		}
+		else {
+			Log.d("[Profile]getDone", "hasNextPage= " + hasNextPage);
 		}
 
 	}
