@@ -117,22 +117,23 @@ public class Profile extends Fragment implements RestApiCallback {
 		});
 
 		totalSpendTime += spendTime;
+		updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
+		updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
 
-		if (page == 12) {
-			updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
-			updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
+		Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
+		legislatorNameArray = new String[legislatorListWithProfile.size()]; // XXX, new 12 times
+		int nameArraySize = NameObjArray.length;
+		for (int i = 0 ; i < nameArraySize ; i++) {
+			legislatorNameArray[i] = NameObjArray[i].toString();
+		}
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
+		legislatorNameSpinner.setAdapter(arrayAdapter);
 
-			//legislatorNameArray
-			Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
-			legislatorNameArray = new String[legislatorListWithProfile.size()];
-			for (int i = 0 ; i < NameObjArray.length ; i++) {
-				legislatorNameArray[i] = NameObjArray[i].toString();
-			}
-			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-			legislatorNameSpinner.setAdapter(arrayAdapter);
-		} else {
+		// get rest profiles
+		if (page != 12) {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
+
 	}// [Callback] Received response from REST GET. [end]
 
 	private void setupOnclickListeners() {
