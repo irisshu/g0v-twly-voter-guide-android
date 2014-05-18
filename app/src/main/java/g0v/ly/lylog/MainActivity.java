@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import g0v.ly.lylog.bill.FragmentBillList;
-import g0v.ly.lylog.data.list.NavigationDrawerList;
+import g0v.ly.lylog.data.list.DataLists;
 import g0v.ly.lylog.legislator.Profile;
 
 @SuppressWarnings("ALL")
@@ -87,7 +87,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 	}
 
 	public void onSectionAttached(int number) {
-		NavigationDrawerList 	navigationDrawerList 	= new NavigationDrawerList();
+		DataLists navigationDrawerList 	= new DataLists();
 		String[] 				titleStrArray 			= navigationDrawerList.getDrawerList();
 		switch (number) {
 			case 1:

@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import g0v.ly.lylog.data.list.NavigationDrawerList;
+import g0v.ly.lylog.data.list.DataLists;
 
 public class NavigationDrawerAdapter extends BaseAdapter {
 	private LayoutInflater 			inflater;
-	private NavigationDrawerList 	navigationDrawerList 	= new NavigationDrawerList();
+	private DataLists navigationDrawerList 	= new DataLists();
 	private String[]				drawerList 				= navigationDrawerList.getDrawerList();
 
 	public NavigationDrawerAdapter(Activity activity) {
