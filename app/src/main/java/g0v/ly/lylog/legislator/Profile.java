@@ -139,9 +139,8 @@ public class Profile extends Fragment implements RestApiCallback {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
 		else {
-			Log.d("[Profile]getDone", "hasNextPage= " + hasNextPage);
+			Log.d("[Profile]getDone", "hasNextPage= " + false); // hasNextPage = false
 		}
-
 	}
 
 	private void setupOnclickListeners() {
