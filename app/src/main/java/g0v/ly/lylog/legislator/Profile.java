@@ -204,6 +204,8 @@ public class Profile extends Fragment implements RestApiCallback {
 				R.string.spiderwebchart_title4), 8));
 		data1.add(new TitleValueEntity(getResources().getString(
 				R.string.spiderwebchart_title5), 10));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 2));
 
 		List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
 		data2.add(new TitleValueEntity(getResources().getString(
@@ -216,12 +218,15 @@ public class Profile extends Fragment implements RestApiCallback {
 				R.string.spiderwebchart_title5), 6));
 		data2.add(new TitleValueEntity(getResources().getString(
 				R.string.spiderwebchart_title5), 7));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 1));
+
 
 		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 		data.add(data1);
 		data.add(data2);
 
 		spiderWebChart.setData(data);
-		spiderWebChart.setLatitudeNum(5);
+		spiderWebChart.setLatitudeNum(4);//TODO method useless, check lib
 	}
 }
