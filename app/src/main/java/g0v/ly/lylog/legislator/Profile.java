@@ -1,5 +1,6 @@
 package g0v.ly.lylog.legislator;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,6 +25,7 @@ import java.util.Map;
 import g0v.ly.lylog.R;
 import g0v.ly.lylog.rest.RESTFunctionManager;
 import g0v.ly.lylog.rest.RestApiCallback;
+import g0v.ly.lylog.utility.FontManager;
 import g0v.ly.lylog.utility.androidcharts.SpiderWebChart;
 import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
@@ -37,6 +39,9 @@ public class Profile extends Fragment implements RestApiCallback {
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
 	private boolean				hasNextPage 			= true;
+
+	private Typeface			robotoLight;
+	private Typeface			droidSansFallback;
 
 	private SpiderWebChart		spiderWebChart;
 
@@ -72,6 +77,13 @@ public class Profile extends Fragment implements RestApiCallback {
 		String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
 		restFunctionManager.restGet(getUrl, Profile.this);
 		setupOnclickListeners();
+
+		// set fonts
+		FontManager fontManager = FontManager.getInstance();
+		robotoLight = fontManager.getRobotoLight();
+		droidSansFallback = fontManager.getDroidSansFallback();
+		tvResponse.setTypeface(robotoLight);
+		tvProfile.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "DroidSansFallback.ttf"));
 
 		return view;
 	}
