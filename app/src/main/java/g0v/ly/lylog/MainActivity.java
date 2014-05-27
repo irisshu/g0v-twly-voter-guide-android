@@ -18,6 +18,7 @@ import android.widget.TextView;
 import g0v.ly.lylog.bill.FragmentBillList;
 import g0v.ly.lylog.data.list.DataLists;
 import g0v.ly.lylog.legislator.Profile;
+import g0v.ly.lylog.utility.FontManager;
 
 @SuppressWarnings("ALL")
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -167,6 +168,11 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
+
+			// TODO set context not work
+			// Prepare font manager
+			FontManager fontManager = FontManager.getInstance();
+			fontManager.setContext(activity);
 		}
 	}
 }
