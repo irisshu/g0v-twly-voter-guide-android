@@ -21,10 +21,10 @@
 
 package g0v.ly.lylog.utility.androidcharts;
 
-		import android.content.Context;
-		import android.graphics.Rect;
-		import android.util.AttributeSet;
-		import android.view.View;
+import android.content.Context;
+import android.graphics.Rect;
+import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * <p>
