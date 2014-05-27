@@ -169,6 +169,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
 
+			// TODO set context not work
 			// Prepare font manager
 			FontManager fontManager = FontManager.getInstance();
 			fontManager.setContext(activity);

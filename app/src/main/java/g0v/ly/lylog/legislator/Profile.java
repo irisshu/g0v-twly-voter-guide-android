@@ -80,10 +80,11 @@ public class Profile extends Fragment implements RestApiCallback {
 
 		// set fonts
 		FontManager fontManager = FontManager.getInstance();
+		fontManager.setContext(getActivity());
 		robotoLight = fontManager.getRobotoLight();
 		droidSansFallback = fontManager.getDroidSansFallback();
 		tvResponse.setTypeface(robotoLight);
-		tvProfile.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "DroidSansFallback.ttf"));
+		tvProfile.setTypeface(droidSansFallback);
 
 		return view;
 	}
