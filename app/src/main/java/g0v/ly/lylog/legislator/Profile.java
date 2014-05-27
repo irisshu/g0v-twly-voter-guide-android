@@ -16,12 +16,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import g0v.ly.lylog.R;
 import g0v.ly.lylog.rest.RESTFunctionManager;
 import g0v.ly.lylog.rest.RestApiCallback;
+import g0v.ly.lylog.utility.androidcharts.SpiderWebChart;
+import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RestApiCallback {
 
@@ -33,6 +37,8 @@ public class Profile extends Fragment implements RestApiCallback {
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
 	private boolean				hasNextPage 			= true;
+
+	private SpiderWebChart		spiderWebChart;
 
 	// Key => legislator's name, Value => legislator's profile
 	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
@@ -55,6 +61,9 @@ public class Profile extends Fragment implements RestApiCallback {
 		tvResponse 				= (TextView) view.findViewById(R.id.tv_response);
 		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
 		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
+
+		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.testChart);
+		initSpiderWebChart();
 
 		/* TODO ad selectable */
 		restFunctionManager = new RESTFunctionManager();
@@ -179,5 +188,40 @@ public class Profile extends Fragment implements RestApiCallback {
 				}
 				break;
 		}
+	}
+
+	// =============================================================================================
+
+	private void initSpiderWebChart() {
+		List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title1), 3));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title2), 4));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title3), 9));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title4), 8));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 10));
+
+		List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 3));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 4));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 5));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 6));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 7));
+
+		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
+		data.add(data1);
+		data.add(data2);
+
+		spiderWebChart.setData(data);
+		spiderWebChart.setLatitudeNum(5);
 	}
 }

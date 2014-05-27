@@ -24,11 +24,17 @@
         android:background="#E6E6E6"
         android:layout_below="@+id/tv_response"/>
 
+    <g0v.ly.lylog.utility.androidcharts.SpiderWebChart
+        android:id="@+id/testChart"
+        android:layout_width="fill_parent"
+        android:layout_height="160dp"
+        android:layout_below="@+id/divider"/>
+
     <TextView
         android:id="@+id/tv_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
+        android:layout_below="@+id/testChart"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
