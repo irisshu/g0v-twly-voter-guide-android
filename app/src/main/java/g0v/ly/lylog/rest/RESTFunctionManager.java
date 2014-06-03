@@ -6,10 +6,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class RESTFunctionManager {
+	private static final Logger logger = LoggerFactory.getLogger(RESTFunctionManager.class);
 
 	public void restGet(String getUrl, RestApiCallback restApiCallback) {
 		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
@@ -37,7 +40,7 @@ public class RESTFunctionManager {
 				HttpResponse response 	= client.execute(request);
 				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("[doInBackground] " + e);
 			}
 			spendTime = System.currentTimeMillis() - spendTime;
 			return null;
@@ -52,6 +55,7 @@ public class RESTFunctionManager {
 			temp = getUrl.split("=");
 			page = Integer.valueOf(temp[1].substring(0, temp[1].lastIndexOf("&")));
 			restApiCallback.getDone(responseStr, spendTime, page);
+			logger.trace("[onPostExecute] get page " + page + " done");
 		}
 	}
 }
