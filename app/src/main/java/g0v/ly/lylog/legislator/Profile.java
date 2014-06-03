@@ -3,7 +3,6 @@ package g0v.ly.lylog.legislator;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ import g0v.ly.lylog.utility.androidcharts.SpiderWebChart;
 import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RestApiCallback {
+	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
 
 	private long				totalSpendTime			 = 0;
 	private TextView 			tvResponse;
@@ -39,9 +41,6 @@ public class Profile extends Fragment implements RestApiCallback {
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
 	private boolean				hasNextPage 			= true;
-
-	private Typeface			robotoLight;
-	private Typeface			droidSansFallback;
 
 	private SpiderWebChart		spiderWebChart;
 
@@ -81,8 +80,8 @@ public class Profile extends Fragment implements RestApiCallback {
 		// set fonts
 		FontManager fontManager = FontManager.getInstance();
 		fontManager.setContext(getActivity());
-		robotoLight = fontManager.getRobotoLight();
-		droidSansFallback = fontManager.getDroidSansFallback();
+		Typeface robotoLight = fontManager.getRobotoLight();
+		Typeface droidSansFallback = fontManager.getDroidSansFallback();
 		tvResponse.setTypeface(robotoLight);
 		tvProfile.setTypeface(droidSansFallback);
 
@@ -143,7 +142,7 @@ public class Profile extends Fragment implements RestApiCallback {
 
 		totalSpendTime += spendTime;
 		int legislatorCount = legislatorListWithProfile.keySet().size();
-		Log.d("[Profile]getDone", "legislatorCount= " + legislatorCount);
+		logger.debug("[Profile]getDone legislatorCount= " + legislatorCount);
 		updateTextView(tvResponse, "Legislator count = " + legislatorCount, TvUpdateType.OVERWRITE);
 		updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
 
@@ -161,7 +160,7 @@ public class Profile extends Fragment implements RestApiCallback {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
 		else {
-			Log.d("[Profile]getDone", "hasNextPage= " + false); // hasNextPage = false
+			logger.debug("[Profile]getDone hasNextPage= " + false); // hasNextPage = false
 		}
 	}
 
