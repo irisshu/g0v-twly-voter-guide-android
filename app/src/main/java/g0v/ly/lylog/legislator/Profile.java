@@ -142,7 +142,7 @@ public class Profile extends Fragment implements RestApiCallback {
 
 		totalSpendTime += spendTime;
 		int legislatorCount = legislatorListWithProfile.keySet().size();
-		logger.debug("[Profile]getDone legislatorCount= " + legislatorCount);
+		logger.debug("[Profile] getDone legislatorCount= " + legislatorCount);
 		updateTextView(tvResponse, "Legislator count = " + legislatorCount, TvUpdateType.OVERWRITE);
 		updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
 
@@ -160,7 +160,7 @@ public class Profile extends Fragment implements RestApiCallback {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
 		else {
-			logger.debug("[Profile]getDone hasNextPage= " + false); // hasNextPage = false
+			logger.debug("[Profile] getDone hasNextPage= " + false); // hasNextPage = false
 		}
 	}
 

@@ -2,9 +2,12 @@ package g0v.ly.lylog.utility;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FontManager {
+	private static final Logger logger = LoggerFactory.getLogger(FontManager.class);
 
 	private static	boolean		isContextGet	= false;
 	private static 	FontManager instance 		= null;
@@ -21,7 +24,7 @@ public class FontManager {
 				instance = new FontManager();
 			} else if (!isContextGet) {
 				//logger.error("Context == null, set FontManager's context before get typefaces.");
-				Log.e("FontManager", "!isContextGet");
+				logger.error("FontManager", "!isContextGet");
 			}
 		}
 		return instance;
@@ -29,7 +32,7 @@ public class FontManager {
 
 	public void setContext(Activity activity) {
 		if (Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-Light.ttf") == null) {
-			Log.e("FontManager", "can't get typeface");
+			logger.error("FontManager", "can't get typeface");
 		}
 
 		isContextGet = true;
@@ -45,14 +48,14 @@ public class FontManager {
 
 	public Typeface getRobotoLight() {
 		if (robotoLight == null) {
-			Log.e("FontManager", "Roboto-Light = null");
+			logger.error("FontManager", "Roboto-Light = null");
 		}
 		return robotoLight;
 	}
 
 	public Typeface getDroidSansFallback() {
 		if (droidSansFallback == null) {
-			Log.e("FontManager", "droidSansFallback = null");
+			logger.error("FontManager", "droidSansFallback = null");
 		}
 		return  droidSansFallback;
 	}
