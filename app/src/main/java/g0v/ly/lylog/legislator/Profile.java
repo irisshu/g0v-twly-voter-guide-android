@@ -65,7 +65,6 @@ public class Profile extends Fragment implements RestApiCallback {
 		tvResponse 				= (TextView) view.findViewById(R.id.tv_response);
 		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
 		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
-
 		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.testChart);
 		initSpiderWebChart();
 
@@ -205,6 +204,9 @@ public class Profile extends Fragment implements RestApiCallback {
 	// =============================================================================================
 
 	private void initSpiderWebChart() {
+
+		/*
+		// TODO create with class
 		List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
 		data1.add(new TitleValueEntity(getResources().getString(
 				R.string.spiderwebchart_title1), 3));
@@ -237,8 +239,20 @@ public class Profile extends Fragment implements RestApiCallback {
 		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 		data.add(data1);
 		data.add(data2);
+		*/
+		//spiderWebChart.setData(data);
+		//spiderWebChart.setLatitudeNum(4);//TODO method useless, check lib
 
-		spiderWebChart.setData(data);
-		spiderWebChart.setLatitudeNum(4);//TODO method useless, check lib
+		
+	}
+
+	//TODO check is data added before init chart
+	private void addRadarChartData(List<List<TitleValueEntity>> newData) {
+		List<List<TitleValueEntity>> radarChartData = new ArrayList<List<TitleValueEntity>>();
+		for (List<TitleValueEntity> aData : newData) {
+			radarChartData.add(aData);
+		}
+		spiderWebChart.setData(radarChartData);
+		spiderWebChart.setLatitudeNum(7);//TODO method useless, check lib
 	}
 }

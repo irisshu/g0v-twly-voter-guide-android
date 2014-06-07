@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class DataLists {
 	private String[] navigationDrawerList;
+	private String[] profileRadarChartDataKeyList;
 	private ArrayList<String> billListGroupData;
 	private ArrayList<ArrayList<String>> billListItemData;
 	private ArrayList<String> billListItemData1;
@@ -11,11 +12,6 @@ public class DataLists {
 	private ArrayList<String> billListItemData3;
 
 	public DataLists() {
-		billListItemData1 = new ArrayList<String>();
-		billListItemData2 = new ArrayList<String>();
-		billListItemData3 = new ArrayList<String>();
-		billListItemData = new ArrayList<ArrayList<String>>();
-		billListGroupData = new ArrayList<String>();
 		navigationDrawerList = new String[] {
 				"委員",			// title 1
 				"基本資料",
@@ -23,12 +19,29 @@ public class DataLists {
 				"政治獻金",
 				"議案",			// title 2
 				"基本資料",
-				"表決紀錄",
+				"表決紀錄"
 		};
+		profileRadarChartDataKeyList = new String[] {
+				"法條修正案",
+				"附帶提案數",
+				"投票缺席率",
+				"脫黨投票率",
+				"立法院院會缺席",
+				"委員會開會缺席"
+		};
+		billListGroupData = new ArrayList<String>();
+		billListItemData = new ArrayList<ArrayList<String>>();
+		billListItemData1 = new ArrayList<String>();
+		billListItemData2 = new ArrayList<String>();
+		billListItemData3 = new ArrayList<String>();
 	}
 
 	public String[] getDrawerList() {
 		return navigationDrawerList;
+	}
+
+	public String[] getProfileRadarChartDataKeyList() {
+		return profileRadarChartDataKeyList;
 	}
 
 	public ArrayList<String> getBillListGroupData() {
