@@ -205,7 +205,7 @@ public class Profile extends Fragment implements RestApiCallback {
 
 	private void initSpiderWebChart() {
 
-		/*
+
 		// TODO create with class
 		List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
 		data1.add(new TitleValueEntity(getResources().getString(
@@ -239,9 +239,10 @@ public class Profile extends Fragment implements RestApiCallback {
 		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 		data.add(data1);
 		data.add(data2);
-		*/
-		//spiderWebChart.setData(data);
-		//spiderWebChart.setLatitudeNum(4);//TODO method useless, check lib
+
+
+		addRadarChartData(data);
+		spiderWebChart.setLatitudeNum(5);//TODO method useless, check lib
 	}
 
 	//TODO check is data added before init chart
@@ -251,6 +252,5 @@ public class Profile extends Fragment implements RestApiCallback {
 			radarChartData.add(aData);
 		}
 		spiderWebChart.setData(radarChartData);
-		spiderWebChart.setLatitudeNum(7);//TODO method useless, check lib
 	}
 }
