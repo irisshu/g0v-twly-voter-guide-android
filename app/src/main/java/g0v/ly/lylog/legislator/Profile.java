@@ -1,6 +1,7 @@
 package g0v.ly.lylog.legislator;
 
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,12 +34,14 @@ import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RestApiCallback {
 	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
-
-	private long				totalSpendTime			 = 0;
 	private TextView 			tvResponse;
 	private TextView			tvProfile;
+	private ImageView			imgProfile;
 	private Spinner				legislatorNameSpinner;
+
 	private RESTFunctionManager restFunctionManager;
+
+	private long				totalSpendTime			 = 0;
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
 	private boolean				hasNextPage 			= true;
@@ -64,8 +68,9 @@ public class Profile extends Fragment implements RestApiCallback {
 
 		tvResponse 				= (TextView) view.findViewById(R.id.tv_response);
 		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
+		imgProfile				= (ImageView) view.findViewById(R.id.profile_img);
 		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
-		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.testChart);
+		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
 		initSpiderWebChart();
 
 		/* TODO ad selectable */
@@ -106,10 +111,10 @@ public class Profile extends Fragment implements RestApiCallback {
 					// get legislator's name
 					JSONObject legislator 	= results.getJSONObject(i);
 					legislatorNameArray[i] 	= legislator.getString("name");
-					legislatorProfileArray	= new String[6];
+					legislatorProfileArray	= new String[7];
 
 					// get legislator's profile
-					for (int j = 0 ; j < 6 ; j++) {
+					for (int j = 0 ; j < 7 ; j++) {
 						switch (j) {
 							case 0:
 								legislatorProfileArray[j] = legislator.getString("ad");
@@ -128,6 +133,12 @@ public class Profile extends Fragment implements RestApiCallback {
 								break;
 							case 5:
 								legislatorProfileArray[j] = legislator.getString("experience");
+								break;
+							case 6:
+								legislatorProfileArray[j] = legislator.getString("image");
+								if (legislatorProfileArray[j].substring(0, 1) != "h") {
+									legislatorProfileArray[j] = legislatorProfileArray[j].substring(1);
+								}
 								break;
 						}
 					}
@@ -159,7 +170,7 @@ public class Profile extends Fragment implements RestApiCallback {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
 		else {
-			logger.debug("[Profile] getDone hasNextPage= " + false); // hasNextPage = false
+			logger.debug("[Profile] getDone hasNextPage = false");
 		}
 	}
 
@@ -177,6 +188,12 @@ public class Profile extends Fragment implements RestApiCallback {
 							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
 							+ "學歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
 							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
+					if (legislatorListWithProfile.get(legislatorNameArray[position])[6] != null) {
+						imgProfile.setImageURI(Uri.parse(legislatorListWithProfile.get(legislatorNameArray[position])[6]));
+					}
+				}
+				else {
+					logger.warn("[onItemSelected] legislator profile not found");
 				}
 			}
 			@Override
