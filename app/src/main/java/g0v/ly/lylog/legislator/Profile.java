@@ -1,6 +1,9 @@
 package g0v.ly.lylog.legislator;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +22,11 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,12 +41,14 @@ import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RestApiCallback {
 	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
-
-	private long				totalSpendTime			 = 0;
 	private TextView 			tvResponse;
 	private TextView			tvProfile;
+	private ImageView			imgProfile;
 	private Spinner				legislatorNameSpinner;
+
 	private RESTFunctionManager restFunctionManager;
+
+	private long				totalSpendTime			 = 0;
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
 	private boolean				hasNextPage 			= true;
@@ -64,8 +75,9 @@ public class Profile extends Fragment implements RestApiCallback {
 
 		tvResponse 				= (TextView) view.findViewById(R.id.tv_response);
 		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
+		imgProfile				= (ImageView) view.findViewById(R.id.profile_img);
 		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
-		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.testChart);
+		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
 		initSpiderWebChart();
 
 		/* TODO ad selectable */
@@ -106,10 +118,10 @@ public class Profile extends Fragment implements RestApiCallback {
 					// get legislator's name
 					JSONObject legislator 	= results.getJSONObject(i);
 					legislatorNameArray[i] 	= legislator.getString("name");
-					legislatorProfileArray	= new String[6];
+					legislatorProfileArray	= new String[7];
 
 					// get legislator's profile
-					for (int j = 0 ; j < 6 ; j++) {
+					for (int j = 0 ; j < 7 ; j++) {
 						switch (j) {
 							case 0:
 								legislatorProfileArray[j] = legislator.getString("ad");
@@ -128,6 +140,9 @@ public class Profile extends Fragment implements RestApiCallback {
 								break;
 							case 5:
 								legislatorProfileArray[j] = legislator.getString("experience");
+								break;
+							case 6:
+								legislatorProfileArray[j] = legislator.getString("image");
 								break;
 						}
 					}
@@ -159,7 +174,7 @@ public class Profile extends Fragment implements RestApiCallback {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
 		else {
-			logger.debug("[Profile] getDone hasNextPage= " + false); // hasNextPage = false
+			logger.debug("[Profile] getDone hasNextPage = false");
 		}
 	}
 
@@ -177,6 +192,11 @@ public class Profile extends Fragment implements RestApiCallback {
 							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
 							+ "學歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
 							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
+					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
+					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[6]);
+				}
+				else {
+					logger.warn("[onItemSelected] legislator profile not found");
 				}
 			}
 			@Override
@@ -252,5 +272,61 @@ public class Profile extends Fragment implements RestApiCallback {
 			radarChartData.add(aData);
 		}
 		spiderWebChart.setData(radarChartData);
+	}
+
+	private class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {
+		@Override
+		protected Bitmap doInBackground(String... urls) {
+			Bitmap map = null;
+			for (String url : urls) {
+				map = downloadImage(url);
+			}
+			return map;
+		}
+
+		// Sets the Bitmap returned by doInBackground
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			imgProfile.setImageBitmap(result);
+		}
+
+		// Creates Bitmap from InputStream and returns it
+		private Bitmap downloadImage(String url) {
+			Bitmap bitmap = null;
+			InputStream stream;
+			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+			bmOptions.inSampleSize = 1;
+
+			try {
+				stream = getHttpConnection(url);
+				bitmap = BitmapFactory.
+						decodeStream(stream, null, bmOptions);
+				stream.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return bitmap;
+		}
+
+		// Makes HttpURLConnection and returns InputStream
+		private InputStream getHttpConnection(String urlString)
+				throws IOException {
+			InputStream stream = null;
+			URL url = new URL(urlString);
+			URLConnection connection = url.openConnection();
+
+			try {
+				HttpURLConnection httpConnection = (HttpURLConnection) connection;
+				httpConnection.setRequestMethod("GET");
+				httpConnection.connect();
+
+				if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					stream = httpConnection.getInputStream();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return stream;
+		}
 	}
 }
