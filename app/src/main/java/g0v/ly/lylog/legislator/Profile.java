@@ -242,7 +242,6 @@ public class Profile extends Fragment implements RestApiCallback {
 		*/
 		//spiderWebChart.setData(data);
 		//spiderWebChart.setLatitudeNum(4);//TODO method useless, check lib
-g
 	}
 
 	//TODO check is data added before init chart
