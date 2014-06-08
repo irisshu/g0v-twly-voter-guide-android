@@ -1,7 +1,9 @@
 package g0v.ly.lylog.legislator;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +22,11 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,9 +143,6 @@ public class Profile extends Fragment implements RestApiCallback {
 								break;
 							case 6:
 								legislatorProfileArray[j] = legislator.getString("image");
-								if (legislatorProfileArray[j].substring(0, 1) != "h") {
-									legislatorProfileArray[j] = legislatorProfileArray[j].substring(1);
-								}
 								break;
 						}
 					}
@@ -188,9 +192,8 @@ public class Profile extends Fragment implements RestApiCallback {
 							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
 							+ "學歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
 							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
-					if (legislatorListWithProfile.get(legislatorNameArray[position])[6] != null) {
-						imgProfile.setImageURI(Uri.parse(legislatorListWithProfile.get(legislatorNameArray[position])[6]));
-					}
+					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
+					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[6]);
 				}
 				else {
 					logger.warn("[onItemSelected] legislator profile not found");
@@ -269,5 +272,61 @@ public class Profile extends Fragment implements RestApiCallback {
 			radarChartData.add(aData);
 		}
 		spiderWebChart.setData(radarChartData);
+	}
+
+	private class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {
+		@Override
+		protected Bitmap doInBackground(String... urls) {
+			Bitmap map = null;
+			for (String url : urls) {
+				map = downloadImage(url);
+			}
+			return map;
+		}
+
+		// Sets the Bitmap returned by doInBackground
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			imgProfile.setImageBitmap(result);
+		}
+
+		// Creates Bitmap from InputStream and returns it
+		private Bitmap downloadImage(String url) {
+			Bitmap bitmap = null;
+			InputStream stream;
+			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+			bmOptions.inSampleSize = 1;
+
+			try {
+				stream = getHttpConnection(url);
+				bitmap = BitmapFactory.
+						decodeStream(stream, null, bmOptions);
+				stream.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return bitmap;
+		}
+
+		// Makes HttpURLConnection and returns InputStream
+		private InputStream getHttpConnection(String urlString)
+				throws IOException {
+			InputStream stream = null;
+			URL url = new URL(urlString);
+			URLConnection connection = url.openConnection();
+
+			try {
+				HttpURLConnection httpConnection = (HttpURLConnection) connection;
+				httpConnection.setRequestMethod("GET");
+				httpConnection.connect();
+
+				if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					stream = httpConnection.getInputStream();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return stream;
+		}
 	}
 }

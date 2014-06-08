@@ -31,7 +31,6 @@
         android:layout_below="@id/divider">
 
         <ImageView
-            android:background="#FF0000"
             android:id="@+id/profile_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
