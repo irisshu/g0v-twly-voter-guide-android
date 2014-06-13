@@ -17,15 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-/**
- * Fragment used for managing interactions for and presentation of a navigation drawer.
- * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
- * design guidelines</a> for a complete explanation of the behaviors implemented here.
- */
 @SuppressWarnings("ALL")
 public class NavigationDrawerFragment extends Fragment {
 
@@ -38,7 +32,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private ListView 					mDrawerListView;
 	private View 						mFragmentContainerView;
 
-	private int 						mCurrentSelectedPosition = 0;
+	private int 						mCurrentSelectedPosition 	= 0;
 	private boolean 					mFromSavedInstanceState;
 	private boolean 					mUserLearnedDrawer;
 
@@ -73,12 +67,14 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
 		mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				selectItem(position);
 			}
 		});
+/*
 		mDrawerListView.setAdapter(new ArrayAdapter<String>(
 				getActionBar().getThemedContext(),
 				android.R.layout.simple_list_item_activated_1,
@@ -89,6 +85,12 @@ public class NavigationDrawerFragment extends Fragment {
 						getString(R.string.title_section3),
 				}
 		));
+*/
+
+		// Use custom adapter for navigation drawer.
+		NavigationDrawerAdapter navigationDrawerAdapter = new NavigationDrawerAdapter(getActivity());
+		mDrawerListView.setAdapter(navigationDrawerAdapter);
+
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}

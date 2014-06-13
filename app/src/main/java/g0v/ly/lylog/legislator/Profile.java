@@ -1,13 +1,17 @@
 package g0v.ly.lylog.legislator;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,23 +19,41 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import g0v.ly.lylog.R;
 import g0v.ly.lylog.rest.RESTFunctionManager;
 import g0v.ly.lylog.rest.RestApiCallback;
+import g0v.ly.lylog.utility.FontManager;
+import g0v.ly.lylog.utility.androidcharts.SpiderWebChart;
+import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RestApiCallback {
-
-	private long				totalSpendTime			 = 0;
+	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
 	private TextView 			tvResponse;
 	private TextView			tvProfile;
+	private ImageView			imgProfile;
 	private Spinner				legislatorNameSpinner;
+
 	private RESTFunctionManager restFunctionManager;
+
+	private long				totalSpendTime			 = 0;
 	private String[]			legislatorNameArray;
 	private String[]			legislatorProfileArray;
+	private boolean				hasNextPage 			= true;
+
+	private SpiderWebChart		spiderWebChart;
 
 	// Key => legislator's name, Value => legislator's profile
 	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
@@ -53,9 +75,12 @@ public class Profile extends Fragment implements RestApiCallback {
 
 		tvResponse 				= (TextView) view.findViewById(R.id.tv_response);
 		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
+		imgProfile				= (ImageView) view.findViewById(R.id.profile_img);
 		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
+		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+		initSpiderWebChart();
 
-		/* TODO sd selectable */
+		/* TODO ad selectable */
 		restFunctionManager = new RESTFunctionManager();
 		//https://twly.herokuapp.com/api/legislator_terms/?page=2&ad=8
 		//restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
@@ -63,84 +88,98 @@ public class Profile extends Fragment implements RestApiCallback {
 		restFunctionManager.restGet(getUrl, Profile.this);
 		setupOnclickListeners();
 
+		// set fonts
+		FontManager fontManager = FontManager.getInstance();
+		fontManager.setContext(getActivity());
+		Typeface robotoLight = fontManager.getRobotoLight();
+		Typeface droidSansFallback = fontManager.getDroidSansFallback();
+		tvResponse.setTypeface(robotoLight);
+		tvProfile.setTypeface(droidSansFallback);
+
 		return view;
 	}
 
-	// [Callback] Received response from REST GET. [start]
 	@Override
 	public void getDone(final String response, final long spendTime, int page) {
-
-		Log.e("Profile", "page: " + page);
 
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					JSONObject 	apiResponse = new JSONObject(response);				//response
-					JSONArray 	results 	= apiResponse.getJSONArray("results");
-					legislatorNameArray 	= new String[results.length()];
-
-					Log.i("getDone", "results.length(): " + results.length());
-
-					for (int i = 0 ; i < results.length() ; i++) {
-						// get legislator's name
-						JSONObject legislator 	= results.getJSONObject(i);
-						legislatorNameArray[i] 	= legislator.getString("name");
-						legislatorProfileArray	= new String[6];
-
-						// get legislator's profile
-						for (int j = 0 ; j < 6 ; j++) {
-							switch (j) {
-								case 0:
-									legislatorProfileArray[j] = legislator.getString("ad");
-									break;
-								case 1:
-									legislatorProfileArray[j] = legislator.getString("gender");
-									break;
-								case 2:
-									legislatorProfileArray[j] = legislator.getString("party");
-									break;
-								case 3:
-									legislatorProfileArray[j] = legislator.getString("county");
-									break;
-								case 4:
-									legislatorProfileArray[j] = legislator.getString("education");
-									break;
-								case 5:
-									legislatorProfileArray[j] = legislator.getString("experience");
-									break;
-							}
-						}
-						legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
+			try {
+				JSONObject 	apiResponse = new JSONObject(response);
+				if (apiResponse.getString("next").equals("null")) {
+					hasNextPage = false;
 				}
+
+				JSONArray 	results 	= apiResponse.getJSONArray("results");
+				legislatorNameArray 	= new String[results.length()];
+
+				for (int i = 0 ; i < results.length() ; i++) {
+					// get legislator's name
+					JSONObject legislator 	= results.getJSONObject(i);
+					legislatorNameArray[i] 	= legislator.getString("name");
+					legislatorProfileArray	= new String[7];
+
+					// get legislator's profile
+					for (int j = 0 ; j < 7 ; j++) {
+						switch (j) {
+							case 0:
+								legislatorProfileArray[j] = legislator.getString("ad");
+								break;
+							case 1:
+								legislatorProfileArray[j] = legislator.getString("gender");
+								break;
+							case 2:
+								legislatorProfileArray[j] = legislator.getString("party");
+								break;
+							case 3:
+								legislatorProfileArray[j] = legislator.getString("county");
+								break;
+							case 4:
+								legislatorProfileArray[j] = legislator.getString("education");
+								break;
+							case 5:
+								legislatorProfileArray[j] = legislator.getString("experience");
+								break;
+							case 6:
+								legislatorProfileArray[j] = legislator.getString("image");
+								break;
+						}
+					}
+					legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			}
 		});
 
 		totalSpendTime += spendTime;
+		int legislatorCount = legislatorListWithProfile.keySet().size();
+		logger.debug("[Profile] getDone legislatorCount= " + legislatorCount);
+		updateTextView(tvResponse, "Legislator count = " + legislatorCount, TvUpdateType.OVERWRITE);
+		updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
 
-		if (page == 12) {
-			updateTextView(tvResponse, "Legislator count = " + legislatorListWithProfile.keySet().size(), TvUpdateType.OVERWRITE);
-			updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
+		Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
+		legislatorNameArray = new String[legislatorListWithProfile.size()]; // XXX, new 12 times
+		int nameArraySize = NameObjArray.length;
+		for (int i = 0 ; i < nameArraySize ; i++) {
+			legislatorNameArray[i] = NameObjArray[i].toString();
+		}
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
+		legislatorNameSpinner.setAdapter(arrayAdapter);
 
-			//legislatorNameArray
-			Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
-			legislatorNameArray = new String[legislatorListWithProfile.size()];
-			for (int i = 0 ; i < NameObjArray.length ; i++) {
-				legislatorNameArray[i] = NameObjArray[i].toString();
-			}
-			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-			legislatorNameSpinner.setAdapter(arrayAdapter);
-		} else {
+		// get rest profiles
+		if (hasNextPage) {
 			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
-	}// [Callback] Received response from REST GET. [end]
+		else {
+			logger.debug("[Profile] getDone hasNextPage = false");
+		}
+	}
 
 	private void setupOnclickListeners() {
 
-		// Setup spinner's onclick listener. [start]
 		legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -153,13 +192,18 @@ public class Profile extends Fragment implements RestApiCallback {
 							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
 							+ "學歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
 							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
+					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
+					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[6]);
+				}
+				else {
+					logger.warn("[onItemSelected] legislator profile not found");
 				}
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
-
+				// do nothing
 			}
-		});// Setup spinner's onclick listener. [end]
+		});
 	}
 
 	private void updateTextView(TextView tv, String msg, TvUpdateType updateType) {
@@ -174,6 +218,115 @@ public class Profile extends Fragment implements RestApiCallback {
 					tv.append(tempMsg);
 				}
 				break;
+		}
+	}
+
+	// =============================================================================================
+
+	private void initSpiderWebChart() {
+
+
+		// TODO create with class
+		List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title1), 3));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title2), 4));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title3), 9));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title4), 8));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 10));
+		data1.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 2));
+
+		List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 3));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 4));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 5));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 6));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 7));
+		data2.add(new TitleValueEntity(getResources().getString(
+				R.string.spiderwebchart_title5), 1));
+
+
+		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
+		data.add(data1);
+		data.add(data2);
+
+
+		addRadarChartData(data);
+		spiderWebChart.setLatitudeNum(5);//TODO method useless, check lib
+	}
+
+	//TODO check is data added before init chart
+	private void addRadarChartData(List<List<TitleValueEntity>> newData) {
+		List<List<TitleValueEntity>> radarChartData = new ArrayList<List<TitleValueEntity>>();
+		for (List<TitleValueEntity> aData : newData) {
+			radarChartData.add(aData);
+		}
+		spiderWebChart.setData(radarChartData);
+	}
+
+	private class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {
+		@Override
+		protected Bitmap doInBackground(String... urls) {
+			Bitmap map = null;
+			for (String url : urls) {
+				map = downloadImage(url);
+			}
+			return map;
+		}
+
+		// Sets the Bitmap returned by doInBackground
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			imgProfile.setImageBitmap(result);
+		}
+
+		// Creates Bitmap from InputStream and returns it
+		private Bitmap downloadImage(String url) {
+			Bitmap bitmap = null;
+			InputStream stream;
+			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+			bmOptions.inSampleSize = 1;
+
+			try {
+				stream = getHttpConnection(url);
+				bitmap = BitmapFactory.
+						decodeStream(stream, null, bmOptions);
+				stream.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return bitmap;
+		}
+
+		// Makes HttpURLConnection and returns InputStream
+		private InputStream getHttpConnection(String urlString)
+				throws IOException {
+			InputStream stream = null;
+			URL url = new URL(urlString);
+			URLConnection connection = url.openConnection();
+
+			try {
+				HttpURLConnection httpConnection = (HttpURLConnection) connection;
+				httpConnection.setRequestMethod("GET");
+				httpConnection.connect();
+
+				if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					stream = httpConnection.getInputStream();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return stream;
 		}
 	}
 }

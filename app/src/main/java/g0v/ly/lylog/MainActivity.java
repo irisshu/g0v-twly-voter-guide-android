@@ -3,11 +3,10 @@ package g0v.ly.lylog;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,12 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import g0v.ly.lylog.bill.FragmentBillList;
+import g0v.ly.lylog.data.list.DataLists;
 import g0v.ly.lylog.legislator.Profile;
-
-/**
- * TODO
- * Check android.support.v4.app.Fragment and android.app.Fragment useage.
- */
+import g0v.ly.lylog.utility.FontManager;
 
 @SuppressWarnings("ALL")
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -37,7 +34,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		mTitle = getTitle();
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 	}
 
 	@Override
@@ -46,30 +43,68 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		fragmentManager = getSupportFragmentManager();
 
 		switch (position){
+/*
 			case 0:
-				Profile fragment = new Profile();
-				fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
+				mTitle = getString(R.string.title_section1);
 				break;
 			case 1:
-				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
+				mTitle = getString(R.string.title_section2);
+				break;
+			case 2:
+				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
+				mTitle = getString(R.string.title_section3);
+				break;
+*/
+
+			case 0:
+			case 4:
+				//Log.d("MainActivity", "Title row clicked");
+				break;
+			case 1:
+				Profile fragmentProfile = new Profile();
+				fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
 				break;
 			case 2:
 				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
 				break;
-		}
+			case 3:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 5:
+				FragmentBillList fragmentBillList = new FragmentBillList();
+				fragmentManager.beginTransaction().replace(R.id.container, fragmentBillList).commit();
+				break;
+			case 6:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
+			case 7:
+				fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+				break;
 
+		}
 	}
 
 	public void onSectionAttached(int number) {
+		DataLists navigationDrawerList 	= new DataLists();
+		String[] 				titleStrArray 			= navigationDrawerList.getDrawerList();
 		switch (number) {
 			case 1:
-				mTitle = getString(R.string.title_section1);
+			case 5:
+				//mTitle = titleStrArray[number-1];
 				break;
 			case 2:
-				mTitle = getString(R.string.title_section2);
-				break;
 			case 3:
-				mTitle = getString(R.string.title_section3);
+			case 4:
+				//mTitle = getString(R.string.title_section1);
+				mTitle = titleStrArray[0] + " : " + titleStrArray[number-1];
+				break;
+
+			case 6:
+			case 7:
+				//mTitle = getString(R.string.title_section1);
+				mTitle = titleStrArray[4] + " : " + titleStrArray[number-1];
 				break;
 		}
 	}
@@ -132,6 +167,11 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
+
+			// TODO set context not work
+			// Prepare font manager
+			FontManager fontManager = FontManager.getInstance();
+			fontManager.setContext(activity);
 		}
 	}
 }

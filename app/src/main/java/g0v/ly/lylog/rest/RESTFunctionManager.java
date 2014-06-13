@@ -1,19 +1,20 @@
 package g0v.ly.lylog.rest;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class RESTFunctionManager {
+	private static final Logger logger = LoggerFactory.getLogger(RESTFunctionManager.class);
 
 	public void restGet(String getUrl, RestApiCallback restApiCallback) {
-		Log.i("RESTFunctionManager :: restGet", "(0) in restGet");
 		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
 		restGetAsyncTask.execute();
 	}
@@ -35,28 +36,26 @@ public class RESTFunctionManager {
 
 			DefaultHttpClient 	client 	= new DefaultHttpClient();
 			HttpGet 			request = new HttpGet(getUrl);
-			Log.i("RESTFunctionManager :: ThreadRESTGet", "(1) getUrl: " + getUrl);
 			try {
 				HttpResponse response 	= client.execute(request);
 				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
-				Log.i("RESTFunctionManager :: ThreadRESTGet", "(2) get responseStr");
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("[doInBackground] " + e);
 			}
 			spendTime = System.currentTimeMillis() - spendTime;
-			Log.i("RESTFunctionManager :: ThreadRESTGet", "(3) spend " + spendTime / 1000 +
-					"." + spendTime % 1000 + " sec to get response.");
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void aVoid) {
 			super.onPostExecute(aVoid);
+			int page;
 			String[] temp;
+
 			temp = getUrl.split("=");
-			int page = Integer.valueOf(temp[1].substring(0, temp[1].lastIndexOf("&")));
-			Log.e("RESTFunctionManager :: ThreadRESTGet", "page: " + page);
+			page = Integer.valueOf(temp[1].substring(0, temp[1].lastIndexOf("&")));
 			restApiCallback.getDone(responseStr, spendTime, page);
+			logger.trace("[onPostExecute] get page " + page + " done");
 		}
 	}
 }
