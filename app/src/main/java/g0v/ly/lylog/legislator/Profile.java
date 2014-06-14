@@ -41,19 +41,19 @@ import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RestApiCallback {
 	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
-	private TextView 			tvResponse;
-	private TextView			tvProfile;
-	private ImageView			imgProfile;
-	private Spinner				legislatorNameSpinner;
+	private TextView tvResponse;
+	private TextView tvProfile;
+	private ImageView imgProfile;
+	private Spinner	legislatorNameSpinner;
 
 	private RESTFunctionManager restFunctionManager;
 
-	private long				totalSpendTime			 = 0;
-	private String[]			legislatorNameArray;
-	private String[]			legislatorProfileArray;
-	private boolean				hasNextPage 			= true;
+	private long totalSpendTime	= 0;
+	private String[] legislatorNameArray;
+	private String[] legislatorProfileArray;
+	private boolean	hasNextPage = true;
 
-	private SpiderWebChart		spiderWebChart;
+	private SpiderWebChart spiderWebChart;
 
 	// Key => legislator's name, Value => legislator's profile
 	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
@@ -73,11 +73,11 @@ public class Profile extends Fragment implements RestApiCallback {
 		View view = inflater.inflate(R.layout.fragment_profile, container, false);
 		assert view != null;
 
-		tvResponse 				= (TextView) view.findViewById(R.id.tv_response);
-		tvProfile				= (TextView) view.findViewById(R.id.tv_profile);
-		imgProfile				= (ImageView) view.findViewById(R.id.profile_img);
-		legislatorNameSpinner 	= (Spinner) view.findViewById(R.id.spinner_legislator_name);
-		spiderWebChart 			= (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+		tvResponse = (TextView) view.findViewById(R.id.tv_response);
+		tvProfile = (TextView) view.findViewById(R.id.tv_profile);
+		imgProfile = (ImageView) view.findViewById(R.id.profile_img);
+		legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
+		spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
 		initSpiderWebChart();
 
 		/* TODO ad selectable */
@@ -106,19 +106,19 @@ public class Profile extends Fragment implements RestApiCallback {
 			@Override
 			public void run() {
 			try {
-				JSONObject 	apiResponse = new JSONObject(response);
+				JSONObject apiResponse = new JSONObject(response);
 				if (apiResponse.getString("next").equals("null")) {
 					hasNextPage = false;
 				}
 
-				JSONArray 	results 	= apiResponse.getJSONArray("results");
-				legislatorNameArray 	= new String[results.length()];
+				JSONArray results = apiResponse.getJSONArray("results");
+				legislatorNameArray = new String[results.length()];
 
 				for (int i = 0 ; i < results.length() ; i++) {
 					// get legislator's name
-					JSONObject legislator 	= results.getJSONObject(i);
-					legislatorNameArray[i] 	= legislator.getString("name");
-					legislatorProfileArray	= new String[7];
+					JSONObject legislator = results.getJSONObject(i);
+					legislatorNameArray[i] = legislator.getString("name");
+					legislatorProfileArray = new String[7];
 
 					// get legislator's profile
 					for (int j = 0 ; j < 7 ; j++) {
@@ -299,8 +299,7 @@ public class Profile extends Fragment implements RestApiCallback {
 
 			try {
 				stream = getHttpConnection(url);
-				bitmap = BitmapFactory.
-						decodeStream(stream, null, bmOptions);
+				bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
 				stream.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();

@@ -71,8 +71,8 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 	}
 
 	private class RowHolder {
-		int 		position;
-		TextView 	textViewMain;
+		int position;
+		TextView textViewMain;
 
 		RowHolder(int position) {
 			this.position = position;
