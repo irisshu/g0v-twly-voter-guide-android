@@ -12,6 +12,7 @@ public class DataLists {
 	private ArrayList<String> billListItemData3;
 
 	public DataLists() {
+        // XXX
 		navigationDrawerList = new String[] {
 				"委員",			// title 1
 				"基本資料",

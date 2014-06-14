@@ -44,6 +44,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 			rowHolder = new RowHolder(position);
 
 			// Apply different xml
+            // XXX
 			if (position == 0 || position == 4) {
 				row = inflater.inflate(R.layout.row_navigation_title, viewGroup, false);
                 assert row != null;

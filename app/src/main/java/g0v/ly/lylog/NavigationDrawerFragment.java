@@ -76,8 +76,8 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // XXX
                 if (position != 0 && position != 4){
-                    logger.error("[onItemClick] {}", position);
                     selectItem(position);
                 }
 			}
@@ -170,6 +170,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private void selectItem(int position) {
 		mCurrentSelectedPosition = position;
+        // XXX
         if (position != 0 && position != 4) {
             logger.error("[selectItem] {}", position);
             if (mDrawerListView != null) {
