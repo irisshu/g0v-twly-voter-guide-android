@@ -20,21 +20,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-@SuppressWarnings("ALL")
+
 public class NavigationDrawerFragment extends Fragment {
 
-	private static final String 		STATE_SELECTED_POSITION 	= "selected_navigation_drawer_position";
-	private static final String 		PREF_USER_LEARNED_DRAWER 	= "navigation_drawer_learned";
-	private NavigationDrawerCallbacks 	mCallbacks;
-	private ActionBarDrawerToggle 		mDrawerToggle;
+	private static final String STATE_SELECTED_POSITION 	= "selected_navigation_drawer_position";
+	private static final String PREF_USER_LEARNED_DRAWER 	= "navigation_drawer_learned";
+	private NavigationDrawerCallbacks mCallbacks;
+	private ActionBarDrawerToggle mDrawerToggle;
 
-	private DrawerLayout 				mDrawerLayout;
-	private ListView 					mDrawerListView;
-	private View 						mFragmentContainerView;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerListView;
+	private View mFragmentContainerView;
 
-	private int 						mCurrentSelectedPosition 	= 0;
-	private boolean 					mFromSavedInstanceState;
-	private boolean 					mUserLearnedDrawer;
+	private int mCurrentSelectedPosition = 0;
+	private boolean mFromSavedInstanceState;
+	private boolean mUserLearnedDrawer;
 
 	public NavigationDrawerFragment() {
 	}
@@ -45,12 +45,12 @@ public class NavigationDrawerFragment extends Fragment {
 
 		// Read in the flag indicating whether or not the user has demonstrated awareness of the
 		// drawer. See PREF_USER_LEARNED_DRAWER for details.
-		SharedPreferences sp 	= PreferenceManager.getDefaultSharedPreferences(getActivity());
-		mUserLearnedDrawer 		= sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
 		if (savedInstanceState != null) {
-			mCurrentSelectedPosition 	= savedInstanceState.getInt(STATE_SELECTED_POSITION);
-			mFromSavedInstanceState 	= true;
+			mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
+			mFromSavedInstanceState = true;
 		}
 
 		// Select either the default item (0) or the last selected item.
@@ -74,18 +74,6 @@ public class NavigationDrawerFragment extends Fragment {
 				selectItem(position);
 			}
 		});
-/*
-		mDrawerListView.setAdapter(new ArrayAdapter<String>(
-				getActionBar().getThemedContext(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1,
-				new String[]{
-						getString(R.string.title_section1),
-						getString(R.string.title_section2),
-						getString(R.string.title_section3),
-				}
-		));
-*/
 
 		// Use custom adapter for navigation drawer.
 		NavigationDrawerAdapter navigationDrawerAdapter = new NavigationDrawerAdapter(getActivity());
@@ -106,8 +94,8 @@ public class NavigationDrawerFragment extends Fragment {
 	 * @param drawerLayout The DrawerLayout containing this fragment's UI.
 	 */
 	public void setUp(int fragmentId, DrawerLayout drawerLayout) {
-		mFragmentContainerView 	= getActivity().findViewById(fragmentId);
-		mDrawerLayout 			= drawerLayout;
+		mFragmentContainerView = getActivity().findViewById(fragmentId);
+		mDrawerLayout = drawerLayout;
 
 		// set a custom shadow that overlays the main content when the drawer opens
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);

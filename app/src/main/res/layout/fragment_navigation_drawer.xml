@@ -7,6 +7,3 @@
     android:dividerHeight="0dp"
     android:background="#FFFFFF"
     tools:context="g0v.ly.lylog.NavigationDrawerFragment" />
-<!--
-    android:background="#cccc"
--->

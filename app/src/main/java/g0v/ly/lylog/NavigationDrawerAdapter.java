@@ -10,9 +10,9 @@ import android.widget.TextView;
 import g0v.ly.lylog.data.list.DataLists;
 
 public class NavigationDrawerAdapter extends BaseAdapter {
-	private LayoutInflater 			inflater;
+	private LayoutInflater inflater;
 	private DataLists navigationDrawerList 	= new DataLists();
-	private String[]				drawerList 				= navigationDrawerList.getDrawerList();
+	private String[] drawerList = navigationDrawerList.getDrawerList();
 
 	public NavigationDrawerAdapter(Activity activity) {
 		inflater = LayoutInflater.from(activity);
@@ -35,8 +35,8 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View view, ViewGroup viewGroup) {
-		View 		row 		= view;
-		RowHolder 	rowHolder;
+		View row = view;
+		RowHolder rowHolder;
 
 		if (row == null) {
 			rowHolder = new RowHolder(position);
