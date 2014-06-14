@@ -22,7 +22,7 @@ import g0v.ly.lylog.utility.FontManager;
 @SuppressWarnings("ALL")
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	private NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
+	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private CharSequence mTitle;
 
 	@Override
@@ -30,7 +30,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        mTitle = getTitle();
+		mNavigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
+		mTitle = getTitle();
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
