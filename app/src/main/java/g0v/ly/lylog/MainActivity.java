@@ -22,16 +22,15 @@ import g0v.ly.lylog.utility.FontManager;
 @SuppressWarnings("ALL")
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	private NavigationDrawerFragment 	mNavigationDrawerFragment;
-	private CharSequence 				mTitle;
+	private NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
+	private CharSequence mTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mNavigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
+        mTitle = getTitle();
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -43,21 +42,6 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		fragmentManager = getSupportFragmentManager();
 
 		switch (position){
-/*
-			case 0:
-				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
-				mTitle = getString(R.string.title_section1);
-				break;
-			case 1:
-				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
-				mTitle = getString(R.string.title_section2);
-				break;
-			case 2:
-				Log.d("MainActivity", "[" + (position+1) + "] row clicked");
-				mTitle = getString(R.string.title_section3);
-				break;
-*/
-
 			case 0:
 			case 4:
 				//Log.d("MainActivity", "Title row clicked");
@@ -87,8 +71,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 	}
 
 	public void onSectionAttached(int number) {
-		DataLists navigationDrawerList 	= new DataLists();
-		String[] 				titleStrArray 			= navigationDrawerList.getDrawerList();
+		DataLists navigationDrawerList = new DataLists();
+		String[] titleStrArray = navigationDrawerList.getDrawerList();
 		switch (number) {
 			case 1:
 			case 5:
@@ -137,15 +121,15 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		return id == R.id.action_settings || super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
 	}
 
 	public static class PlaceholderFragment extends Fragment {
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
 		public static PlaceholderFragment newInstance(int sectionNumber) {
-			PlaceholderFragment fragment 	= new PlaceholderFragment();
-			Bundle 				args 		= new Bundle();
+			PlaceholderFragment fragment = new PlaceholderFragment();
+			Bundle args = new Bundle();
 			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 			fragment.setArguments(args);
 			return fragment;
@@ -156,9 +140,9 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-			View 		rootView 	= inflater.inflate(R.layout.fragment_main, container, false);
+			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 			assert rootView != null;
-			TextView 	textView 	= (TextView) rootView.findViewById(R.id.section_label);
+			TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 			textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
 			return rootView;
 		}

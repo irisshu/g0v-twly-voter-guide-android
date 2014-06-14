@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 public class FontManager {
 	private static final Logger logger = LoggerFactory.getLogger(FontManager.class);
 
-	private static	boolean		isContextGet	= false;
-	private static 	FontManager instance 		= null;
-	private 		Typeface 	robotoRegular;
-	private 		Typeface 	robotoLight;
-	private			Typeface	droidSansFallback;
+	private static boolean	isContextGet = false;
+	private static FontManager instance = null;
+	private Typeface robotoRegular;
+	private Typeface robotoLight;
+	private	Typeface droidSansFallback;
 
 	private FontManager() {
 	}
@@ -23,7 +23,6 @@ public class FontManager {
 			if (instance == null) {
 				instance = new FontManager();
 			} else if (!isContextGet) {
-				//logger.error("Context == null, set FontManager's context before get typefaces.");
 				logger.error("FontManager", "!isContextGet");
 			}
 		}
@@ -36,9 +35,9 @@ public class FontManager {
 		}
 
 		isContextGet = true;
-		this.robotoRegular 		= Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-Regular.ttf");
-		this.robotoLight 		= Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-Light.ttf");
-		this.droidSansFallback 	= Typeface.createFromAsset(activity.getAssets(), "fonts/DroidSansFallback.ttf");
+		this.robotoRegular = Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-Regular.ttf");
+		this.robotoLight = Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-Light.ttf");
+		this.droidSansFallback = Typeface.createFromAsset(activity.getAssets(), "fonts/DroidSansFallback.ttf");
 
 	}
 

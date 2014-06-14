@@ -15,18 +15,18 @@ public class RESTFunctionManager {
 	private static final Logger logger = LoggerFactory.getLogger(RESTFunctionManager.class);
 
 	public void restGet(String getUrl, RestApiCallback restApiCallback) {
-		RESTGetAsyncTask restGetAsyncTask  = new RESTGetAsyncTask(getUrl, restApiCallback);
+		RESTGetAsyncTask restGetAsyncTask = new RESTGetAsyncTask(getUrl, restApiCallback);
 		restGetAsyncTask.execute();
 	}
 
 	private class RESTGetAsyncTask extends AsyncTask<Void, Integer, Void> {
-		long 			spendTime;
-		String 			getUrl;
-		String 			responseStr;
+		long spendTime;
+		String getUrl;
+		String responseStr;
 		RestApiCallback restApiCallback;
 
 		public RESTGetAsyncTask(String url, RestApiCallback callback) {
-			getUrl 			= url;
+			getUrl = url;
 			restApiCallback = callback;
 		}
 
@@ -34,11 +34,11 @@ public class RESTFunctionManager {
 		protected Void doInBackground(Void... voids) {
 			spendTime = System.currentTimeMillis();
 
-			DefaultHttpClient 	client 	= new DefaultHttpClient();
-			HttpGet 			request = new HttpGet(getUrl);
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpGet request = new HttpGet(getUrl);
 			try {
-				HttpResponse response 	= client.execute(request);
-				responseStr 			= EntityUtils.toString(response.getEntity(), "UTF-8");
+				HttpResponse response = client.execute(request);
+				responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			} catch (IOException e) {
 				logger.error("[doInBackground] " + e);
 			}

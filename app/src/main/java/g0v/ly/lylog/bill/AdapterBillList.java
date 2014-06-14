@@ -14,9 +14,9 @@ import g0v.ly.lylog.R;
 
 public class AdapterBillList implements ExpandableListAdapter {
 
-	private LayoutInflater 					inflater;
-	private ArrayList<String> 				groupData;
-	private ArrayList<ArrayList<String>>	itemData;
+	private LayoutInflater inflater;
+	private ArrayList<String> groupData;
+	private ArrayList<ArrayList<String>> itemData;
 
 	public AdapterBillList(Activity activity, ArrayList<String> groupData, ArrayList<ArrayList<String>> itemData) {
 		this.groupData = groupData;

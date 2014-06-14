@@ -11,7 +11,7 @@ import g0v.ly.lylog.R;
 import g0v.ly.lylog.data.list.DataLists;
 import g0v.ly.lylog.rest.RestApiCallback;
 
-public class FragmentBillList  extends Fragment implements RestApiCallback {
+public class FragmentBillList extends Fragment implements RestApiCallback {
 	DataLists dataLists = new DataLists();
 
 	@Override
