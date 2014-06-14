@@ -20,12 +20,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class NavigationDrawerFragment extends Fragment {
-    private static final Logger logger = LoggerFactory.getLogger(NavigationDrawerFragment.class);
+    //private static final Logger logger = LoggerFactory.getLogger(NavigationDrawerFragment.class);
 
 	private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 	private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
@@ -172,7 +169,6 @@ public class NavigationDrawerFragment extends Fragment {
 		mCurrentSelectedPosition = position;
         // XXX
         if (position != 0 && position != 4) {
-            logger.error("[selectItem] {}", position);
             if (mDrawerListView != null) {
                 mDrawerListView.setItemChecked(position, true);
             }
