@@ -33,20 +33,19 @@ import java.util.List;
 import java.util.Map;
 
 import g0v.ly.lylog.R;
-import g0v.ly.lylog.rest.RESTFunctionManager;
-import g0v.ly.lylog.rest.RestApiCallback;
+import g0v.ly.lylog.rest.RESTMethods;
 import g0v.ly.lylog.utility.FontManager;
 import g0v.ly.lylog.utility.androidcharts.SpiderWebChart;
 import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
-public class Profile extends Fragment implements RestApiCallback {
+public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
 	private TextView tvResponse;
 	private TextView tvProfile;
 	private ImageView imgProfile;
 	private Spinner	legislatorNameSpinner;
 
-	private RESTFunctionManager restFunctionManager;
+	private RESTMethods restMethods;
 
 	private long totalSpendTime	= 0;
 	private String[] legislatorNameArray;
@@ -81,11 +80,11 @@ public class Profile extends Fragment implements RestApiCallback {
 		initSpiderWebChart();
 
 		/* TODO ad selectable */
-		restFunctionManager = new RESTFunctionManager();
+		restMethods = new RESTMethods();
 		//https://twly.herokuapp.com/api/legislator_terms/?page=2&ad=8
-		//restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
+		//restMethods.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
 		String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
-		restFunctionManager.restGet(getUrl, Profile.this);
+		restMethods.restGet(getUrl, Profile.this);
 		setupOnclickListeners();
 
 		// set fonts
@@ -171,7 +170,7 @@ public class Profile extends Fragment implements RestApiCallback {
 
 		// get rest profiles
 		if (hasNextPage) {
-			restFunctionManager.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
+			restMethods.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
 		}
 		else {
 			logger.debug("[Profile] getDone hasNextPage = false");
