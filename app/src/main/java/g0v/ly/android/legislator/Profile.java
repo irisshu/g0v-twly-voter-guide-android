@@ -238,7 +238,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 		data1.add(new TitleValueEntity(webChartTitle[2], 9));
 		data1.add(new TitleValueEntity(webChartTitle[3], 8));
 		data1.add(new TitleValueEntity(webChartTitle[4], 10));
-		data1.add(new TitleValueEntity(webChartTitle[4], 2));
+		data1.add(new TitleValueEntity(webChartTitle[5], 2));
 
 		List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
 		data2.add(new TitleValueEntity(webChartTitle[0], 3));
