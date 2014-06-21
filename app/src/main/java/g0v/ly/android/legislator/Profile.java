@@ -43,6 +43,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
     private static final Logger logger = LoggerFactory.getLogger(Profile.class);
 
     // Legislators' profile info title
+    private static final int PROFILE_INFO_COUNT = 7;
     private static final int PROFILE_INFO_AD = 0;
     private static final int PROFILE_INFO_GENDER = 1;
     private static final int PROFILE_INFO_PARTY = 2;
@@ -58,7 +59,6 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
     private TextView tvProfileCounty;
     private TextView tvProfileEducation;
     private TextView tvProfileExperience;
-
     private ImageView imgProfile;
     private Spinner legislatorNameSpinner;
 
@@ -123,7 +123,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 					// get legislator's name
 					JSONObject legislator = results.getJSONObject(i);
 					legislatorNameArray[i] = legislator.getString("name");
-					legislatorProfileArray = new String[7];
+					legislatorProfileArray = new String[PROFILE_INFO_COUNT];
 
 					// get legislator's profile
 					for (int j = 0 ; j < legislatorProfileArray.length ; j++) {
@@ -301,8 +301,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 		}
 
 		// Makes HttpURLConnection and returns InputStream
-		private InputStream getHttpConnection(String urlString)
-				throws IOException {
+		private InputStream getHttpConnection(String urlString) throws IOException {
 			InputStream stream = null;
 			URL url = new URL(urlString);
 			URLConnection connection = url.openConnection();
@@ -324,22 +323,22 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 
     private void setupUiComponents(View view) {
         TextView tvProfileAdTitle = (TextView) view.findViewById(R.id.legislator_profile_info_ad_title);
-        tvProfileAd = (TextView) view.findViewById(R.id.legislator_profile_info_ad);
         TextView tvProfileGenderTitle = (TextView) view.findViewById(R.id.legislator_profile_info_gender_title);
-        tvProfileGender = (TextView) view.findViewById(R.id.legislator_profile_info_gender);
         TextView tvProfilePartyTitle = (TextView) view.findViewById(R.id.legislator_profile_info_party_title);
-        tvProfileParty = (TextView) view.findViewById(R.id.legislator_profile_info_party);
         TextView tvProfileCountyTitle = (TextView) view.findViewById(R.id.legislator_profile_info_county_title);
-        tvProfileCounty = (TextView) view.findViewById(R.id.legislator_profile_info_county);
         TextView tvProfileEducationTitle = (TextView) view.findViewById(R.id.legislator_profile_info_education_title);
-        tvProfileEducation = (TextView) view.findViewById(R.id.legislator_profile_info_education);
         TextView tvProfileExperienceTitle = (TextView) view.findViewById(R.id.legislator_profile_info_experience_title);
+        tvProfileAd = (TextView) view.findViewById(R.id.legislator_profile_info_ad);
+        tvProfileGender = (TextView) view.findViewById(R.id.legislator_profile_info_gender);
+        tvProfileParty = (TextView) view.findViewById(R.id.legislator_profile_info_party);
+        tvProfileCounty = (TextView) view.findViewById(R.id.legislator_profile_info_county);
+        tvProfileEducation = (TextView) view.findViewById(R.id.legislator_profile_info_education);
         tvProfileExperience = (TextView) view.findViewById(R.id.legislator_profile_info_experience);
-
         tvResponse = (TextView) view.findViewById(R.id.tv_response);
         imgProfile = (ImageView) view.findViewById(R.id.profile_img);
         legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
         spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+
         initSpiderWebChart();
 
         // setup text view fonts
