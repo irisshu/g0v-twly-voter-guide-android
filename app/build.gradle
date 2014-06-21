@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.0'
+    buildToolsVersion '19.1'
 
     defaultConfig {
         minSdkVersion 14
@@ -23,4 +23,5 @@ dependencies {
     // The Support Repository (separate from the corresponding library) can be found in the Extras category.
     //compile 'com.android.support:support-v4:19.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/slf4j-android-1.6.1-RC1.jar')
 }
