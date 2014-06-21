@@ -231,7 +231,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 
 	private void initSpiderWebChart() {
 
-        String[] webChartTitle = resources.getStringArray(R.array.spiderwebchart_title);
+        String[] webChartTitle = resources.getStringArray(R.array.legislator_profile_radar_chart_title);
 
 		// TODO create with class
 		List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();

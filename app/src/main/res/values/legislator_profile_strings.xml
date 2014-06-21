@@ -20,7 +20,7 @@
         <item>image</item>
     </string-array>
 
-    <string-array name="spiderwebchart_title">
+    <string-array name="legislator_profile_radar_chart_title">
         <item>title1</item>
         <item>title2</item>
         <item>title3</item>
