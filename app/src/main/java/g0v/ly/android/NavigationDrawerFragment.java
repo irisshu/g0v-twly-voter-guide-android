@@ -20,8 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import g0v.ly.lylog.R;
-
 
 public class NavigationDrawerFragment extends Fragment {
     //private static final Logger logger = LoggerFactory.getLogger(NavigationDrawerFragment.class);

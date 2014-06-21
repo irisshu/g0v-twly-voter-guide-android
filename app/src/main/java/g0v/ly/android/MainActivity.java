@@ -18,7 +18,6 @@ import g0v.ly.android.bill.FragmentBillList;
 import g0v.ly.android.data.list.DataLists;
 import g0v.ly.android.legislator.Profile;
 import g0v.ly.android.utility.FontManager;
-import g0v.ly.lylog.R;
 
 @SuppressWarnings("ALL")
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {

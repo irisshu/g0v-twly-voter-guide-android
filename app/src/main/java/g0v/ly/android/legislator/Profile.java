@@ -32,11 +32,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import g0v.ly.android.R;
 import g0v.ly.android.rest.RESTMethods;
 import g0v.ly.android.utility.FontManager;
 import g0v.ly.android.utility.androidcharts.SpiderWebChart;
 import g0v.ly.android.utility.androidcharts.TitleValueEntity;
-import g0v.ly.lylog.R;
 
 public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 	private static final Logger logger = LoggerFactory.getLogger(Profile.class);

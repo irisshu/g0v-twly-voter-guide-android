@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import g0v.ly.lylog.R;
+import g0v.ly.android.R;
 
 public class AdapterBillList implements ExpandableListAdapter {
 
