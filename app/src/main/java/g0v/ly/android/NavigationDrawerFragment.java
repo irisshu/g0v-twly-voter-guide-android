@@ -1,4 +1,4 @@
-package g0v.ly.lylog;
+package g0v.ly.android;
 
 import android.app.ActionBar;
 import android.app.Activity;

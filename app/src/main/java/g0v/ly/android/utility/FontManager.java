@@ -1,4 +1,4 @@
-package g0v.ly.lylog.utility;
+package g0v.ly.android.utility;
 
 import android.app.Activity;
 import android.graphics.Typeface;

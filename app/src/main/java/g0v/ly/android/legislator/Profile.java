@@ -1,5 +1,6 @@
-package g0v.ly.lylog.legislator;
+package g0v.ly.android.legislator;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -32,27 +33,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import g0v.ly.lylog.R;
-import g0v.ly.lylog.rest.RESTMethods;
-import g0v.ly.lylog.utility.FontManager;
-import g0v.ly.lylog.utility.androidcharts.SpiderWebChart;
-import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
+import g0v.ly.android.R;
+import g0v.ly.android.rest.RESTMethods;
+import g0v.ly.android.utility.FontManager;
+import g0v.ly.android.utility.androidcharts.SpiderWebChart;
+import g0v.ly.android.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RESTMethods.RestApiCallback {
-	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
-	private TextView tvResponse;
-	private TextView tvProfile;
-	private ImageView imgProfile;
-	private Spinner	legislatorNameSpinner;
+    private static final Logger logger = LoggerFactory.getLogger(Profile.class);
+    private TextView tvResponse;
+    private TextView tvProfile;
+    private ImageView imgProfile;
+    private Spinner legislatorNameSpinner;
 
-	private RESTMethods restMethods;
+    private RESTMethods restMethods;
 
-	private long totalSpendTime	= 0;
-	private String[] legislatorNameArray;
-	private String[] legislatorProfileArray;
-	private boolean	hasNextPage = true;
+    private long totalSpendTime = 0;
+    private String[] legislatorNameArray;
+    private String[] legislatorProfileArray;
+    private boolean hasNextPage = true;
 
-	private SpiderWebChart spiderWebChart;
+    private SpiderWebChart spiderWebChart;
+
+    private Resources resources;
 
 	// Key => legislator's name, Value => legislator's profile
 	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
@@ -65,6 +68,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        resources = getResources();
 	}
 
 	@Override
@@ -112,6 +116,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 
 				JSONArray results = apiResponse.getJSONArray("results");
 				legislatorNameArray = new String[results.length()];
+                String[] legislatorProfileInfoApiKey = resources.getStringArray(R.array.legislator_profile_info_api_key);
 
 				for (int i = 0 ; i < results.length() ; i++) {
 					// get legislator's name
@@ -123,25 +128,25 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 					for (int j = 0 ; j < 7 ; j++) {
 						switch (j) {
 							case 0:
-								legislatorProfileArray[j] = legislator.getString("ad");
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[0]);
 								break;
 							case 1:
-								legislatorProfileArray[j] = legislator.getString("gender");
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[1]);
 								break;
 							case 2:
-								legislatorProfileArray[j] = legislator.getString("party");
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[2]);
 								break;
 							case 3:
-								legislatorProfileArray[j] = legislator.getString("county");
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[3]);
 								break;
 							case 4:
-								legislatorProfileArray[j] = legislator.getString("education");
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[4]);
 								break;
 							case 5:
-								legislatorProfileArray[j] = legislator.getString("experience");
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[5]);
 								break;
 							case 6:
-								legislatorProfileArray[j] = legislator.getString("image");
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[6]);
 								break;
 						}
 					}
@@ -183,14 +188,16 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 				Toast.makeText(getActivity(), "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
+
+                String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
 				if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
 					updateTextView(tvProfile, legislatorNameArray[position] + "\n"
-							+ "屆期：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
-							+ "性別：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
-							+ "黨籍：" + legislatorListWithProfile.get(legislatorNameArray[position])[2] + "\n"
-							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
-							+ "學歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
-							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
+							+ legislatorProfileInfo[0] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
+                            + legislatorProfileInfo[1] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
+                            + legislatorProfileInfo[2] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[2] + "\n"
+                            + legislatorProfileInfo[3] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
+                            + legislatorProfileInfo[4] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
+                            + legislatorProfileInfo[5] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
 					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
 					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[6]);
 				}
@@ -224,35 +231,24 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 
 	private void initSpiderWebChart() {
 
+        String[] webChartTitle = resources.getStringArray(R.array.legislator_profile_radar_chart_title);
 
 		// TODO create with class
 		List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
-		data1.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title1), 3));
-		data1.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title2), 4));
-		data1.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title3), 9));
-		data1.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title4), 8));
-		data1.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 10));
-		data1.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 2));
+		data1.add(new TitleValueEntity(webChartTitle[0], 3));
+		data1.add(new TitleValueEntity(webChartTitle[1], 4));
+		data1.add(new TitleValueEntity(webChartTitle[2], 9));
+		data1.add(new TitleValueEntity(webChartTitle[3], 8));
+		data1.add(new TitleValueEntity(webChartTitle[4], 10));
+		data1.add(new TitleValueEntity(webChartTitle[4], 2));
 
 		List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
-		data2.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 3));
-		data2.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 4));
-		data2.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 5));
-		data2.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 6));
-		data2.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 7));
-		data2.add(new TitleValueEntity(getResources().getString(
-				R.string.spiderwebchart_title5), 1));
+		data2.add(new TitleValueEntity(webChartTitle[0], 3));
+		data2.add(new TitleValueEntity(webChartTitle[1], 4));
+		data2.add(new TitleValueEntity(webChartTitle[2], 5));
+		data2.add(new TitleValueEntity(webChartTitle[3], 6));
+		data2.add(new TitleValueEntity(webChartTitle[4], 7));
+		data2.add(new TitleValueEntity(webChartTitle[5], 1));
 
 
 		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();

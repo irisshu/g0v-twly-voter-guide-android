@@ -1,4 +1,4 @@
-package g0v.ly.lylog.bill;
+package g0v.ly.android.bill;
 
 import android.app.Activity;
 import android.database.DataSetObserver;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import g0v.ly.lylog.R;
+import g0v.ly.android.R;
 
 public class AdapterBillList implements ExpandableListAdapter {
 

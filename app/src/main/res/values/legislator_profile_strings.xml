@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="legislator_profile_info">
+        <item>屆期</item>
+        <item>性別</item>
+        <item>黨籍</item>
+        <item>縣市</item>
+        <item>學歷</item>
+        <item>經歷</item>
+    </string-array>
+
+    <string-array name="legislator_profile_info_api_key">
+        <item>ad</item>
+        <item>gender</item>
+        <item>party</item>
+        <item>county</item>
+        <item>education</item>
+        <item>experience</item>
+        <item>image</item>
+    </string-array>
+
+    <string-array name="legislator_profile_radar_chart_title">
+        <item>title1</item>
+        <item>title2</item>
+        <item>title3</item>
+        <item>title4</item>
+        <item>title5</item>
+    </string-array>
+
+</resources>
