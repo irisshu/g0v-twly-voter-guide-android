@@ -41,6 +41,16 @@ import g0v.ly.android.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RESTMethods.RestApiCallback {
     private static final Logger logger = LoggerFactory.getLogger(Profile.class);
+
+    // Legislators' profile info title
+    private static final int PROFILE_INFO_AD = 0;
+    private static final int PROFILE_INFO_GENDER = 1;
+    private static final int PROFILE_INFO_PARTY = 2;
+    private static final int PROFILE_INFO_COUNTY = 3;
+    private static final int PROFILE_INFO_EDUCATION = 4;
+    private static final int PROFILE_INFO_EXPERIENCE = 5;
+    private static final int PROFILE_INFO_PHOTO = 6;
+
     private TextView tvResponse;
     private TextView tvProfileAd;
     private TextView tvProfileGender;
@@ -119,25 +129,25 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 					for (int j = 0 ; j < legislatorProfileArray.length ; j++) {
 						switch (j) {
 							case 0:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[0]);
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_AD]);
 								break;
 							case 1:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[1]);
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_GENDER]);
 								break;
 							case 2:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[2]);
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_PARTY]);
 								break;
 							case 3:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[3]);
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_COUNTY]);
 								break;
 							case 4:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[4]);
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_EDUCATION]);
 								break;
 							case 5:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[5]);
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_EXPERIENCE]);
 								break;
 							case 6:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[6]);
+								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_PHOTO]);
 								break;
 						}
 					}
@@ -181,23 +191,15 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 				Toast.makeText(getActivity(), "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
 
 				if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
-                    updateTextView(tvProfileAd, legislatorListWithProfile.get(legislatorNameArray[position])[0], TvUpdateType.OVERWRITE);
-                    updateTextView(tvProfileGender, legislatorListWithProfile.get(legislatorNameArray[position])[1], TvUpdateType.OVERWRITE);
-                    updateTextView(tvProfileParty, legislatorListWithProfile.get(legislatorNameArray[position])[2], TvUpdateType.OVERWRITE);
-                    updateTextView(tvProfileCounty, legislatorListWithProfile.get(legislatorNameArray[position])[3], TvUpdateType.OVERWRITE);
-                    updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[4], TvUpdateType.OVERWRITE);
-                    updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
-                    /*
-					updateTextView(tvProfile, legislatorNameArray[position] + "\n"
-							+ legislatorProfileInfo[0] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
-                            + legislatorProfileInfo[1] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
-                            + legislatorProfileInfo[2] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[2] + "\n"
-                            + legislatorProfileInfo[3] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
-                            + legislatorProfileInfo[4] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
-                            + legislatorProfileInfo[5] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
-                    */
+                    updateTextView(tvProfileAd, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_AD], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileGender, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_GENDER], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileParty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PARTY], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileCounty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_COUNTY], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
+
 					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
-					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[6]);
+					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);
 				}
 				else {
 					logger.warn("[onItemSelected] legislator profile not found");
@@ -361,10 +363,11 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 
         // setup titles
         String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
-        tvProfileAdTitle.setText(legislatorProfileInfo[0]);
-        tvProfileGenderTitle.setText(legislatorProfileInfo[1]);
-        tvProfilePartyTitle.setText(legislatorProfileInfo[2]);
-        tvProfileEducationTitle.setText(legislatorProfileInfo[3]);
-        tvProfileExperienceTitle.setText(legislatorProfileInfo[4]);
+        tvProfileAdTitle.setText(legislatorProfileInfo[PROFILE_INFO_AD]);
+        tvProfileGenderTitle.setText(legislatorProfileInfo[PROFILE_INFO_GENDER]);
+        tvProfilePartyTitle.setText(legislatorProfileInfo[PROFILE_INFO_PARTY]);
+        tvProfileCountyTitle.setText(legislatorProfileInfo[PROFILE_INFO_COUNTY]);
+        tvProfileEducationTitle.setText(legislatorProfileInfo[PROFILE_INFO_EDUCATION]);
+        tvProfileExperienceTitle.setText(legislatorProfileInfo[PROFILE_INFO_EXPERIENCE]);
     }
 }
