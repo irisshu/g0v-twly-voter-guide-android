@@ -42,7 +42,13 @@ import g0v.ly.android.utility.androidcharts.TitleValueEntity;
 public class Profile extends Fragment implements RESTMethods.RestApiCallback {
     private static final Logger logger = LoggerFactory.getLogger(Profile.class);
     private TextView tvResponse;
-    private TextView tvProfile;
+    private TextView tvProfileAd;
+    private TextView tvProfileGender;
+    private TextView tvProfileParty;
+    private TextView tvProfileCounty;
+    private TextView tvProfileEducation;
+    private TextView tvProfileExperience;
+
     private ImageView imgProfile;
     private Spinner legislatorNameSpinner;
 
@@ -76,28 +82,13 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 		View view = inflater.inflate(R.layout.fragment_profile, container, false);
 		assert view != null;
 
-		tvResponse = (TextView) view.findViewById(R.id.tv_response);
-		tvProfile = (TextView) view.findViewById(R.id.tv_profile);
-		imgProfile = (ImageView) view.findViewById(R.id.profile_img);
-		legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
-		spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
-		initSpiderWebChart();
+        setupUiComponents(view);
 
 		/* TODO ad selectable */
 		restMethods = new RESTMethods();
-		//https://twly.herokuapp.com/api/legislator_terms/?page=2&ad=8
-		//restMethods.restGet("https://twly.herokuapp.com/api/legislator/.json", Profile.this);
 		String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
 		restMethods.restGet(getUrl, Profile.this);
 		setupOnclickListeners();
-
-		// set fonts
-		FontManager fontManager = FontManager.getInstance();
-		fontManager.setContext(getActivity());
-		Typeface robotoLight = fontManager.getRobotoLight();
-		Typeface droidSansFallback = fontManager.getDroidSansFallback();
-		tvResponse.setTypeface(robotoLight);
-		tvProfile.setTypeface(droidSansFallback);
 
 		return view;
 	}
@@ -125,7 +116,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 					legislatorProfileArray = new String[7];
 
 					// get legislator's profile
-					for (int j = 0 ; j < 7 ; j++) {
+					for (int j = 0 ; j < legislatorProfileArray.length ; j++) {
 						switch (j) {
 							case 0:
 								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[0]);
@@ -189,8 +180,14 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 				Toast.makeText(getActivity(), "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
 
-                String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
 				if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
+                    updateTextView(tvProfileAd, legislatorListWithProfile.get(legislatorNameArray[position])[0], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileGender, legislatorListWithProfile.get(legislatorNameArray[position])[1], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileParty, legislatorListWithProfile.get(legislatorNameArray[position])[2], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileCounty, legislatorListWithProfile.get(legislatorNameArray[position])[3], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[4], TvUpdateType.OVERWRITE);
+                    updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
+                    /*
 					updateTextView(tvProfile, legislatorNameArray[position] + "\n"
 							+ legislatorProfileInfo[0] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
                             + legislatorProfileInfo[1] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
@@ -198,6 +195,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
                             + legislatorProfileInfo[3] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
                             + legislatorProfileInfo[4] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
                             + legislatorProfileInfo[5] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
+                    */
 					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
 					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[6]);
 				}
@@ -250,11 +248,9 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 		data2.add(new TitleValueEntity(webChartTitle[4], 7));
 		data2.add(new TitleValueEntity(webChartTitle[5], 1));
 
-
 		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 		data.add(data1);
 		data.add(data2);
-
 
 		addRadarChartData(data);
 		spiderWebChart.setLatitudeNum(5);//TODO method useless, check lib
@@ -323,4 +319,52 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 			return stream;
 		}
 	}
+
+    private void setupUiComponents(View view) {
+        TextView tvProfileAdTitle = (TextView) view.findViewById(R.id.legislator_profile_info_ad_title);
+        tvProfileAd = (TextView) view.findViewById(R.id.legislator_profile_info_ad);
+        TextView tvProfileGenderTitle = (TextView) view.findViewById(R.id.legislator_profile_info_gender_title);
+        tvProfileGender = (TextView) view.findViewById(R.id.legislator_profile_info_gender);
+        TextView tvProfilePartyTitle = (TextView) view.findViewById(R.id.legislator_profile_info_party_title);
+        tvProfileParty = (TextView) view.findViewById(R.id.legislator_profile_info_party);
+        TextView tvProfileCountyTitle = (TextView) view.findViewById(R.id.legislator_profile_info_county_title);
+        tvProfileCounty = (TextView) view.findViewById(R.id.legislator_profile_info_county);
+        TextView tvProfileEducationTitle = (TextView) view.findViewById(R.id.legislator_profile_info_education_title);
+        tvProfileEducation = (TextView) view.findViewById(R.id.legislator_profile_info_education);
+        TextView tvProfileExperienceTitle = (TextView) view.findViewById(R.id.legislator_profile_info_experience_title);
+        tvProfileExperience = (TextView) view.findViewById(R.id.legislator_profile_info_experience);
+
+        tvResponse = (TextView) view.findViewById(R.id.tv_response);
+        imgProfile = (ImageView) view.findViewById(R.id.profile_img);
+        legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
+        spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+        initSpiderWebChart();
+
+        // setup text view fonts
+        FontManager fontManager = FontManager.getInstance();
+        fontManager.setContext(getActivity());
+        Typeface robotoLight = fontManager.getRobotoLight();
+        Typeface droidSansFallback = fontManager.getDroidSansFallback();
+        tvResponse.setTypeface(robotoLight);
+        tvProfileAdTitle.setTypeface(droidSansFallback);
+        tvProfileAd.setTypeface(droidSansFallback);
+        tvProfileGenderTitle.setTypeface(droidSansFallback);
+        tvProfileGender.setTypeface(droidSansFallback);
+        tvProfilePartyTitle.setTypeface(droidSansFallback);
+        tvProfileParty.setTypeface(droidSansFallback);
+        tvProfileCountyTitle.setTypeface(droidSansFallback);
+        tvProfileCounty.setTypeface(droidSansFallback);
+        tvProfileEducationTitle.setTypeface(droidSansFallback);
+        tvProfileEducation.setTypeface(droidSansFallback);
+        tvProfileExperienceTitle.setTypeface(droidSansFallback);
+        tvProfileExperience.setTypeface(droidSansFallback);
+
+        // setup titles
+        String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
+        tvProfileAdTitle.setText(legislatorProfileInfo[0]);
+        tvProfileGenderTitle.setText(legislatorProfileInfo[1]);
+        tvProfilePartyTitle.setText(legislatorProfileInfo[2]);
+        tvProfileEducationTitle.setText(legislatorProfileInfo[3]);
+        tvProfileExperienceTitle.setText(legislatorProfileInfo[4]);
+    }
 }
