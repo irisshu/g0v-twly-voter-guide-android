@@ -1,4 +1,4 @@
-package g0v.ly.lylog.bill;
+package g0v.ly.android.bill;
 
 import android.app.Activity;
 import android.database.DataSetObserver;

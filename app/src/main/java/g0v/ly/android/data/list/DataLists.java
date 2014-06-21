@@ -1,4 +1,4 @@
-package g0v.ly.lylog.data.list;
+package g0v.ly.android.data.list;
 
 import java.util.ArrayList;
 

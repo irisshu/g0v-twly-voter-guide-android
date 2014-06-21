@@ -1,4 +1,4 @@
-package g0v.ly.lylog.legislator;
+package g0v.ly.android.legislator;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,11 +32,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import g0v.ly.android.rest.RESTMethods;
+import g0v.ly.android.utility.FontManager;
+import g0v.ly.android.utility.androidcharts.SpiderWebChart;
+import g0v.ly.android.utility.androidcharts.TitleValueEntity;
 import g0v.ly.lylog.R;
-import g0v.ly.lylog.rest.RESTMethods;
-import g0v.ly.lylog.utility.FontManager;
-import g0v.ly.lylog.utility.androidcharts.SpiderWebChart;
-import g0v.ly.lylog.utility.androidcharts.TitleValueEntity;
 
 public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 	private static final Logger logger = LoggerFactory.getLogger(Profile.class);
@@ -183,14 +183,16 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 				Toast.makeText(getActivity(), "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
+
+                String[] legislatorProfileInfo = getResources().getStringArray(R.array.legislator_profile_info);
 				if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
 					updateTextView(tvProfile, legislatorNameArray[position] + "\n"
-							+ "屆期：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
-							+ "性別：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
-							+ "黨籍：" + legislatorListWithProfile.get(legislatorNameArray[position])[2] + "\n"
-							+ "縣市：" + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
-							+ "學歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
-							+ "經歷：" + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
+							+ legislatorProfileInfo[0] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[0] + "\n"
+                            + legislatorProfileInfo[1] + "：" + legislatorListWithProfile.get(legislatorNameArray[position])[1] + "\n"
+                            + legislatorProfileInfo[2] + "："  + legislatorListWithProfile.get(legislatorNameArray[position])[2] + "\n"
+                            + legislatorProfileInfo[3] + "："  + legislatorListWithProfile.get(legislatorNameArray[position])[3] + "\n"
+                            + legislatorProfileInfo[4] + "："  + legislatorListWithProfile.get(legislatorNameArray[position])[4] + "\n"
+                            + legislatorProfileInfo[5] + "："  + legislatorListWithProfile.get(legislatorNameArray[position])[5], TvUpdateType.OVERWRITE);
 					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
 					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[6]);
 				}

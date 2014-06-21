@@ -6,4 +6,4 @@
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="#FFFFFF"
-    tools:context="g0v.ly.lylog.NavigationDrawerFragment" />
+    tools:context="g0v.ly.android.NavigationDrawerFragment" />

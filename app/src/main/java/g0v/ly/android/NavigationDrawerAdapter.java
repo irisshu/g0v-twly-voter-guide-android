@@ -1,4 +1,4 @@
-package g0v.ly.lylog;
+package g0v.ly.android;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import g0v.ly.lylog.data.list.DataLists;
+import g0v.ly.android.data.list.DataLists;
+import g0v.ly.lylog.R;
 
 public class NavigationDrawerAdapter extends BaseAdapter {
     //private static final Logger logger = LoggerFactory.getLogger(NavigationDrawerAdapter.class);

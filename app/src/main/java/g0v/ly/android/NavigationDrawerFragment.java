@@ -1,4 +1,4 @@
-package g0v.ly.lylog;
+package g0v.ly.android;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import g0v.ly.lylog.R;
 
 
 public class NavigationDrawerFragment extends Fragment {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array
+        name="legislator_profile_info">
+
+        <item>屆期</item>
+        <item>性別</item>
+        <item>黨籍</item>
+        <item>縣市</item>
+        <item>學歷</item>
+        <item>經歷</item>
+    </string-array>
+
+</resources>

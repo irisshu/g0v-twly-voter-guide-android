@@ -20,7 +20,7 @@
  * limitations under the License.
  */
 
-package g0v.ly.lylog.utility.androidcharts;
+package g0v.ly.android.utility.androidcharts;
 
 import android.content.Context;
 import android.graphics.Canvas;

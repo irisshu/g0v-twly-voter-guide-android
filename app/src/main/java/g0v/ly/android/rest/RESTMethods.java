@@ -1,4 +1,4 @@
-package g0v.ly.lylog.rest;
+package g0v.ly.android.rest;
 
 import android.os.AsyncTask;
 

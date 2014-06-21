@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="g0v.ly.lylog.legislator.Profile">
+    tools:context="g0v.ly.android.legislator.Profile">
 
     <Spinner
         android:id="@+id/spinner_legislator_name"
@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:contentDescription="@null"/>
 
-        <g0v.ly.lylog.utility.androidcharts.SpiderWebChart
+        <g0v.ly.android.utility.androidcharts.SpiderWebChart
             android:id="@+id/profile_radar_chart"
             android:layout_width="fill_parent"
             android:layout_height="160dp"
