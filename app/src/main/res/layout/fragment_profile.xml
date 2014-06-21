@@ -86,12 +86,5 @@
         </TableRow>
 
     </TableLayout>
-<!--
-    <TextView
-        android:id="@+id/tv_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_and_img_relative_layout"
-        android:layout_centerHorizontal="true"/>
--->
+
 </RelativeLayout>
