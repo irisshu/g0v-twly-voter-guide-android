@@ -45,11 +45,53 @@
 
     </RelativeLayout>
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/profile_and_img_relative_layout">
+
+        <TableRow>
+            <TextView android:id="@+id/legislator_profile_info_ad_title"/>
+            <TextView
+                android:id="@+id/legislator_profile_info_ad"
+                android:layout_weight="5"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/legislator_profile_info_gender_title"/>
+            <TextView
+                android:id="@+id/legislator_profile_info_gender"
+                android:layout_weight="3"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/legislator_profile_info_party_title"/>
+            <TextView android:id="@+id/legislator_profile_info_party"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/legislator_profile_info_county_title"/>
+            <TextView android:id="@+id/legislator_profile_info_county"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/legislator_profile_info_education_title"/>
+            <TextView android:id="@+id/legislator_profile_info_education"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/legislator_profile_info_experience_title"/>
+            <TextView android:id="@+id/legislator_profile_info_experience"/>
+        </TableRow>
+
+    </TableLayout>
+<!--
     <TextView
         android:id="@+id/tv_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_and_img_relative_layout"
         android:layout_centerHorizontal="true"/>
-
+-->
 </RelativeLayout>
