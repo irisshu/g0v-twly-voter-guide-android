@@ -11,8 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class RESTFunctionManager {
-	private static final Logger logger = LoggerFactory.getLogger(RESTFunctionManager.class);
+public class RESTMethods {
+	private static final Logger logger = LoggerFactory.getLogger(RESTMethods.class);
+
+    public interface RestApiCallback {
+        void getDone(String response, long spendTime, int page);
+    }
 
 	public void restGet(String getUrl, RestApiCallback restApiCallback) {
 		RESTGetAsyncTask restGetAsyncTask = new RESTGetAsyncTask(getUrl, restApiCallback);

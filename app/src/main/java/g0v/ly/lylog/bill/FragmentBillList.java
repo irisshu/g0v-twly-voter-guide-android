@@ -9,9 +9,9 @@ import android.widget.ExpandableListView;
 
 import g0v.ly.lylog.R;
 import g0v.ly.lylog.data.list.DataLists;
-import g0v.ly.lylog.rest.RestApiCallback;
+import g0v.ly.lylog.rest.RESTMethods;
 
-public class FragmentBillList extends Fragment implements RestApiCallback {
+public class FragmentBillList extends Fragment implements RESTMethods.RestApiCallback {
 	DataLists dataLists = new DataLists();
 
 	@Override
