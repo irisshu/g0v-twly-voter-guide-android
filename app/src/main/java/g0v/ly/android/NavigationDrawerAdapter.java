@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import g0v.ly.android.data.list.DataLists;
-
 public class NavigationDrawerAdapter extends BaseAdapter {
     //private static final Logger logger = LoggerFactory.getLogger(NavigationDrawerAdapter.class);
 
