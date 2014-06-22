@@ -240,7 +240,6 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 		data1.add(new TitleValueEntity(webChartTitle[2], 9));
 		data1.add(new TitleValueEntity(webChartTitle[3], 8));
 		data1.add(new TitleValueEntity(webChartTitle[4], 10));
-		data1.add(new TitleValueEntity(webChartTitle[5], 2));
 
 		List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
 		data2.add(new TitleValueEntity(webChartTitle[0], 3));
@@ -248,7 +247,6 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 		data2.add(new TitleValueEntity(webChartTitle[2], 5));
 		data2.add(new TitleValueEntity(webChartTitle[3], 6));
 		data2.add(new TitleValueEntity(webChartTitle[4], 7));
-		data2.add(new TitleValueEntity(webChartTitle[5], 1));
 
 		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 		data.add(data1);

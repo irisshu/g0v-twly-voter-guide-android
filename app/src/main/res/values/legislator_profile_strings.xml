@@ -21,12 +21,11 @@
     </string-array>
 
     <string-array name="legislator_profile_radar_chart_title">
-        <item>title1</item>
-        <item>title2</item>
-        <item>title3</item>
-        <item>title4</item>
-        <item>title5</item>
-        <item>title6</item>
+        <item>沒投票次數</item>
+        <item>脫黨投票次數</item>
+        <item>主提案法案數</item>
+        <item>全體院會缺席次數</item>
+        <item>委員會缺席次數</item>
     </string-array>
 
 </resources>

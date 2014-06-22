@@ -13,11 +13,11 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     //private static final Logger logger = LoggerFactory.getLogger(NavigationDrawerAdapter.class);
 
 	private LayoutInflater inflater;
-	private DataLists navigationDrawerList 	= new DataLists();
-	private String[] drawerList = navigationDrawerList.getDrawerList();
+	private String[] drawerList;
 
 	public NavigationDrawerAdapter(Activity activity) {
 		inflater = LayoutInflater.from(activity);
+        drawerList = activity.getResources().getStringArray(R.array.navigation_drawer_list);
 	}
 
     @Override
