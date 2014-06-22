@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import g0v.ly.android.bill.FragmentBillList;
-import g0v.ly.android.data.list.DataLists;
 import g0v.ly.android.legislator.Profile;
 import g0v.ly.android.utility.FontManager;
 
@@ -72,8 +71,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 	}
 
 	public void onSectionAttached(int number) {
-		DataLists navigationDrawerList = new DataLists();
-		String[] titleStrArray = navigationDrawerList.getDrawerList();
+		String[] titleStrArray = getResources().getStringArray(R.array.navigation_drawer_list);
 		switch (number) {
 			case 1:
 			case 5:
