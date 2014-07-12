@@ -189,7 +189,8 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
         if (hasNextPage) {
             restMethods.restGet(
                     "https://twly.herokuapp.com/api/legislator_terms/?page=" + (page + 1) +
-                            "&ad=8", Profile.this);
+                            "&ad=8", Profile.this
+            );
         } else {
             logger.debug("[Profile] getDone hasNextPage = false");
         }

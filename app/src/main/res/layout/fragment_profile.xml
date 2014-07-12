@@ -1,28 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="g0v.ly.android.legislator.Profile">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="g0v.ly.android.legislator.Profile">
 
     <Spinner
         android:id="@+id/spinner_legislator_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/tv_response"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinner_legislator_name"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#E6E6E6"
-        android:layout_below="@+id/tv_response" />
+        android:layout_below="@+id/tv_response"/>
 
     <RelativeLayout
         android:id="@+id/profile_and_img_relative_layout"
@@ -35,13 +35,13 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerVertical="true"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"/>
 
         <g0v.ly.android.utility.androidcharts.SpiderWebChart
             android:id="@+id/profile_radar_chart"
             android:layout_width="fill_parent"
             android:layout_height="160dp"
-            android:layout_toRightOf="@id/profile_img" />
+            android:layout_toRightOf="@id/profile_img"/>
 
     </RelativeLayout>
 
@@ -53,48 +53,48 @@
 
         <TableRow>
 
-            <TextView android:id="@+id/legislator_profile_info_ad_title" />
+            <TextView android:id="@+id/legislator_profile_info_ad_title"/>
 
             <TextView
                 android:id="@+id/legislator_profile_info_ad"
-                android:layout_weight="5" />
+                android:layout_weight="5"/>
         </TableRow>
 
         <TableRow>
 
-            <TextView android:id="@+id/legislator_profile_info_gender_title" />
+            <TextView android:id="@+id/legislator_profile_info_gender_title"/>
 
             <TextView
                 android:id="@+id/legislator_profile_info_gender"
-                android:layout_weight="3" />
+                android:layout_weight="3"/>
         </TableRow>
 
         <TableRow>
 
-            <TextView android:id="@+id/legislator_profile_info_party_title" />
+            <TextView android:id="@+id/legislator_profile_info_party_title"/>
 
-            <TextView android:id="@+id/legislator_profile_info_party" />
+            <TextView android:id="@+id/legislator_profile_info_party"/>
         </TableRow>
 
         <TableRow>
 
-            <TextView android:id="@+id/legislator_profile_info_county_title" />
+            <TextView android:id="@+id/legislator_profile_info_county_title"/>
 
-            <TextView android:id="@+id/legislator_profile_info_county" />
+            <TextView android:id="@+id/legislator_profile_info_county"/>
         </TableRow>
 
         <TableRow>
 
-            <TextView android:id="@+id/legislator_profile_info_education_title" />
+            <TextView android:id="@+id/legislator_profile_info_education_title"/>
 
-            <TextView android:id="@+id/legislator_profile_info_education" />
+            <TextView android:id="@+id/legislator_profile_info_education"/>
         </TableRow>
 
         <TableRow>
 
-            <TextView android:id="@+id/legislator_profile_info_experience_title" />
+            <TextView android:id="@+id/legislator_profile_info_experience_title"/>
 
-            <TextView android:id="@+id/legislator_profile_info_experience" />
+            <TextView android:id="@+id/legislator_profile_info_experience"/>
         </TableRow>
 
     </TableLayout>
