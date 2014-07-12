@@ -34,7 +34,6 @@ package g0v.ly.android.utility.androidcharts;
  *
  * @author limc
  * @version v1.0 2011/05/29 15:17:50
- *
  */
 public interface IChart {
 }

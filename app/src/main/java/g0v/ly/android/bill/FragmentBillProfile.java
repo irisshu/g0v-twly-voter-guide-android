@@ -6,8 +6,8 @@ import g0v.ly.android.rest.RESTMethods;
 
 public class FragmentBillProfile extends Fragment implements RESTMethods.RestApiCallback {
 
-	@Override
-	public void getDone(String response, long spendTime, int page) {
+    @Override
+    public void getDone(String response, long spendTime, int page) {
 
-	}
+    }
 }
