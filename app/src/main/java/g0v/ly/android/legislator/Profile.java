@@ -73,124 +73,138 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 
     private Resources resources;
 
-	// Key => legislator's name, Value => legislator's profile
-	private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
+    // Key => legislator's name, Value => legislator's profile
+    private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
 
-	public enum TvUpdateType {
-		APPEND,
-		OVERWRITE
-	}
+    public enum TvUpdateType {
+        APPEND,
+        OVERWRITE
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         resources = getResources();
-	}
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_profile, container, false);
-		assert view != null;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        assert view != null;
 
         setupUiComponents(view);
 
 		/* TODO ad selectable */
-		restMethods = new RESTMethods();
-		String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
-		restMethods.restGet(getUrl, Profile.this);
-		setupOnclickListeners();
+        restMethods = new RESTMethods();
+        String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
+        restMethods.restGet(getUrl, Profile.this);
+        setupOnclickListeners();
 
-		return view;
-	}
+        return view;
+    }
 
-	@Override
-	public void getDone(final String response, final long spendTime, int page) {
+    @Override
+    public void getDone(final String response, final long spendTime, int page) {
 
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-			try {
-				JSONObject apiResponse = new JSONObject(response);
-				if (apiResponse.getString("next").equals("null")) {
-					hasNextPage = false;
-				}
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject apiResponse = new JSONObject(response);
+                    if (apiResponse.getString("next").equals("null")) {
+                        hasNextPage = false;
+                    }
 
-				JSONArray results = apiResponse.getJSONArray("results");
-				legislatorNameArray = new String[results.length()];
-                String[] legislatorProfileInfoApiKey = resources.getStringArray(R.array.legislator_profile_info_api_key);
+                    JSONArray results = apiResponse.getJSONArray("results");
+                    legislatorNameArray = new String[results.length()];
+                    String[] legislatorProfileInfoApiKey =
+                            resources.getStringArray(R.array.legislator_profile_info_api_key);
 
-				for (int i = 0 ; i < results.length() ; i++) {
-					// get legislator's name
-					JSONObject legislator = results.getJSONObject(i);
-					legislatorNameArray[i] = legislator.getString("name");
-					legislatorProfileArray = new String[PROFILE_INFO_COUNT];
+                    for (int i = 0; i < results.length(); i++) {
+                        // get legislator's name
+                        JSONObject legislator = results.getJSONObject(i);
+                        legislatorNameArray[i] = legislator.getString("name");
+                        legislatorProfileArray = new String[PROFILE_INFO_COUNT];
 
-					// get legislator's profile
-					for (int j = 0 ; j < legislatorProfileArray.length ; j++) {
-						switch (j) {
-							case 0:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_AD]);
-								break;
-							case 1:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_GENDER]);
-								break;
-							case 2:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_PARTY]);
-								break;
-							case 3:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_COUNTY]);
-								break;
-							case 4:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_EDUCATION]);
-								break;
-							case 5:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_EXPERIENCE]);
-								break;
-							case 6:
-								legislatorProfileArray[j] = legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_PHOTO]);
-								break;
-						}
-					}
-					legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			}
-		});
+                        // get legislator's profile
+                        for (int j = 0; j < legislatorProfileArray.length; j++) {
+                            switch (j) {
+                                case 0:
+                                    legislatorProfileArray[j] =
+                                            legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_AD]);
+                                    break;
+                                case 1:
+                                    legislatorProfileArray[j] =
+                                            legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_GENDER]);
+                                    break;
+                                case 2:
+                                    legislatorProfileArray[j] =
+                                            legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_PARTY]);
+                                    break;
+                                case 3:
+                                    legislatorProfileArray[j] =
+                                            legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_COUNTY]);
+                                    break;
+                                case 4:
+                                    legislatorProfileArray[j] =
+                                            legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_EDUCATION]);
+                                    break;
+                                case 5:
+                                    legislatorProfileArray[j] =
+                                            legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_EXPERIENCE]);
+                                    break;
+                                case 6:
+                                    legislatorProfileArray[j] =
+                                            legislator.getString(legislatorProfileInfoApiKey[PROFILE_INFO_PHOTO]);
+                                    break;
+                            }
+                        }
+                        legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-		totalSpendTime += spendTime;
-		int legislatorCount = legislatorListWithProfile.keySet().size();
-		logger.debug("[Profile] getDone legislatorCount= " + legislatorCount);
-		updateTextView(tvResponse, "Legislator count = " + legislatorCount, TvUpdateType.OVERWRITE);
-		updateTextView(tvResponse, "Spend " + totalSpendTime/1000 + "." + totalSpendTime%1000 + "s", TvUpdateType.APPEND);
+        totalSpendTime += spendTime;
+        int legislatorCount = legislatorListWithProfile.keySet().size();
+        logger.debug("[Profile] getDone legislatorCount= " + legislatorCount);
+        updateTextView(tvResponse, "Legislator count = " + legislatorCount, TvUpdateType.OVERWRITE);
+        updateTextView(tvResponse, "Spend " + totalSpendTime / 1000 + "." + totalSpendTime % 1000 +
+                "s", TvUpdateType.APPEND);
 
-		Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
-		legislatorNameArray = new String[legislatorListWithProfile.size()]; // XXX, new 12 times
-		int nameArraySize = NameObjArray.length;
-		for (int i = 0 ; i < nameArraySize ; i++) {
-			legislatorNameArray[i] = NameObjArray[i].toString();
-		}
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-		legislatorNameSpinner.setAdapter(arrayAdapter);
+        Object[] NameObjArray = legislatorListWithProfile.keySet().toArray();
+        legislatorNameArray = new String[legislatorListWithProfile.size()]; // XXX, new 12 times
+        int nameArraySize = NameObjArray.length;
+        for (int i = 0; i < nameArraySize; i++) {
+            legislatorNameArray[i] = NameObjArray[i].toString();
+        }
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
+        legislatorNameSpinner.setAdapter(arrayAdapter);
 
-		// get rest profiles
-		if (hasNextPage) {
-			restMethods.restGet("https://twly.herokuapp.com/api/legislator_terms/?page=" + (page+1) + "&ad=8", Profile.this);
-		}
-		else {
-			logger.debug("[Profile] getDone hasNextPage = false");
-		}
-	}
+        // get rest profiles
+        if (hasNextPage) {
+            restMethods.restGet(
+                    "https://twly.herokuapp.com/api/legislator_terms/?page=" + (page + 1) +
+                            "&ad=8", Profile.this);
+        } else {
+            logger.debug("[Profile] getDone hasNextPage = false");
+        }
+    }
 
-	private void setupOnclickListeners() {
+    private void setupOnclickListeners() {
 
-		legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-				Toast.makeText(getActivity(), "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
+        legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position,
+                                       long l) {
+                Toast.makeText(getActivity(),
+                        "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
 
-				if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
+                if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
                     updateTextView(tvProfileAd, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_AD], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileGender, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_GENDER], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileParty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PARTY], TvUpdateType.OVERWRITE);
@@ -198,134 +212,141 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
                     updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
 
-					GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
-					getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);
-				}
-				else {
-					logger.warn("[onItemSelected] legislator profile not found");
-				}
-			}
-			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-				// do nothing
-			}
-		});
-	}
+                    GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
+                    getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);
+                } else {
+                    logger.warn("[onItemSelected] legislator profile not found");
+                }
+            }
 
-	private void updateTextView(TextView tv, String msg, TvUpdateType updateType) {
-		switch (updateType) {
-			case OVERWRITE:
-				tv.setText(msg);
-				break;
-			case APPEND:
-				CharSequence tempMsg = tv.getText();
-				tv.setText(msg + "\n");
-				if (tempMsg != null){
-					tv.append(tempMsg);
-				}
-				break;
-		}
-	}
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // do nothing
+            }
+        });
+    }
 
-	// =============================================================================================
+    private void updateTextView(TextView tv, String msg, TvUpdateType updateType) {
+        switch (updateType) {
+            case OVERWRITE:
+                tv.setText(msg);
+                break;
+            case APPEND:
+                CharSequence tempMsg = tv.getText();
+                tv.setText(msg + "\n");
+                if (tempMsg != null) {
+                    tv.append(tempMsg);
+                }
+                break;
+        }
+    }
 
-	private void initSpiderWebChart() {
+    // =============================================================================================
 
-        String[] webChartTitle = resources.getStringArray(R.array.legislator_profile_radar_chart_title);
+    private void initSpiderWebChart() {
 
-		// TODO create with class
-		List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
-		data1.add(new TitleValueEntity(webChartTitle[0], 3));
-		data1.add(new TitleValueEntity(webChartTitle[1], 4));
-		data1.add(new TitleValueEntity(webChartTitle[2], 9));
-		data1.add(new TitleValueEntity(webChartTitle[3], 8));
-		data1.add(new TitleValueEntity(webChartTitle[4], 10));
+        String[] webChartTitle =
+                resources.getStringArray(R.array.legislator_profile_radar_chart_title);
 
-		List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
-		data2.add(new TitleValueEntity(webChartTitle[0], 3));
-		data2.add(new TitleValueEntity(webChartTitle[1], 4));
-		data2.add(new TitleValueEntity(webChartTitle[2], 5));
-		data2.add(new TitleValueEntity(webChartTitle[3], 6));
-		data2.add(new TitleValueEntity(webChartTitle[4], 7));
+        // TODO create with class
+        List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
+        data1.add(new TitleValueEntity(webChartTitle[0], 3));
+        data1.add(new TitleValueEntity(webChartTitle[1], 4));
+        data1.add(new TitleValueEntity(webChartTitle[2], 9));
+        data1.add(new TitleValueEntity(webChartTitle[3], 8));
+        data1.add(new TitleValueEntity(webChartTitle[4], 10));
 
-		List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
-		data.add(data1);
-		data.add(data2);
+        List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
+        data2.add(new TitleValueEntity(webChartTitle[0], 3));
+        data2.add(new TitleValueEntity(webChartTitle[1], 4));
+        data2.add(new TitleValueEntity(webChartTitle[2], 5));
+        data2.add(new TitleValueEntity(webChartTitle[3], 6));
+        data2.add(new TitleValueEntity(webChartTitle[4], 7));
 
-		addRadarChartData(data);
-		spiderWebChart.setLatitudeNum(5);//TODO method useless, check lib
-	}
+        List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
+        data.add(data1);
+        data.add(data2);
 
-	//TODO check is data added before init chart
-	private void addRadarChartData(List<List<TitleValueEntity>> newData) {
-		List<List<TitleValueEntity>> radarChartData = new ArrayList<List<TitleValueEntity>>();
-		for (List<TitleValueEntity> aData : newData) {
-			radarChartData.add(aData);
-		}
-		spiderWebChart.setData(radarChartData);
-	}
+        addRadarChartData(data);
+        spiderWebChart.setLatitudeNum(5);//TODO method useless, check lib
+    }
 
-	private class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {
-		@Override
-		protected Bitmap doInBackground(String... urls) {
-			Bitmap map = null;
-			for (String url : urls) {
-				map = downloadImage(url);
-			}
-			return map;
-		}
+    //TODO check is data added before init chart
+    private void addRadarChartData(List<List<TitleValueEntity>> newData) {
+        List<List<TitleValueEntity>> radarChartData = new ArrayList<List<TitleValueEntity>>();
+        for (List<TitleValueEntity> aData : newData) {
+            radarChartData.add(aData);
+        }
+        spiderWebChart.setData(radarChartData);
+    }
 
-		// Sets the Bitmap returned by doInBackground
-		@Override
-		protected void onPostExecute(Bitmap result) {
-			imgProfile.setImageBitmap(result);
-		}
+    private class GetImageFromUrl extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap map = null;
+            for (String url : urls) {
+                map = downloadImage(url);
+            }
+            return map;
+        }
 
-		// Creates Bitmap from InputStream and returns it
-		private Bitmap downloadImage(String url) {
-			Bitmap bitmap = null;
-			InputStream stream;
-			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-			bmOptions.inSampleSize = 1;
+        // Sets the Bitmap returned by doInBackground
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            imgProfile.setImageBitmap(result);
+        }
 
-			try {
-				stream = getHttpConnection(url);
-				bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
-				stream.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			return bitmap;
-		}
+        // Creates Bitmap from InputStream and returns it
+        private Bitmap downloadImage(String url) {
+            Bitmap bitmap = null;
+            InputStream stream;
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inSampleSize = 1;
 
-		// Makes HttpURLConnection and returns InputStream
-		private InputStream getHttpConnection(String urlString) throws IOException {
-			InputStream stream = null;
-			URL url = new URL(urlString);
-			URLConnection connection = url.openConnection();
+            try {
+                stream = getHttpConnection(url);
+                bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
+                stream.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            return bitmap;
+        }
 
-			try {
-				HttpURLConnection httpConnection = (HttpURLConnection) connection;
-				httpConnection.setRequestMethod("GET");
-				httpConnection.connect();
+        // Makes HttpURLConnection and returns InputStream
+        private InputStream getHttpConnection(String urlString) throws IOException {
+            InputStream stream = null;
+            URL url = new URL(urlString);
+            URLConnection connection = url.openConnection();
 
-				if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-					stream = httpConnection.getInputStream();
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return stream;
-		}
-	}
+            try {
+                HttpURLConnection httpConnection = (HttpURLConnection) connection;
+                httpConnection.setRequestMethod("GET");
+                httpConnection.connect();
+
+                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    stream = httpConnection.getInputStream();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return stream;
+        }
+    }
 
     private void setupUiComponents(View view) {
-        TextView tvProfileAdTitle = (TextView) view.findViewById(R.id.legislator_profile_info_ad_title);
-        TextView tvProfileGenderTitle = (TextView) view.findViewById(R.id.legislator_profile_info_gender_title);
-        TextView tvProfilePartyTitle = (TextView) view.findViewById(R.id.legislator_profile_info_party_title);
-        TextView tvProfileCountyTitle = (TextView) view.findViewById(R.id.legislator_profile_info_county_title);
-        TextView tvProfileEducationTitle = (TextView) view.findViewById(R.id.legislator_profile_info_education_title);
-        TextView tvProfileExperienceTitle = (TextView) view.findViewById(R.id.legislator_profile_info_experience_title);
+        TextView tvProfileAdTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_ad_title);
+        TextView tvProfileGenderTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_gender_title);
+        TextView tvProfilePartyTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_party_title);
+        TextView tvProfileCountyTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_county_title);
+        TextView tvProfileEducationTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_education_title);
+        TextView tvProfileExperienceTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_experience_title);
         tvProfileAd = (TextView) view.findViewById(R.id.legislator_profile_info_ad);
         tvProfileGender = (TextView) view.findViewById(R.id.legislator_profile_info_gender);
         tvProfileParty = (TextView) view.findViewById(R.id.legislator_profile_info_party);
