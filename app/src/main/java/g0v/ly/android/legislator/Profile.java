@@ -269,7 +269,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
         data.add(data2);
 
         addRadarChartData(data);
-        spiderWebChart.setLatitudeNum(5);//TODO method useless, check lib
+        spiderWebChart.setLatitudeNum(5);//XXX method useless, check lib
     }
 
     //TODO check is data added before init chart
