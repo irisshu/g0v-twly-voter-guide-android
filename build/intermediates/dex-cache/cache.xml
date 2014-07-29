@@ -2,14 +2,14 @@
 <pre-dex-items>
 
     <item
-        dex="/Users/HMW/AndroidStudioProjects/LegislativeYuanLog/app/build/intermediates/pre-dexed/debug/slf4j-android-1.6.1-RC1-45e4d7e745f8da73ba6f6e2d8534a44f8ff02c67.jar"
-        jar="/Users/HMW/AndroidStudioProjects/LegislativeYuanLog/app/libs/slf4j-android-1.6.1-RC1.jar"
+        dex="H:\AndroidStudioProjects\g0v-twly-voter-guide-android\app\build\intermediates\pre-dexed\debug\slf4j-android-1.6.1-RC1-366829425be76fee277dafa432677d7cd8e35867.jar"
+        jar="H:\AndroidStudioProjects\g0v-twly-voter-guide-android\app\libs\slf4j-android-1.6.1-RC1.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="a0b527e8aabcc1f1e97d1674dc3f4f0794ec5df1"/>
     <item
-        dex="/Users/HMW/AndroidStudioProjects/LegislativeYuanLog/app/build/intermediates/pre-dexed/debug/android-support-v13-fdc39d02196f52c8ededc54e447ee4b8d65076ec.jar"
-        jar="/Users/HMW/AndroidStudioProjects/LegislativeYuanLog/app/libs/android-support-v13.jar"
+        dex="H:\AndroidStudioProjects\g0v-twly-voter-guide-android\app\build\intermediates\pre-dexed\debug\android-support-v13-e28a34804bc48c33caf3ce0c15318078337b8173.jar"
+        jar="H:\AndroidStudioProjects\g0v-twly-voter-guide-android\app\libs\android-support-v13.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="67a612e91a8c7f89536d5cf896fdfef7269a285d"/>
