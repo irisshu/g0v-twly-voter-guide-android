@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import g0v.ly.android.bill.FragmentBillList;
 import g0v.ly.android.data.list.DataLists;
 import g0v.ly.android.legislator.Profile;
@@ -28,6 +29,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Crashlytics.start(this);
 		setContentView(R.layout.activity_main);
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
