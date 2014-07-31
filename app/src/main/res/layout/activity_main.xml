@@ -15,11 +15,8 @@
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-<<<<<<< HEAD
         android:name="g0v.ly.android.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer"/>
-=======
-        android:name="g0v.ly.android.NavigationDrawerFragment"/>
->>>>>>> 1fc36aa1ca18e0018c6c9b4394057d73ddcd9b60
+
 
 </android.support.v4.widget.DrawerLayout>
