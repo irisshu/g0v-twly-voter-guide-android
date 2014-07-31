@@ -1,21 +1,25 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="g0v.ly.android.MainActivity">
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:tools="http://schemas.android.com/tools"
+                                        android:id="@+id/drawer_layout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        tools:context="g0v.ly.android.MainActivity">
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
-    <fragment android:id="@+id/navigation_drawer"
+    <fragment
+        android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+<<<<<<< HEAD
         android:name="g0v.ly.android.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer"/>
+=======
+        android:name="g0v.ly.android.NavigationDrawerFragment"/>
+>>>>>>> 1fc36aa1ca18e0018c6c9b4394057d73ddcd9b60
 
 </android.support.v4.widget.DrawerLayout>

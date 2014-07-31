@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="g0v.ly.android.legislator.Profile">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="g0v.ly.android.legislator.Profile">
 
     <Spinner
         android:id="@+id/spinner_legislator_name"
@@ -52,36 +52,48 @@
         android:layout_below="@+id/profile_and_img_relative_layout">
 
         <TableRow>
+
             <TextView android:id="@+id/legislator_profile_info_ad_title"/>
+
             <TextView
                 android:id="@+id/legislator_profile_info_ad"
                 android:layout_weight="5"/>
         </TableRow>
 
         <TableRow>
+
             <TextView android:id="@+id/legislator_profile_info_gender_title"/>
+
             <TextView
                 android:id="@+id/legislator_profile_info_gender"
                 android:layout_weight="3"/>
         </TableRow>
 
         <TableRow>
+
             <TextView android:id="@+id/legislator_profile_info_party_title"/>
+
             <TextView android:id="@+id/legislator_profile_info_party"/>
         </TableRow>
 
         <TableRow>
+
             <TextView android:id="@+id/legislator_profile_info_county_title"/>
+
             <TextView android:id="@+id/legislator_profile_info_county"/>
         </TableRow>
 
         <TableRow>
+
             <TextView android:id="@+id/legislator_profile_info_education_title"/>
+
             <TextView android:id="@+id/legislator_profile_info_education"/>
         </TableRow>
 
         <TableRow>
+
             <TextView android:id="@+id/legislator_profile_info_experience_title"/>
+
             <TextView android:id="@+id/legislator_profile_info_experience"/>
         </TableRow>
 

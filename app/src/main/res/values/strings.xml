@@ -11,4 +11,14 @@
     <string name="coming_soon">coming soon!</string>
     <string name="title_1">委員</string>
 
+    <string-array name="navigation_drawer_list">
+        <item>委員</item>
+        <item>基本資料</item>
+        <item>出席紀錄</item>
+        <item>政治獻金</item>
+        <item>議案</item>
+        <item>基本資料</item>
+        <item>表決紀錄</item>
+    </string-array>
+
 </resources>
