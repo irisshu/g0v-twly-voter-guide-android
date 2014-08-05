@@ -14,24 +14,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import g0v.ly.android.bill.FragmentBillList;
 import g0v.ly.android.legislator.Profile;
 import g0v.ly.android.utility.FontManager;
 
 @SuppressWarnings("ALL")
-public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+
+public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
-        mNavigationDrawerFragment =
-                (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
@@ -53,24 +57,20 @@ public class MainActivity extends FragmentActivity
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
                 break;
             case 2:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
-                        position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
                 break;
             case 3:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
-                        position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
                 break;
             case 5:
                 FragmentBillList fragmentBillList = new FragmentBillList();
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentBillList).commit();
                 break;
             case 6:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
-                        position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
                 break;
             case 7:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
-                        position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
                 break;
 
         }
@@ -126,6 +126,7 @@ public class MainActivity extends FragmentActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
