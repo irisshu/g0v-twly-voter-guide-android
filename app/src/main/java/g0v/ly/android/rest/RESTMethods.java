@@ -14,13 +14,13 @@ import java.io.IOException;
 public class RESTMethods {
     private static final Logger logger = LoggerFactory.getLogger(RESTMethods.class);
 
-    public interface RestApiCallback {
-        void getDone(String response, long spendTime, int page);
-    }
-
     public void restGet(String getUrl, RestApiCallback restApiCallback) {
         RESTGetAsyncTask restGetAsyncTask = new RESTGetAsyncTask(getUrl, restApiCallback);
         restGetAsyncTask.execute();
+    }
+
+    public interface RestApiCallback {
+        void getDone(String response, long spendTime, int page);
     }
 
     private class RESTGetAsyncTask extends AsyncTask<Void, Integer, Void> {

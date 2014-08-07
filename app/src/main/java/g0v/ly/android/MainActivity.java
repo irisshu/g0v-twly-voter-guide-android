@@ -133,15 +133,15 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public PlaceholderFragment() {
+        }
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
-        }
-
-        public PlaceholderFragment() {
         }
 
         @Override
