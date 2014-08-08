@@ -23,7 +23,8 @@ import g0v.ly.android.utility.FontManager;
 @SuppressWarnings("ALL")
 
 
-public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends FragmentActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -35,7 +36,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment =
+                (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
@@ -57,20 +59,24 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
                 break;
             case 2:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
+                        position + 1)).commit();
                 break;
             case 3:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
+                        position + 1)).commit();
                 break;
             case 5:
                 FragmentBillList fragmentBillList = new FragmentBillList();
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentBillList).commit();
                 break;
             case 6:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
+                        position + 1)).commit();
                 break;
             case 7:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
+                        position + 1)).commit();
                 break;
 
         }
@@ -133,15 +139,15 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public PlaceholderFragment() {
+        }
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
-        }
-
-        public PlaceholderFragment() {
         }
 
         @Override
