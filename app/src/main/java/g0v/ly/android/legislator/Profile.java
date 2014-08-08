@@ -302,6 +302,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 
         initSpiderWebChart();
 
+        /*
         // setup text view fonts
         FontManager fontManager = FontManager.getInstance();
         fontManager.setContext(getActivity());
@@ -320,6 +321,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
         tvProfileEducation.setTypeface(droidSansFallback);
         tvProfileExperienceTitle.setTypeface(droidSansFallback);
         tvProfileExperience.setTypeface(droidSansFallback);
+        */
 
         // setup titles
         String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
