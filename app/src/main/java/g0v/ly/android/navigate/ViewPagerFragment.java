@@ -10,25 +10,16 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import g0v.ly.android.R;
 
 public class ViewPagerFragment extends Fragment {
 
-    public interface ViewPagerInnerFragment {
-        public void enter();
-        //public void leave();
-        //public boolean controlEnabled();
-    }
-
     private static final int NUM_PAGES = 5;
-
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-
-    private SparseArray<ViewPagerInnerFragment> innerFragments = new SparseArray<ViewPagerInnerFragment>();
-
+    private SparseArray<ViewPagerInnerFragment> innerFragments =
+            new SparseArray<ViewPagerInnerFragment>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +32,13 @@ public class ViewPagerFragment extends Fragment {
         viewPager.setAdapter(pagerAdapter);
 
         return view;
+    }
+
+
+    public interface ViewPagerInnerFragment {
+        public void enter();
+        //public void leave();
+        //public boolean controlEnabled();
     }
 
     public class TestViewPagerAdapter extends FragmentPagerAdapter {

@@ -15,7 +15,7 @@ public class TestFragment extends Fragment implements ViewPagerFragment.ViewPage
     private TextView title;
     private int index;
 
-    public TestFragment (int index) {
+    public TestFragment(int index) {
         this.index = index;
     }
 
