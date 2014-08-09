@@ -49,13 +49,11 @@ public class FragmentViewPager extends Fragment {
 
         public TestViewPagerAdapter(Fragment fragment) {
             super(fragment.getChildFragmentManager());
-
-
         }
 
         @Override
         public Fragment getItem(int i) {
-            return new FragmentTest(i);
+            return new FragmentTest(i, 300);
         }
 
         @Override

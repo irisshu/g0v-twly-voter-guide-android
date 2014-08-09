@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import g0v.ly.android.R;
@@ -12,10 +13,14 @@ import g0v.ly.android.R;
 
 public class FragmentTest extends Fragment { // implements FragmentViewPager
 // .ViewPagerInnerFragment {
-    private int index;
+    private ScrollView scrollView;
 
-    public FragmentTest(int index) {
+    private int index;
+    private int scrollTo;
+
+    public FragmentTest(int index, int scrollTo) {
         this.index = index;
+        this.scrollTo = scrollTo;
     }
 
     @Override
@@ -27,6 +32,14 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         TextView title2 = (TextView) view.findViewById(R.id.title2);
         TextView title3 = (TextView) view.findViewById(R.id.title3);
         TextView title4 = (TextView) view.findViewById(R.id.title4);
+
+        scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
+
+        scrollView.post(new Runnable() {
+            public void run() {
+                scrollView.scrollTo(0, scrollTo);
+            }
+        });
 
         title1.setText("Title 1\n");
         title1.append("I'm num " + index + " fragment");
@@ -41,5 +54,9 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         title4.append("I'm num " + index + " fragment");
 
         return view;
+    }
+
+    public int getCurrentScrollY() {
+        return scrollView.getScrollY();
     }
 }
