@@ -17,7 +17,8 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 
 import g0v.ly.android.bill.FragmentBillList;
-import g0v.ly.android.legislator.Profile;
+import g0v.ly.android.legislator.FragmentProfile;
+import g0v.ly.android.navigate.FragmentViewPager;
 import g0v.ly.android.utility.FontManager;
 
 @SuppressWarnings("ALL")
@@ -55,12 +56,13 @@ public class MainActivity extends FragmentActivity
                 //Log.d("MainActivity", "Title row clicked");
                 break;
             case 1:
-                Profile fragmentProfile = new Profile();
+                FragmentProfile fragmentProfile = new FragmentProfile();
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
                 break;
             case 2:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
-                        position + 1)).commit();
+                FragmentViewPager fragmentViewPager = new FragmentViewPager();
+                fragmentManager.beginTransaction().replace(R.id.container,
+                        fragmentViewPager).commit();
                 break;
             case 3:
                 fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
