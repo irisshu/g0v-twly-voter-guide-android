@@ -10,12 +10,13 @@ import android.widget.TextView;
 import g0v.ly.android.R;
 
 
-public class TestFragment extends Fragment implements ViewPagerFragment.ViewPagerInnerFragment {
+public class FragmentTest extends Fragment { // implements FragmentViewPager
+// .ViewPagerInnerFragment {
 
     private TextView title;
     private int index;
 
-    public TestFragment(int index) {
+    public FragmentTest(int index) {
         this.index = index;
     }
 
@@ -25,12 +26,8 @@ public class TestFragment extends Fragment implements ViewPagerFragment.ViewPage
         View view = inflater.inflate(R.layout.fragment_test, container, false);
 
         title = (TextView) view.findViewById(R.id.title);
+        title.setText("I'm num " + index + " fragment");
 
         return view;
-    }
-
-    @Override
-    public void enter() {
-        title.setText("I'm num " + index + " fragment");
     }
 }

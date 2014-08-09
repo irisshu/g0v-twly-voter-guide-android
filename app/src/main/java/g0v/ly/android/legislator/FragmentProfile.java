@@ -39,8 +39,8 @@ import g0v.ly.android.utility.FontManager;
 import g0v.ly.android.utility.androidcharts.SpiderWebChart;
 import g0v.ly.android.utility.androidcharts.TitleValueEntity;
 
-public class Profile extends Fragment implements RESTMethods.RestApiCallback {
-    private static final Logger logger = LoggerFactory.getLogger(Profile.class);
+public class FragmentProfile extends Fragment implements RESTMethods.RestApiCallback {
+    private static final Logger logger = LoggerFactory.getLogger(FragmentProfile.class);
 
     // Legislators' profile info title
     private static final int PROFILE_INFO_COUNT = 7;
@@ -93,7 +93,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
 		/* TODO ad selectable */
         restMethods = new RESTMethods();
         String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
-        restMethods.restGet(getUrl, Profile.this);
+        restMethods.restGet(getUrl, FragmentProfile.this);
         setupOnclickListeners();
 
         return view;
@@ -184,7 +184,7 @@ public class Profile extends Fragment implements RESTMethods.RestApiCallback {
         if (hasNextPage) {
             restMethods.restGet(
                     "https://twly.herokuapp.com/api/legislator_terms/?page=" + (page + 1) +
-                            "&ad=8", Profile.this
+                            "&ad=8", FragmentProfile.this
             );
         } else {
             logger.debug("[Profile] getDone hasNextPage = false");

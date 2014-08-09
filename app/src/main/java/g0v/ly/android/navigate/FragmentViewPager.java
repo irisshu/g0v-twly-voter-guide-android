@@ -6,21 +6,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import g0v.ly.android.R;
 
-public class ViewPagerFragment extends Fragment {
+public class FragmentViewPager extends Fragment {
 
     private static final int NUM_PAGES = 5;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+/*
     private SparseArray<ViewPagerInnerFragment> innerFragments =
             new SparseArray<ViewPagerInnerFragment>();
-
+*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,6 +31,9 @@ public class ViewPagerFragment extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         pagerAdapter = new TestViewPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
+
+        // debug toast
+        Toast.makeText(view.getContext(), "FragmentViewPager", Toast.LENGTH_LONG).show();
 
         return view;
     }
@@ -51,7 +55,7 @@ public class ViewPagerFragment extends Fragment {
 
         @Override
         public Fragment getItem(int i) {
-            return null;
+            return new FragmentTest(i);
         }
 
         @Override
