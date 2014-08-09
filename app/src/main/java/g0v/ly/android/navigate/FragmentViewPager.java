@@ -11,13 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import g0v.ly.android.R;
 
 public class FragmentViewPager extends Fragment {
 
+    private static final Logger logger = LoggerFactory.getLogger(FragmentViewPager.class);
+
     private static final int NUM_PAGES = 5;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+
+    private List<Fragment> testFragments = new ArrayList <Fragment>();
 /*
     private SparseArray<ViewPagerInnerFragment> innerFragments =
             new SparseArray<ViewPagerInnerFragment>();
@@ -53,12 +63,21 @@ public class FragmentViewPager extends Fragment {
 
         @Override
         public Fragment getItem(int i) {
+            // TODO: get previous fragment's y position and pass to next fragment.
+
             return new FragmentTest(i, 300);
         }
 
         @Override
         public int getCount() {
             return NUM_PAGES;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+
+            logger.error("destroy {}", position);
         }
     }
 }
