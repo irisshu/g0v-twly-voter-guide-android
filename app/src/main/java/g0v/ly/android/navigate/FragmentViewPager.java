@@ -27,11 +27,24 @@ public class FragmentViewPager extends Fragment {
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
 
-    private List<Fragment> testFragments = new ArrayList <Fragment>();
+    private FragmentTest fragmentTest;
+
+    private int lastFragmentIndex = 0;
+    private int lastY = 0;
+    private FragmentTest lastFragment;
+    //private List<Fragment> testFragments = new ArrayList <Fragment>();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 /*
-    private SparseArray<ViewPagerInnerFragment> innerFragments =
-            new SparseArray<ViewPagerInnerFragment>();
+        for (int i = 0; i < NUM_PAGES; i++) {
+            testFragments.add(new FragmentTest(i, 0));
+        }
+        lastFragment = (FragmentTest) testFragments.get(0);
 */
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,14 +61,7 @@ public class FragmentViewPager extends Fragment {
         return view;
     }
 
-
-    public interface ViewPagerInnerFragment {
-        public void enter();
-        //public void leave();
-        //public boolean controlEnabled();
-    }
-
-    public class TestViewPagerAdapter extends FragmentPagerAdapter {
+    public class TestViewPagerAdapter extends FragmentPagerAdapter{
 
         public TestViewPagerAdapter(Fragment fragment) {
             super(fragment.getChildFragmentManager());
@@ -64,20 +70,35 @@ public class FragmentViewPager extends Fragment {
         @Override
         public Fragment getItem(int i) {
             // TODO: get previous fragment's y position and pass to next fragment.
+/*
+            FragmentTest fragmentTest = (FragmentTest) testFragments.get(lastFragmentIndex);
+            lastY = fragmentTest.getY();
+            lastFragmentIndex = i;
 
-            return new FragmentTest(i, 300);
+            logger.error("last y = " + lastY + ", last index = " + lastFragmentIndex);
+
+            fragmentTest = (FragmentTest) testFragments.get(i);
+            fragmentTest.setScrollViewY(lastY);
+*/
+            int lastY = 0;
+
+            if (fragmentTest != null) {
+                lastY = fragmentTest.getY();
+            }
+            else {
+                logger.error("fragmentTest = null");
+            }
+
+            logger.error("lastY = {}", lastY);
+
+            fragmentTest = new FragmentTest(i, lastY);
+
+            return fragmentTest;
         }
 
         @Override
         public int getCount() {
             return NUM_PAGES;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            super.destroyItem(container, position, object);
-
-            logger.error("destroy {}", position);
         }
     }
 }
