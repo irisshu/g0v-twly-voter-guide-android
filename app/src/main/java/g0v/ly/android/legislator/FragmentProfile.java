@@ -237,29 +237,30 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         }
     }
 
+    // Put data in SpiderWebChart.
     private void initSpiderWebChart() {
 
         String[] webChartTitle =
                 resources.getStringArray(R.array.legislator_profile_radar_chart_title);
 
         // TODO create with class
-        List<TitleValueEntity> data1 = new ArrayList<TitleValueEntity>();
-        data1.add(new TitleValueEntity(webChartTitle[0], 3));
-        data1.add(new TitleValueEntity(webChartTitle[1], 4));
-        data1.add(new TitleValueEntity(webChartTitle[2], 9));
-        data1.add(new TitleValueEntity(webChartTitle[3], 8));
-        data1.add(new TitleValueEntity(webChartTitle[4], 10));
+        List<TitleValueEntity> red_own = new ArrayList<TitleValueEntity>();
+        red_own.add(new TitleValueEntity(webChartTitle[0], 3));  //委員會缺席次數 committee_absent_count
+        red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
+        red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
+        red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
+        red_own.add(new TitleValueEntity(webChartTitle[4], 10)); //沒投票次數 not_vote_count
 
-        List<TitleValueEntity> data2 = new ArrayList<TitleValueEntity>();
-        data2.add(new TitleValueEntity(webChartTitle[0], 3));
-        data2.add(new TitleValueEntity(webChartTitle[1], 4));
-        data2.add(new TitleValueEntity(webChartTitle[2], 5));
-        data2.add(new TitleValueEntity(webChartTitle[3], 6));
-        data2.add(new TitleValueEntity(webChartTitle[4], 7));
+        List<TitleValueEntity> blue_ave = new ArrayList<TitleValueEntity>();
+        blue_ave.add(new TitleValueEntity(webChartTitle[0], 3));
+        blue_ave.add(new TitleValueEntity(webChartTitle[1], 4));
+        blue_ave.add(new TitleValueEntity(webChartTitle[2], 5));
+        blue_ave.add(new TitleValueEntity(webChartTitle[3], 6));
+        blue_ave.add(new TitleValueEntity(webChartTitle[4], 7));
 
         List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
-        data.add(data1);
-        data.add(data2);
+        data.add(red_own);
+        data.add(blue_ave);
 
         addRadarChartData(data);
         spiderWebChart.setLatitudeNum(5);//XXX method useless, check lib
