@@ -10,9 +10,8 @@
                         xmlns:tools="http://schemas.android.com/tools"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="6dp"
+                        android:padding="12dp"
                         tools:context="g0v.ly.android.legislator.Profile">
-
 
 
             <Spinner
