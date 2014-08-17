@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.slf4j.Logger;
@@ -20,15 +19,24 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
 
     private static final Logger logger = LoggerFactory.getLogger(FragmentTest.class);
 
-    private ScrollView scrollView;
+    private SynchronizedScrollView scrollView;
     private int index;
     private int scrollTo;
 
     private int y = 0;
 
-    public FragmentTest(int index, int scrollTo) {
+    private SynchronizedScrollView.ScrollViewListener scrollViewListener;
+
+    public FragmentTest(int index, int scrollTo, SynchronizedScrollView.ScrollViewListener scrollViewListener) {
         this.index = index;
         this.scrollTo = scrollTo;
+        if (scrollViewListener == null) {
+            logger.error("scrollViewListener == null");
+        }
+        else {
+            this.scrollViewListener = scrollViewListener;
+            scrollView.setScrollViewListener(scrollViewListener);
+        }
     }
 
     @Override
@@ -50,7 +58,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         title4.setText("Title 4\n");
         title4.append("I'm num " + index + " fragment");
 
-        scrollView = (ScrollView) rootView.findViewById(R.id.scroll_view);
+        scrollView = (SynchronizedScrollView) rootView.findViewById(R.id.scroll_view);
         setupOnClickListener();
 
         if (scrollTo != 0) {
@@ -80,6 +88,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
                     case MotionEvent.ACTION_MOVE:
                         y = getCurrentScrollY();
                         logger.error("ACTION_MOVE y {}", y);
+                        scrollViewListener.onScrollChanged(scrollView, 0, y, 0, 0);
                         break;
                     default:
                         break;
@@ -100,7 +109,11 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         }
     }
 
-    public int getY() {
-        return y;
+    public int getIndex() {
+        return index;
+    }
+
+    public void setY(int y) {
+        scrollView.setY(y);
     }
 }

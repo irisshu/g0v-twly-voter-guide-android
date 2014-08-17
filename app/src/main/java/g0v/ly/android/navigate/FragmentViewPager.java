@@ -19,17 +19,14 @@ import java.util.List;
 
 import g0v.ly.android.R;
 
-public class FragmentViewPager extends Fragment {
+public class FragmentViewPager extends Fragment implements
+        SynchronizedScrollView.ScrollViewListener {
 
     private static final Logger logger = LoggerFactory.getLogger(FragmentViewPager.class);
 
     private static final int NUM_PAGES = 5;
-    private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
 
-    private FragmentTest fragmentTest;
-
-    private List<Fragment> fragments = new ArrayList<Fragment>();
+    private List<FragmentTest> fragments = new ArrayList<FragmentTest>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +34,7 @@ public class FragmentViewPager extends Fragment {
 
         // Create FragmentTest and add to list
         for (int i = 0; i < NUM_PAGES; i++) {
-            fragments.add(new FragmentTest(0, 0));
+            fragments.add(new FragmentTest(0, 0, this));
         }
     }
 
@@ -47,14 +44,23 @@ public class FragmentViewPager extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
-        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
-        pagerAdapter = new TestViewPagerAdapter(this);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        PagerAdapter pagerAdapter = new TestViewPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
 
         // debug toast
         Toast.makeText(view.getContext(), "FragmentViewPager", Toast.LENGTH_LONG).show();
 
         return view;
+    }
+
+    @Override
+    public void onScrollChanged(
+            SynchronizedScrollView scrollView, int x, int y, int oldx, int oldy) {
+        for (FragmentTest fragmentTest : fragments) {
+            logger.error("ViewPager onScrollChange, index = {}", fragmentTest.getIndex());
+            //fragmentTest.setY(y);
+        }
     }
 
     public class TestViewPagerAdapter extends FragmentPagerAdapter{
@@ -66,19 +72,6 @@ public class FragmentViewPager extends Fragment {
         @Override
         public Fragment getItem(int i) {
             // TODO: get previous fragment's y position and pass to next fragment.
-/*
-            int lastY = 0;
-            if (fragmentTest != null) {
-                lastY = fragmentTest.getY();
-            }
-            else {
-                logger.error("fragmentTest = null");
-            }
-            logger.error("lastY = {}", lastY);
-            fragmentTest = new FragmentTest(i, lastY);
-*/
-            
-
             return fragments.get(i);//fragmentTest;
         }
 
