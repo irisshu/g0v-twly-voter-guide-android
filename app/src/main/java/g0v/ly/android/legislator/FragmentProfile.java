@@ -76,6 +76,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     List<TitleValueEntity> blue_ave = new ArrayList<TitleValueEntity>();
     List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 
+
     private RESTMethods restMethods;
 
     private long totalSpendTime = 0;
@@ -302,13 +303,17 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private void updateSpiderWebChart(String msg){
 
         tvProfileAd.setText("hi " + msg);
-        red_own.add(new TitleValueEntity(webChartTitle[0], Float.parseFloat(msg)));  //沒投票次數 not_vote_count
+
+        red_own.set(0,new TitleValueEntity(webChartTitle[0], 8));  //沒投票次數 not_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
         red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
-        red_own.add(new TitleValueEntity(webChartTitle[4], 3));  //委員會缺席次數 committee_absent_count
+        red_own.add(new TitleValueEntity(webChartTitle[4], 11));  //委員會缺席次數 committee_absent_count
 
-        data.add(red_own);
+
+        //data.add(red_own);
+        data.set(0,red_own);
+
         addRadarChartData(data);
         spiderWebChart.setLatitudeNum(5);
         spiderWebChart.refreshDrawableState();
@@ -382,7 +387,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
         spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
         initSpiderWebChart("1" );
-        
+
 
         // setup titles
         String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
