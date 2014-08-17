@@ -52,6 +52,15 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int PROFILE_INFO_EXPERIENCE = 5;
     private static final int PROFILE_INFO_PHOTO = 6;
 
+    // RadarChart number
+    private static final int ABSENT_COUNT = 5;
+    private static final int NOT_VOTE_COUNT = 0;
+    private static final int CONSCIENCE_VOTE_COUNT = 1;
+    private static final int PRIMARY_PROPOSER_COUNT = 2;
+    private static final int LY_ABSENT_COUNT = 3;
+    private static final int COMMITTEE_ABSENT_COUNT = 4;
+
+
     private TextView tvResponse;
     private TextView tvProfileAd;
     private TextView tvProfileGender;
@@ -62,25 +71,36 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private ImageView imgProfile;
     private Spinner legislatorNameSpinner;
 
+
+    List<TitleValueEntity> red_own = new ArrayList<TitleValueEntity>();
+    List<TitleValueEntity> blue_ave = new ArrayList<TitleValueEntity>();
+    List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
+
     private RESTMethods restMethods;
 
     private long totalSpendTime = 0;
     private String[] legislatorNameArray;
     private String[] legislatorProfileArray;
+    private String[] legislatorAbsentArray;
     private boolean hasNextPage = true;
 
     private SpiderWebChart spiderWebChart;
 
     private Resources resources;
+    String[] webChartTitle;
+
 
     // Key => legislator's name, Value => legislator's profile
     private Map<String, String[]> legislatorListWithProfile = new HashMap<String, String[]>();
+    private Map<String, String[]> legislatorListWithAbsent = new HashMap<String, String[]>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resources = getResources();
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,12 +135,17 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                     legislatorNameArray = new String[results.length()];
                     String[] legislatorProfileInfoApiKey =
                             resources.getStringArray(R.array.legislator_profile_info_api_key);
+                    //Iris
+                    String[] legislatorProfileRadarChartApiKey =
+                            resources.getStringArray(R.array.legislator_profile_radar_chart_api_key);
+
 
                     for (int i = 0; i < results.length(); i++) {
                         // get legislator's name
                         JSONObject legislator = results.getJSONObject(i);
                         legislatorNameArray[i] = legislator.getString("name");
                         legislatorProfileArray = new String[PROFILE_INFO_COUNT];
+                        legislatorAbsentArray = new String[ABSENT_COUNT];
 
                         // get legislator's profile
                         for (int j = 0; j < legislatorProfileArray.length; j++) {
@@ -155,7 +180,36 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                                     break;
                             }
                         }
+
+                        // get legislator's absent counts
+                        for (int j = 0; j < legislatorAbsentArray.length; j++) {
+                            switch (j) {
+                                case 0:
+                                    legislatorAbsentArray[j] =
+                                            legislator.getString(legislatorProfileRadarChartApiKey[NOT_VOTE_COUNT]);
+                                    break;
+                                case 1:
+                                    legislatorAbsentArray[j] =
+                                            legislator.getString(legislatorProfileRadarChartApiKey[CONSCIENCE_VOTE_COUNT]);
+                                    break;
+                                case 2:
+                                    legislatorAbsentArray[j] =
+                                            legislator.getString(legislatorProfileRadarChartApiKey[PRIMARY_PROPOSER_COUNT]);
+                                    break;
+                                case 3:
+                                    legislatorAbsentArray[j] =
+                                            legislator.getString(legislatorProfileRadarChartApiKey[LY_ABSENT_COUNT]);
+                                    break;
+                                case 4:
+                                    legislatorAbsentArray[j] =
+                                            legislator.getString(legislatorProfileRadarChartApiKey[COMMITTEE_ABSENT_COUNT]);
+                                    break;
+
+                            }
+                        }
+
                         legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
+                        legislatorListWithAbsent.put(legislatorNameArray[i], legislatorAbsentArray);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -191,6 +245,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         }
     }
 
+
     private void setupOnclickListeners() {
 
         legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -200,6 +255,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                 Toast.makeText(getActivity(),
                         "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
 
+
+
                 if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
                     updateTextView(tvProfileAd, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_AD], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileGender, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_GENDER], TvUpdateType.OVERWRITE);
@@ -207,6 +264,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                     updateTextView(tvProfileCounty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_COUNTY], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
+
+                    updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_COUNT]);
 
                     GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
                     getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);
@@ -221,6 +280,9 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
             }
         });
     }
+
+
+
 
     private void updateTextView(TextView tv, String msg, TvUpdateType updateType) {
         switch (updateType) {
@@ -237,34 +299,53 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         }
     }
 
-    // Put data in SpiderWebChart.
-    private void initSpiderWebChart() {
+    private void updateSpiderWebChart(String msg){
 
-        String[] webChartTitle =
-                resources.getStringArray(R.array.legislator_profile_radar_chart_title);
-
-        // TODO create with class
-        List<TitleValueEntity> red_own = new ArrayList<TitleValueEntity>();
-        red_own.add(new TitleValueEntity(webChartTitle[0], 3));  //委員會缺席次數 committee_absent_count
+        tvProfileAd.setText("hi " + msg);
+        red_own.add(new TitleValueEntity(webChartTitle[0], Float.parseFloat(msg)));  //沒投票次數 not_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
         red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
-        red_own.add(new TitleValueEntity(webChartTitle[4], 10)); //沒投票次數 not_vote_count
+        red_own.add(new TitleValueEntity(webChartTitle[4], 3));  //委員會缺席次數 committee_absent_count
 
-        List<TitleValueEntity> blue_ave = new ArrayList<TitleValueEntity>();
-        blue_ave.add(new TitleValueEntity(webChartTitle[0], 3));
+        data.add(red_own);
+        addRadarChartData(data);
+        spiderWebChart.setLatitudeNum(5);
+        spiderWebChart.refreshDrawableState();
+         //spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+
+    }
+
+    // Put data in SpiderWebChart.
+    public void initSpiderWebChart( String nvc ) {
+
+        webChartTitle =  resources.getStringArray(R.array.legislator_profile_radar_chart_title);
+
+        // TODO create with class
+
+        red_own.add(new TitleValueEntity(webChartTitle[0], Integer.parseInt(nvc)));  //沒投票次數 not_vote_count
+        red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
+        red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
+        red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
+        red_own.add(new TitleValueEntity(webChartTitle[4], 8));  //委員會缺席次數 committee_absent_count
+
+
+        blue_ave.add(new TitleValueEntity(webChartTitle[0], 3)); //先固定數字
         blue_ave.add(new TitleValueEntity(webChartTitle[1], 4));
         blue_ave.add(new TitleValueEntity(webChartTitle[2], 5));
         blue_ave.add(new TitleValueEntity(webChartTitle[3], 6));
         blue_ave.add(new TitleValueEntity(webChartTitle[4], 7));
 
-        List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
+
         data.add(red_own);
         data.add(blue_ave);
 
         addRadarChartData(data);
         spiderWebChart.setLatitudeNum(5);//XXX method useless, check lib
     }
+
+
+
 
     // =============================================================================================
 
@@ -300,29 +381,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         imgProfile = (ImageView) view.findViewById(R.id.profile_img);
         legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
         spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
-
-        initSpiderWebChart();
-
-        /*
-        // setup text view fonts
-        FontManager fontManager = FontManager.getInstance();
-        fontManager.setContext(getActivity());
-        Typeface robotoLight = fontManager.getRobotoLight();
-        Typeface droidSansFallback = fontManager.getDroidSansFallback();
-        tvResponse.setTypeface(robotoLight);
-        tvProfileAdTitle.setTypeface(droidSansFallback);
-        tvProfileAd.setTypeface(droidSansFallback);
-        tvProfileGenderTitle.setTypeface(droidSansFallback);
-        tvProfileGender.setTypeface(droidSansFallback);
-        tvProfilePartyTitle.setTypeface(droidSansFallback);
-        tvProfileParty.setTypeface(droidSansFallback);
-        tvProfileCountyTitle.setTypeface(droidSansFallback);
-        tvProfileCounty.setTypeface(droidSansFallback);
-        tvProfileEducationTitle.setTypeface(droidSansFallback);
-        tvProfileEducation.setTypeface(droidSansFallback);
-        tvProfileExperienceTitle.setTypeface(droidSansFallback);
-        tvProfileExperience.setTypeface(droidSansFallback);
-        */
+        initSpiderWebChart("1" );
+        
 
         // setup titles
         String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
