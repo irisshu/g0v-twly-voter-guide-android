@@ -14,6 +14,9 @@ import android.widget.Toast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import g0v.ly.android.R;
 
 public class FragmentViewPager extends Fragment {
@@ -26,9 +29,16 @@ public class FragmentViewPager extends Fragment {
 
     private FragmentTest fragmentTest;
 
+    private List<Fragment> fragments = new ArrayList<Fragment>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Create FragmentTest and add to list
+        for (int i = 0; i < NUM_PAGES; i++) {
+            fragments.add(new FragmentTest(0, 0));
+        }
     }
 
     @Override
@@ -56,20 +66,20 @@ public class FragmentViewPager extends Fragment {
         @Override
         public Fragment getItem(int i) {
             // TODO: get previous fragment's y position and pass to next fragment.
+/*
             int lastY = 0;
-
             if (fragmentTest != null) {
                 lastY = fragmentTest.getY();
             }
             else {
                 logger.error("fragmentTest = null");
             }
-
             logger.error("lastY = {}", lastY);
-
             fragmentTest = new FragmentTest(i, lastY);
+*/
+            
 
-            return fragmentTest;
+            return fragments.get(i);//fragmentTest;
         }
 
         @Override
