@@ -304,7 +304,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
         tvProfileAd.setText("hi " + msg);
 
-        red_own.set(0,new TitleValueEntity(webChartTitle[0], 8));  //沒投票次數 not_vote_count
+        red_own.set(0,new TitleValueEntity(webChartTitle[0], Float.parseFloat(msg)));  //沒投票次數 not_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
         red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
