@@ -34,7 +34,7 @@ public class FragmentViewPager extends Fragment implements
 
         // Create FragmentTest and add to list
         for (int i = 0; i < NUM_PAGES; i++) {
-            fragments.add(new FragmentTest(0, 0, this));
+            fragments.add(new FragmentTest(i, 0, this));
         }
     }
 
@@ -56,10 +56,21 @@ public class FragmentViewPager extends Fragment implements
 
     @Override
     public void onScrollChanged(
-            SynchronizedScrollView scrollView, int x, int y, int oldx, int oldy) {
+            SynchronizedScrollView scrollView, int index, int y) {
+        //logger.error("ViewPager onScrollChange, y = {}", y);
+
+        //for (int i = 0; i < fragments.size(); i++) {
         for (FragmentTest fragmentTest : fragments) {
-            logger.error("ViewPager onScrollChange, index = {}", fragmentTest.getIndex());
-            //fragmentTest.setY(y);
+            //logger.error("fragments size = {}", fragments.size());
+            //logger.error("[index, y] = [{}, {}]", index, y);
+            //logger.error("fragIndex = {}", fragments.get(i).getIndex());
+            //logger.error("[{}, {}]", index, fragmentTest.getIndex());
+
+            if (fragmentTest.getIndex() != index) {
+                logger.error("getIndex = {}", fragmentTest.getIndex());
+                fragmentTest.setY(y);
+            }
+
         }
     }
 

@@ -30,13 +30,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
     public FragmentTest(int index, int scrollTo, SynchronizedScrollView.ScrollViewListener scrollViewListener) {
         this.index = index;
         this.scrollTo = scrollTo;
-        if (scrollViewListener == null) {
-            logger.error("scrollViewListener == null");
-        }
-        else {
-            this.scrollViewListener = scrollViewListener;
-            scrollView.setScrollViewListener(scrollViewListener);
-        }
+        this.scrollViewListener = scrollViewListener;
     }
 
     @Override
@@ -59,7 +53,15 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         title4.append("I'm num " + index + " fragment");
 
         scrollView = (SynchronizedScrollView) rootView.findViewById(R.id.scroll_view);
+        scrollView.setIndex(index);
         setupOnClickListener();
+
+        if (scrollViewListener == null) {
+            logger.error("scrollViewListener == null");
+        }
+        else {
+            scrollView.setScrollViewListener(scrollViewListener);
+        }
 
         if (scrollTo != 0) {
             logger.error("scrollTo != 0");
@@ -81,14 +83,9 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        //y = getCurrentScrollY();
-                        //logger.error("ACTION_UP y {}", y);
-                        break;
                     case MotionEvent.ACTION_MOVE:
                         y = getCurrentScrollY();
-                        logger.error("ACTION_MOVE y {}", y);
-                        scrollViewListener.onScrollChanged(scrollView, 0, y, 0, 0);
+                        scrollViewListener.onScrollChanged(scrollView, index, y);
                         break;
                     default:
                         break;
@@ -101,7 +98,6 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
     private int getCurrentScrollY() {
         if (scrollView != null) {
             int y = scrollView.getScrollY();
-            logger.error("y = {}", y);
             return y;
         }
         else {
@@ -114,6 +110,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
     }
 
     public void setY(int y) {
-        scrollView.setY(y);
+        logger.error("[index, y] = [{}, {}]", index, y);
+        scrollView.scrollTo(0, y);
     }
 }
