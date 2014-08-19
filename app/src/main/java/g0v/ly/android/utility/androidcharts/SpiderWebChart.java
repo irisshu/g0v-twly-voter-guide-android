@@ -514,7 +514,7 @@ public class SpiderWebChart extends BaseChart {
 
         Paint mPaintFont = new Paint();
         mPaintFont.setColor(Color.BLACK);
-        mPaintFont.setTextSize(18);
+        mPaintFont.setTextSize(20);
 
         Path mPath = new Path();
         List<PointF> pointList = getWebAxisPoints(1);

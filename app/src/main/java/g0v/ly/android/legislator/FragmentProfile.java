@@ -266,7 +266,11 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                     updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
 
-                    updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_COUNT]);
+                    updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_COUNT],
+                            legislatorListWithAbsent.get(legislatorNameArray[position])[CONSCIENCE_VOTE_COUNT],
+                            legislatorListWithAbsent.get(legislatorNameArray[position])[PRIMARY_PROPOSER_COUNT],
+                            legislatorListWithAbsent.get(legislatorNameArray[position])[LY_ABSENT_COUNT],
+                            legislatorListWithAbsent.get(legislatorNameArray[position])[COMMITTEE_ABSENT_COUNT]     );
 
                     GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
                     getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);
@@ -300,16 +304,14 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         }
     }
 
-    private void updateSpiderWebChart(String msg){
+    private void updateSpiderWebChart(String nvc, String cvc, String pbc, String lac, String cac){
 
-        tvProfileAd.setText("hi " + msg);
-
-        red_own.set(0,new TitleValueEntity(webChartTitle[0], Float.parseFloat(msg)));  //沒投票次數 not_vote_count
-        red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
-        red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
-        red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
-        red_own.add(new TitleValueEntity(webChartTitle[4], 11));  //委員會缺席次數 committee_absent_count
-
+        // tvProfileAd.setText("hi " + msg);
+        red_own.set(0,new TitleValueEntity(webChartTitle[0], Float.parseFloat(nvc)/10));  //沒投票次數 not_vote_count
+        red_own.add(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
+        red_own.add(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
+        red_own.add(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
+        red_own.add(4,new TitleValueEntity(webChartTitle[4], Float.parseFloat(cac)));  //委員會缺席次數 committee_absent_count
 
         //data.add(red_own);
         data.set(0,red_own);
@@ -322,13 +324,13 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     }
 
     // Put data in SpiderWebChart.
-    public void initSpiderWebChart( String nvc ) {
+    public void initSpiderWebChart() {
 
         webChartTitle =  resources.getStringArray(R.array.legislator_profile_radar_chart_title);
 
         // TODO create with class
 
-        red_own.add(new TitleValueEntity(webChartTitle[0], Integer.parseInt(nvc)));  //沒投票次數 not_vote_count
+        red_own.add(new TitleValueEntity(webChartTitle[0], 2));  //沒投票次數 not_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
         red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
         red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
@@ -386,7 +388,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         imgProfile = (ImageView) view.findViewById(R.id.profile_img);
         legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
         spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
-        initSpiderWebChart("1" );
+        initSpiderWebChart( );
 
 
         // setup titles
