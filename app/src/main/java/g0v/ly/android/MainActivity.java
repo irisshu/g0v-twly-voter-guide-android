@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -21,6 +22,8 @@ import g0v.ly.android.legislator.FragmentProfile;
 import g0v.ly.android.navigate.FragmentViewPager;
 import g0v.ly.android.utility.FontManager;
 
+
+
 @SuppressWarnings("ALL")
 
 
@@ -29,6 +32,7 @@ public class MainActivity extends FragmentActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+
 
 
     @Override
@@ -155,11 +159,16 @@ public class MainActivity extends FragmentActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             assert rootView != null;
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+            //ImageView imgLegislation = (ImageView) rootView.findViewById(R.id.legislation_img);
+
             return rootView;
+
+
         }
 
         @Override

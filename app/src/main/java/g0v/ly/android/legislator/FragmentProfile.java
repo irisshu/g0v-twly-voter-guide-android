@@ -3,6 +3,7 @@ package g0v.ly.android.legislator;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -116,7 +117,6 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
         restMethods.restGet(getUrl, FragmentProfile.this);
         setupOnclickListeners();
-
         return view;
     }
 
@@ -389,7 +389,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
         spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
         initSpiderWebChart( );
-
+        view.setBackgroundColor(Color.WHITE);
 
         // setup titles
         String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
