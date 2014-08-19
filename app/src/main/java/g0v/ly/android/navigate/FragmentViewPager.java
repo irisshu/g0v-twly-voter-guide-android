@@ -67,7 +67,7 @@ public class FragmentViewPager extends Fragment implements
             //logger.error("[{}, {}]", index, fragmentTest.getIndex());
 
             if (fragmentTest.getIndex() != index) {
-                logger.error("getIndex = {}", fragmentTest.getIndex());
+                //logger.error("getIndex = {}", fragmentTest.getIndex());
                 fragmentTest.setY(y);
             }
 
@@ -89,6 +89,15 @@ public class FragmentViewPager extends Fragment implements
         @Override
         public int getCount() {
             return NUM_PAGES;
+        }
+
+        @Override
+        public float getPageWidth(int position) {
+            logger.error("******** position {}", position);
+            if (position == 0 || position == 2){
+                return 0.8f;
+            }
+            return 1f;
         }
     }
 }
