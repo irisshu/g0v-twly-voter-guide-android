@@ -34,9 +34,17 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        scrollView = new SynchronizedScrollView(getActivity());
+        logger.error("index {} onCreate", index);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_test, container, false);
+        logger.error("index {} onCreateView", index);
 
         TextView title1 = (TextView) rootView.findViewById(R.id.title1);
         TextView title2 = (TextView) rootView.findViewById(R.id.title2);
@@ -97,8 +105,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
 
     private int getCurrentScrollY() {
         if (scrollView != null) {
-            int y = scrollView.getScrollY();
-            return y;
+            return scrollView.getScrollY();
         }
         else {
             return 0;
@@ -109,8 +116,24 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         return index;
     }
 
-    public void setY(int y) {
-        logger.error("[index, y] = [{}, {}]", index, y);
-        scrollView.scrollTo(0, y);
+    public void setY(final int y) {
+        logger.error("[index, y] = [{}, {}]", index, scrollView.getY());
+        //logger.error("[index, y] = [{}, {}]", index, y);
+        /*
+        if (scrollView != null) {
+            logger.error("{} scroll view {}", index, scrollView);
+        }
+        else {
+            logger.error("{} scroll view = null", index);
+        }
+        */
+/*
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, y);
+            }
+        });
+*/
     }
 }

@@ -66,8 +66,9 @@ public class FragmentViewPager extends Fragment implements
             //logger.error("fragIndex = {}", fragments.get(i).getIndex());
             //logger.error("[{}, {}]", index, fragmentTest.getIndex());
 
-            if (fragmentTest.getIndex() != index) {
-                logger.error("getIndex = {}", fragmentTest.getIndex());
+            //if (fragmentTest.getIndex() != index) {
+            if ((fragmentTest.getIndex() == index + 1) || fragmentTest.getIndex() == index - 1) {
+                //logger.error("getIndex = {}", fragmentTest.getIndex());
                 fragmentTest.setY(y);
             }
 
