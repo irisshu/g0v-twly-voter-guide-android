@@ -9,8 +9,7 @@
         android:id="@+id/linear_layout"
         android:orientation = "vertical"
         android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:background="#FF0000">
+        android:layout_height = "wrap_content">
 
 
         <TextView
@@ -23,7 +22,6 @@
             android:id = "@+id/title2"
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:background="#FFFF00"
             android:paddingTop="250dp"/>
 
         <TextView
@@ -37,7 +35,6 @@
             android:id = "@+id/title4"
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:background="#FFFF00"
             android:paddingTop="250dp"/>
 
     </LinearLayout>

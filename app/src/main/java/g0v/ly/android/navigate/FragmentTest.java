@@ -1,5 +1,6 @@
 package g0v.ly.android.navigate;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -59,6 +60,25 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         title3.append("I'm num " + index + " fragment");
         title4.setText("Title 4\n");
         title4.append("I'm num " + index + " fragment");
+
+        // test set page width
+        switch (index) {
+            case 0:
+                rootView.setBackgroundColor(Color.rgb(256, 0, 0));
+                break;
+            case 1:
+                rootView.setBackgroundColor(Color.rgb(0, 256, 0));
+                break;
+            case 2:
+                rootView.setBackgroundColor(Color.rgb(0, 0, 256));
+                break;
+            case 3:
+                rootView.setBackgroundColor(Color.rgb(256, 0, 0));
+                break;
+            case 4:
+                rootView.setBackgroundColor(Color.rgb(0, 256, 0));
+                break;
+        }
 
         scrollView = (SynchronizedScrollView) rootView.findViewById(R.id.scroll_view);
         scrollView.setIndex(index);
