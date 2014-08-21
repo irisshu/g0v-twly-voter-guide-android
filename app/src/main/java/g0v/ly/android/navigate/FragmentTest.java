@@ -22,15 +22,13 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
 
     private SynchronizedScrollView scrollView;
     private int index;
-    private int scrollTo;
 
     private int y = 0;
 
     private SynchronizedScrollView.ScrollViewListener scrollViewListener;
 
-    public FragmentTest(int index, int scrollTo, SynchronizedScrollView.ScrollViewListener scrollViewListener) {
+    public FragmentTest(int index, SynchronizedScrollView.ScrollViewListener scrollViewListener) {
         this.index = index;
-        this.scrollTo = scrollTo;
         this.scrollViewListener = scrollViewListener;
     }
 
@@ -82,19 +80,6 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         else {
             scrollView.setScrollViewListener(scrollViewListener);
         }
-
-        if (scrollTo != 0) {
-            logger.error("scrollTo != 0");
-            scrollView.post(new Runnable() {
-                public void run() {
-                    scrollView.scrollTo(0, scrollTo);
-                }
-            });
-        }
-        else {
-            logger.error("scrollTo == 0");
-        }
-
         return rootView;
     }
 
@@ -117,8 +102,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
 
     private int getCurrentScrollY() {
         if (scrollView != null) {
-            int y = scrollView.getScrollY();
-            return y;
+            return scrollView.getScrollY();
         }
         else {
             return 0;
@@ -130,7 +114,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
     }
 
     public void setY(int y) {
-        //logger.error("[index, y] = [{}, {}]", index, y);
-        //scrollView.scrollTo(0, y);
+        logger.error("[index, y] = [{}, {}]", index, y);
+        scrollView.scrollTo(0, y);
     }
 }
