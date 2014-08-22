@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.slf4j.Logger;
@@ -15,14 +16,12 @@ import org.slf4j.LoggerFactory;
 import g0v.ly.android.R;
 
 
-public class FragmentTest extends Fragment { // implements FragmentViewPager
-// .ViewPagerInnerFragment {
+public class FragmentTest extends Fragment {
 
     private static final Logger logger = LoggerFactory.getLogger(FragmentTest.class);
 
     private SynchronizedScrollView scrollView;
-    private int index;
-
+    private int index = 0;
     private int y = 0;
 
     private SynchronizedScrollView.ScrollViewListener scrollViewListener;
@@ -42,6 +41,26 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_test, container, false);
 
+        // XXX hard code colors for 4 way ViewPager demo.
+        LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.linear_layout);
+        switch (index) {
+            case 0:
+                linearLayout.setBackgroundColor(Color.RED);
+                break;
+            case 1:
+                linearLayout.setBackgroundColor(Color.YELLOW);
+                break;
+            case 2:
+                linearLayout.setBackgroundColor(Color.GREEN);
+                break;
+            case 3:
+                linearLayout.setBackgroundColor(Color.BLUE);
+                break;
+            case 4:
+                linearLayout.setBackgroundColor(Color.BLACK);
+                break;
+        }
+
         TextView title1 = (TextView) rootView.findViewById(R.id.title1);
         TextView title2 = (TextView) rootView.findViewById(R.id.title2);
         TextView title3 = (TextView) rootView.findViewById(R.id.title3);
@@ -55,7 +74,6 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         title3.append("I'm num " + index + " fragment");
         title4.setText("Title 4\n");
         title4.append("I'm num " + index + " fragment");
-
         // test set page width
         switch (index) {
             case 0:
