@@ -75,10 +75,12 @@ public class FragmentViewPager extends Fragment implements
         public int getCount() {
             return NUM_PAGES;
         }
-
+        // TODO: show neighbors
+/*
         @Override
         public float getPageWidth(int position) {
             return 0.8f;
         }
+*/
     }
 }
