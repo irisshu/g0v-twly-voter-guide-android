@@ -37,7 +37,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        scrollView = new SynchronizedScrollView(getActivity());
+        //scrollView = new SynchronizedScrollView(getActivity());
         logger.error("index {} onCreate", index);
     }
 
@@ -90,7 +90,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         else {
             scrollView.setScrollViewListener(scrollViewListener);
         }
-
+/*
         if (scrollTo != 0) {
             logger.error("scrollTo != 0");
             scrollView.post(new Runnable() {
@@ -102,7 +102,7 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
         else {
             logger.error("scrollTo == 0");
         }
-
+*/
         return rootView;
     }
 
@@ -147,13 +147,13 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
             logger.error("{} scroll view = null", index);
         }
         */
-/*
+
         scrollView.post(new Runnable() {
             @Override
             public void run() {
                 scrollView.scrollTo(0, y);
             }
         });
-*/
+
     }
 }

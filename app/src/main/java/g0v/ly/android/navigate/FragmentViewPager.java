@@ -93,11 +93,14 @@ public class FragmentViewPager extends Fragment implements
 
         @Override
         public float getPageWidth(int position) {
-            logger.error("******** position {}", position);
+            //logger.error("******** position {}", position);
+            /*
             if (position == 0 || position == 2){
                 return 0.8f;
             }
             return 1f;
+            */
+            return 0.8f;
         }
     }
 }
