@@ -1,6 +1,5 @@
 package g0v.ly.android.navigate;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +18,9 @@ import g0v.ly.android.R;
 public class FragmentViewPager extends Fragment implements
         SynchronizedScrollView.ScrollViewListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(FragmentViewPager.class);
-
     private static final int NUM_PAGES = 5;
+
+    private ViewPager viewPager;
 
     private List<FragmentTest> fragments = new ArrayList<FragmentTest>();
 
@@ -34,7 +30,7 @@ public class FragmentViewPager extends Fragment implements
 
         // Create FragmentTest and add to list
         for (int i = 0; i < NUM_PAGES; i++) {
-            fragments.add(new FragmentTest(i, 0, this));
+            fragments.add(new FragmentTest(i, this));
         }
     }
 
@@ -44,7 +40,7 @@ public class FragmentViewPager extends Fragment implements
 
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         PagerAdapter pagerAdapter = new TestViewPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
 
@@ -55,22 +51,11 @@ public class FragmentViewPager extends Fragment implements
     }
 
     @Override
-    public void onScrollChanged(
-            SynchronizedScrollView scrollView, int index, int y) {
-        //logger.error("ViewPager onScrollChange, y = {}", y);
-
-        //for (int i = 0; i < fragments.size(); i++) {
+    public void onScrollChanged(SynchronizedScrollView scrollView, int index, int y) {
         for (FragmentTest fragmentTest : fragments) {
-            //logger.error("fragments size = {}", fragments.size());
-            //logger.error("[index, y] = [{}, {}]", index, y);
-            //logger.error("fragIndex = {}", fragments.get(i).getIndex());
-            //logger.error("[{}, {}]", index, fragmentTest.getIndex());
-            //if (fragmentTest.getIndex() != index) {
-            if ((fragmentTest.getIndex() == index + 1) || fragmentTest.getIndex() == index - 1) {
-                //logger.error("getIndex = {}", fragmentTest.getIndex());
+            if ((fragmentTest.getIndex() == viewPager.getCurrentItem() - 1) || (fragmentTest.getIndex() == viewPager.getCurrentItem() + 1)) {
                 fragmentTest.setY(y);
             }
-
         }
     }
 
@@ -83,7 +68,7 @@ public class FragmentViewPager extends Fragment implements
         @Override
         public Fragment getItem(int i) {
             // TODO: get previous fragment's y position and pass to next fragment.
-            return fragments.get(i);//fragmentTest;
+            return fragments.get(i);
         }
 
         @Override
@@ -93,13 +78,6 @@ public class FragmentViewPager extends Fragment implements
 
         @Override
         public float getPageWidth(int position) {
-            //logger.error("******** position {}", position);
-            /*
-            if (position == 0 || position == 2){
-                return 0.8f;
-            }
-            return 1f;
-            */
             return 0.8f;
         }
     }
