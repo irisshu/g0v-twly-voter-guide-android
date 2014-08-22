@@ -35,15 +35,12 @@ public class FragmentTest extends Fragment { // implements FragmentViewPager
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //scrollView = new SynchronizedScrollView(getActivity());
-        logger.error("index {} onCreate", index);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_test, container, false);
-        logger.error("index {} onCreateView", index);
 
         TextView title1 = (TextView) rootView.findViewById(R.id.title1);
         TextView title2 = (TextView) rootView.findViewById(R.id.title2);
