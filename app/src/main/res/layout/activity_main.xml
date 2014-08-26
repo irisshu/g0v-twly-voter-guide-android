@@ -8,13 +8,31 @@
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"   >
+
+
+        <ImageView
+            android:id="@+id/legislation_img"
+            android:layout_width="368dp"
+            android:layout_height="match_parent"
+                      android:contentDescription="@null"
+            android:src="@drawable/legislation2"
+
+            android:adjustViewBounds="false"
+            android:alpha="50"
+            android:visibility="visible"
+            android:focusable="false"
+            android:layout_gravity="left|top"/>
+
+    </FrameLayout>
 
     <fragment
         android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:name="g0v.ly.android.NavigationDrawerFragment"/>
+        android:name="g0v.ly.android.NavigationDrawerFragment"
+        tools:layout="@layout/fragment_navigation_drawer"/>
+
 
 </android.support.v4.widget.DrawerLayout>

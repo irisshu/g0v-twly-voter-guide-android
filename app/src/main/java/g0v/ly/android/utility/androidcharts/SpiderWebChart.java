@@ -63,150 +63,6 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     public static final String DEFAULT_TITLE = "Spider Web Chart";
-
-    /**
-     * <p>
-     * default should display longitude lines
-     * </p>
-     * <p>
-     * 経線を表示する
-     * </p>
-     * <p>
-     * 默认是否显示经线
-     * </p>
-     */
-    public static final boolean DEFAULT_DISPLAY_LONGITUDE = true;
-
-    /**
-     * <p>
-     * default longitude numbers
-     * </p>
-     * <p>
-     * 経線の数量のデフォルト値
-     * </p>
-     * <p>
-     * 默认经线数量
-     * </p>
-     */
-    public static final int DEFAULT_LONGITUDE_NUM = 5;
-
-    /**
-     * <p>
-     * default longitude length
-     * </p>
-     * <p>
-     * 経線の長さのデフォルト値
-     * </p>
-     * <p>
-     * 默认经线长度
-     * </p>
-     */
-    public static final int DEFAULT_LONGITUDE_LENGTH = 80;
-
-    /**
-     * <p>
-     * default color for longitude lines
-     * </p>
-     * <p>
-     * 経線の色のデフォルト値
-     * </p>
-     * <p>
-     * 默认经线颜色
-     * </p>
-     */
-    public static final int DEFAULT_LONGITUDE_COLOR = Color.BLACK;
-
-    /**
-     * <p>
-     * default should display latitude lines
-     * </p>
-     * <p>
-     * 緯線を表示する
-     * </p>
-     * <p>
-     * 默认是否显示纬线
-     * </p>
-     */
-    public static final boolean DEFAULT_DISPLAY_LATITUDE = true;
-
-    /**
-     * <p>
-     * default latitude numbers
-     * </p>
-     * <p>
-     * 緯線の数量のデフォルト値
-     * </p>
-     * <p>
-     * 默认纬线数量
-     * </p>
-     */
-    public static final int DEFAULT_LATITUDE_NUM = 5;
-
-    /**
-     * <p>
-     * default color for latitude lines
-     * </p>
-     * <p>
-     * 緯線の色のデフォルト値
-     * </p>
-     * <p>
-     * 默认纬线颜色
-     * </p>
-     */
-    public static final int DEFAULT_LATITUDE_COLOR = Color.BLACK;
-
-    /**
-     * <p>
-     * default position
-     * </p>
-     * <p>
-     * 中心位置のデフォルト値
-     * </p>
-     * <p>
-     * 默认绘图中心位置
-     * </p>
-     */
-    public static final Point DEFAULT_POSITION = new Point(0, 0);
-
-    /**
-     * <p>
-     * default color for background
-     * </p>
-     * <p>
-     * 背景の色のデフォルト値
-     * </p>
-     * <p>
-     * 默认蛛网背景色
-     * </p>
-     */
-    public static final int DEFAULT_BACKGROUND_COLOR = Color.GRAY;
-
-    /**
-     * <p>
-     * default color for display data
-     * </p>
-     * <p>
-     * データの色のデフォルト値
-     * </p>
-     * <p>
-     * 默认数据的显示颜色
-     * </p>
-     */
-    public static final int[] COLORS = {Color.RED, Color.BLUE, Color.YELLOW};
-
-    /**
-     * <p>
-     * Data
-     * </p>
-     * <p>
-     * データ
-     * </p>
-     * <p>
-     * 图表数据
-     * </p>
-     */
-    private List<List<TitleValueEntity>> data;
-
     /**
      * <p>
      * title
@@ -219,20 +75,18 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private String title = DEFAULT_TITLE;
-
     /**
      * <p>
-     * position
+     * default should display longitude lines
      * </p>
      * <p>
-     * 中心位置
+     * 経線を表示する
      * </p>
      * <p>
-     * 绘图中心位置
+     * 默认是否显示经线
      * </p>
      */
-    private Point position = DEFAULT_POSITION;
-
+    public static final boolean DEFAULT_DISPLAY_LONGITUDE = true;
     /**
      * <p>
      * should display longitude lines
@@ -245,7 +99,18 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private boolean displayLongitude = DEFAULT_DISPLAY_LONGITUDE;
-
+    /**
+     * <p>
+     * default longitude numbers
+     * </p>
+     * <p>
+     * 経線の数量のデフォルト値
+     * </p>
+     * <p>
+     * 默认经线数量
+     * </p>
+     */
+    public static final int DEFAULT_LONGITUDE_NUM = 5;
     /**
      * <p>
      * longitude numbers
@@ -258,20 +123,18 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private int longitudeNum = DEFAULT_LONGITUDE_NUM;
-
     /**
      * <p>
-     * color for longitude lines
+     * default longitude length
      * </p>
      * <p>
-     * 経線の色
+     * 経線の長さのデフォルト値
      * </p>
      * <p>
-     * 经线颜色
+     * 默认经线长度
      * </p>
      */
-    private int longitudeColor = DEFAULT_LONGITUDE_COLOR;
-
+    public static final int DEFAULT_LONGITUDE_LENGTH = 80;
     /**
      * <p>
      * longitude length
@@ -284,7 +147,42 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private int longitudeLength = DEFAULT_LONGITUDE_LENGTH;
-
+    /**
+     * <p>
+     * default color for longitude lines
+     * </p>
+     * <p>
+     * 経線の色のデフォルト値
+     * </p>
+     * <p>
+     * 默认经线颜色
+     * </p>
+     */
+    public static final int DEFAULT_LONGITUDE_COLOR = Color.BLACK;
+    /**
+     * <p>
+     * color for longitude lines
+     * </p>
+     * <p>
+     * 経線の色
+     * </p>
+     * <p>
+     * 经线颜色
+     * </p>
+     */
+    private int longitudeColor = DEFAULT_LONGITUDE_COLOR;
+    /**
+     * <p>
+     * default should display latitude lines
+     * </p>
+     * <p>
+     * 緯線を表示する
+     * </p>
+     * <p>
+     * 默认是否显示纬线
+     * </p>
+     */
+    public static final boolean DEFAULT_DISPLAY_LATITUDE = true;
     /**
      * <p>
      * should display latitude lines?
@@ -297,7 +195,18 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private boolean displayLatitude = DEFAULT_DISPLAY_LATITUDE;
-
+    /**
+     * <p>
+     * default latitude numbers
+     * </p>
+     * <p>
+     * 緯線の数量のデフォルト値
+     * </p>
+     * <p>
+     * 默认纬线数量
+     * </p>
+     */
+    public static final int DEFAULT_LATITUDE_NUM = 5;
     /**
      * <p>
      * latitude numbers
@@ -310,7 +219,18 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private int latitudeNum = DEFAULT_LATITUDE_NUM;
-
+    /**
+     * <p>
+     * default color for latitude lines
+     * </p>
+     * <p>
+     * 緯線の色のデフォルト値
+     * </p>
+     * <p>
+     * 默认纬线颜色
+     * </p>
+     */
+    public static final int DEFAULT_LATITUDE_COLOR = Color.BLACK;
     /**
      * <p>
      * color for latitude lines
@@ -323,7 +243,42 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private int latitudeColor = DEFAULT_LATITUDE_COLOR;
-
+    /**
+     * <p>
+     * default position
+     * </p>
+     * <p>
+     * 中心位置のデフォルト値
+     * </p>
+     * <p>
+     * 默认绘图中心位置
+     * </p>
+     */
+    public static final Point DEFAULT_POSITION = new Point(0, 0);
+    /**
+     * <p>
+     * position
+     * </p>
+     * <p>
+     * 中心位置
+     * </p>
+     * <p>
+     * 绘图中心位置
+     * </p>
+     */
+    private Point position = DEFAULT_POSITION;
+    /**
+     * <p>
+     * default color for background
+     * </p>
+     * <p>
+     * 背景の色のデフォルト値
+     * </p>
+     * <p>
+     * 默认蛛网背景色
+     * </p>
+     */
+    public static final int DEFAULT_BACKGROUND_COLOR = Color.GRAY;
     /**
      * <p>
      * color for background
@@ -336,6 +291,30 @@ public class SpiderWebChart extends BaseChart {
      * </p>
      */
     private int backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    /**
+     * <p>
+     * default color for display data
+     * </p>
+     * <p>
+     * データの色のデフォルト値
+     * </p>
+     * <p>
+     * 默认数据的显示颜色
+     * </p>
+     */
+    public static final int[] COLORS = {Color.RED, Color.BLUE, Color.YELLOW};
+    /**
+     * <p>
+     * Data
+     * </p>
+     * <p>
+     * データ
+     * </p>
+     * <p>
+     * 图表数据
+     * </p>
+     */
+    private List<List<TitleValueEntity>> data;
 
     /*
      * (non-Javadoc)
@@ -534,7 +513,8 @@ public class SpiderWebChart extends BaseChart {
         mPaintLine.setColor(Color.LTGRAY);
 
         Paint mPaintFont = new Paint();
-        mPaintFont.setColor(Color.LTGRAY);
+        mPaintFont.setColor(Color.BLACK);
+        mPaintFont.setTextSize(20);
 
         Path mPath = new Path();
         List<PointF> pointList = getWebAxisPoints(1);
@@ -558,7 +538,7 @@ public class SpiderWebChart extends BaseChart {
                 if (pt.x < position.x) {
                     realx = pt.x - mPaintFont.measureText(title) - 5;
                 } else if (pt.x > position.x) {
-                    realx = pt.x + 5;
+                    realx = pt.x + 1;
                 } else {
                     realx = pt.x - mPaintFont.measureText(title) / 2;
                 }
@@ -566,7 +546,7 @@ public class SpiderWebChart extends BaseChart {
                 if (pt.y > position.y) {
                     realy = pt.y + 10;
                 } else if (pt.y < position.y) {
-                    realy = pt.y - 2;
+                    realy = pt.y - 0.8f;
                 } else {
                     realy = pt.y - 5;
                 }

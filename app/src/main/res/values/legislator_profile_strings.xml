@@ -2,12 +2,12 @@
 <resources>
 
     <string-array name="legislator_profile_info">
-        <item>屆期</item>
-        <item>性別</item>
-        <item>黨籍</item>
-        <item>縣市</item>
-        <item>學歷</item>
-        <item>經歷</item>
+        <item>屆期：</item>
+        <item>性別：</item>
+        <item>黨籍：</item>
+        <item>縣市：</item>
+        <item>學歷：</item>
+        <item>經歷：</item>
     </string-array>
 
     <string-array name="legislator_profile_info_api_key">
@@ -26,6 +26,14 @@
         <item>主提案法案數</item>
         <item>全體院會缺席次數</item>
         <item>委員會缺席次數</item>
+    </string-array>
+
+    <string-array name="legislator_profile_radar_chart_api_key">
+        <item>not_vote_count</item>
+        <item>conscience_vote_count</item>
+        <item>primary_proposer_count</item>
+        <item>ly_absent_count</item>
+        <item>committee_absent_count</item>
     </string-array>
 
 </resources>
