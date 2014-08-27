@@ -308,10 +308,10 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
         // tvProfileAd.setText("hi " + msg);
         red_own.set(0,new TitleValueEntity(webChartTitle[0], Float.parseFloat(nvc)/10));  //沒投票次數 not_vote_count
-        red_own.add(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
-        red_own.add(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
-        red_own.add(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
-        red_own.add(4,new TitleValueEntity(webChartTitle[4], Float.parseFloat(cac)));  //委員會缺席次數 committee_absent_count
+        red_own.set(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
+        red_own.set(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
+        red_own.set(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
+        red_own.set(4,new TitleValueEntity(webChartTitle[4], Float.parseFloat(cac)));  //委員會缺席次數 committee_absent_count
 
         //data.add(red_own);
         data.set(0,red_own);
@@ -319,6 +319,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         addRadarChartData(data);
         spiderWebChart.setLatitudeNum(5);
         spiderWebChart.refreshDrawableState();
+        spiderWebChart.invalidate();
+        
          //spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
 
     }
