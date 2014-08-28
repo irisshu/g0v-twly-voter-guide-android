@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,7 +35,6 @@ import java.util.Map;
 
 import g0v.ly.android.R;
 import g0v.ly.android.rest.RESTMethods;
-import g0v.ly.android.utility.FontManager;
 import g0v.ly.android.utility.androidcharts.SpiderWebChart;
 import g0v.ly.android.utility.androidcharts.TitleValueEntity;
 
