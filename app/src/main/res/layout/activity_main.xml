@@ -34,11 +34,24 @@
                 android:id="@+id/btn_click"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#176CEC"
-                android:text="SHOW POPUP"
+                android:layout_margin="5dp"
+                android:background="@color/popup_menu"
+                android:text="hi"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#fff"
+                android:textColor="@color/popup_menu_txt"
+                android:textStyle="bold"
+                android:enabled="true" />
+
+            <Button
+                android:id="@+id/btn_county1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/popup_menu"
+                android:layout_below="@id/btn_click"
+                android:text="全國不分區"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/popup_menu_txt"
                 android:textStyle="bold"
                 android:enabled="true" />
 
