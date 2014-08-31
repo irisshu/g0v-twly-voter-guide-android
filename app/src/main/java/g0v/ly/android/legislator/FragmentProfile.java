@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -263,12 +264,12 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                     updateTextView(tvProfileCounty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_COUNTY], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
-
+                    Log.e("HI","HAHA");
                     updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[CONSCIENCE_VOTE_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[PRIMARY_PROPOSER_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[LY_ABSENT_COUNT],
-                            legislatorListWithAbsent.get(legislatorNameArray[position])[COMMITTEE_ABSENT_COUNT]     );
+                            legislatorListWithAbsent.get(legislatorNameArray[position])[COMMITTEE_ABSENT_COUNT]);
 
                     GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
                     getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);

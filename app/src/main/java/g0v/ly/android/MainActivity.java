@@ -13,7 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -28,7 +30,7 @@ import g0v.ly.android.utility.FontManager;
 
 
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, PopupMenu.OnMenuItemClickListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -47,6 +49,36 @@ public class MainActivity extends FragmentActivity
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        findViewById(R.id.btn_click).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
+                popupMenu.setOnMenuItemClickListener(MainActivity.this);
+                popupMenu.inflate(R.menu.popup_menu);
+                popupMenu.show();
+            }
+        });
+    }
+
+    public boolean onMenuItemClick(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.item_comedy:
+                Toast.makeText(this, "Comedy Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_movies:
+                Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_music:
+                Toast.makeText(this, "Music Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return false;
+        }
+
     }
 
     @Override

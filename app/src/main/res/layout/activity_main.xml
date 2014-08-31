@@ -22,7 +22,27 @@
             android:alpha="50"
             android:visibility="visible"
             android:focusable="false"
-            android:layout_gravity="left|top"/>
+            android:layout_gravity="start|top"/>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fcfcfc" >
+
+            <Button
+                android:id="@+id/btn_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#176CEC"
+                android:text="SHOW POPUP"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:enabled="true" />
+
+        </RelativeLayout>
 
     </FrameLayout>
 
