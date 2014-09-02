@@ -6,8 +6,9 @@
     <color name="fragment_background_4">#FF00FFF0</color>
     <color name="fragment_background_5">#FFF000FF</color>
 
-    <color name="popup_menu">#176CEC</color>
+    <color name="popup_menu1">#ff5e08bb</color>
+    <color name="popup_menu2">#ffbb610c</color>
+    <color name="popup_menu3">#ff0d7999</color>
     <color name="popup_menu_txt">#FFF</color>
-
 
 </resources>
