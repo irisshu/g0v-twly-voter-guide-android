@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="0dp"
-                    android:background="@color/popup_menu1"
+                    android:background= "#111"
                     android:text="請選擇地區"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/popup_menu_txt"

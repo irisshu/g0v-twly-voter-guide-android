@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
-
+    private final int country_num = 26;
 
 
     @Override
@@ -50,16 +50,24 @@ public class MainActivity extends FragmentActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        findViewById(R.id.btn_click).setOnClickListener(new View.OnClickListener() {
+        for (int i= 0; i< country_num; i++){
 
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
-                popupMenu.setOnMenuItemClickListener(MainActivity.this);
-                popupMenu.inflate(R.menu.popup_menu);
-                popupMenu.show();
-            }
-        });
+            String h = Integer.toHexString(i);
+            findViewById(R.id.btn_county1 +i).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
+                    popupMenu.setOnMenuItemClickListener(MainActivity.this);
+                    popupMenu.inflate(R.menu.popup_menu);
+                    popupMenu.show();
+
+                }
+            });
+
+        }
+
+
     }
 
     public boolean onMenuItemClick(MenuItem item) {
