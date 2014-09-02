@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,17 +51,26 @@ public class MainActivity extends FragmentActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        for (int i= 0; i< country_num; i++){
+        for ( int i= 0; i< country_num; i++){
 
-            String h = Integer.toHexString(i);
+            final int finalI = i;
             findViewById(R.id.btn_county1 +i).setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
                     popupMenu.setOnMenuItemClickListener(MainActivity.this);
-                    popupMenu.inflate(R.menu.popup_menu);
-                    popupMenu.show();
+                    popupMenu.inflate(R.menu.constituency_menu1 + finalI);
+                    if (popupMenu.getMenu().size() == 0) { //表示這個縣市沒有更細的分類
+                        // 直接判斷是哪一區，然後進入顯示區域立委資料
+                        // 已用中斷點測試過
+
+
+                    }
+                    else{
+                        popupMenu.show();
+                    }
+
 
                 }
             });
