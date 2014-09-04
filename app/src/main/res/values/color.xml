@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fragment_background_1">#FFFF0000</color>
+    <color name="fragment_background_2">#FFFFF000</color>
+    <color name="fragment_background_3">#FF0FFF00</color>
+    <color name="fragment_background_4">#FF00FFF0</color>
+    <color name="fragment_background_5">#FFF000FF</color>
+
+    <color name="popup_menu1">#ff5e08bb</color>
+    <color name="popup_menu2">#ffbb610c</color>
+    <color name="popup_menu3">#ff0d7999</color>
+    <color name="popup_menu_txt">#FFF</color>
+
+</resources>

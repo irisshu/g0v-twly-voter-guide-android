@@ -10,9 +10,8 @@
                         xmlns:tools="http://schemas.android.com/tools"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="6dp"
+                        android:padding="9dp"
                         tools:context="g0v.ly.android.legislator.Profile">
-
 
 
             <Spinner
@@ -44,7 +43,7 @@
 
                 <ImageView
                     android:id="@+id/profile_img"
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="100dp"
                     android:layout_centerVertical="true"
                     android:contentDescription="@null"/>

@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<g0v.ly.android.navigate.SynchronizedScrollView
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_view"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
+    android:clipToPadding="false">
 
-<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-              android:orientation = "vertical"
-              android:layout_width = "match_parent"
-              android:layout_height = "match_parent">
-
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:orientation = "vertical"
         android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"/>
+        android:layout_height = "wrap_content"
+        android:background="#00000000">
 
-</LinearLayout>
+        <TextView
+            android:id = "@+id/title1"
+            android:layout_width = "match_parent"
+            android:layout_height = "250dp"
+            android:background="#33FFFFFF"/>
+
+        <TextView
+            android:id = "@+id/title2"
+            android:layout_width = "match_parent"
+            android:layout_height = "250dp"
+            android:background="#66FFFFFF"/>
+
+        <TextView
+            android:id = "@+id/title3"
+            android:layout_width = "match_parent"
+            android:layout_height = "250dp"
+            android:background="#99FFFFFF"/>
+
+        <TextView
+            android:id = "@+id/title4"
+            android:layout_width = "match_parent"
+            android:layout_height = "250dp"
+            android:background="#CCFFFFFF"/>
+
+    </LinearLayout>
+
+</g0v.ly.android.navigate.SynchronizedScrollView>
