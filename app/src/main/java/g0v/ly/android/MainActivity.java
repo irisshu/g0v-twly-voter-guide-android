@@ -2,6 +2,7 @@ package g0v.ly.android;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -44,6 +45,9 @@ public class MainActivity extends FragmentActivity
         Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
+        final FragmentManager fragmentManager;
+        fragmentManager = getSupportFragmentManager();
+
         mNavigationDrawerFragment =
                 (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -60,10 +64,14 @@ public class MainActivity extends FragmentActivity
                 public void onClick(View view) {
                     PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
                     popupMenu.setOnMenuItemClickListener(MainActivity.this);
-                    popupMenu.inflate(R.menu.constituency_menu1 + finalI);
+                    popupMenu.inflate(R.menu.constituency_menu1 + finalI); //每個縣市都會分配到一個menu，有可能是空的
                     if (popupMenu.getMenu().size() == 0) { //表示這個縣市沒有更細的分類
                         // 直接判斷是哪一區，然後進入顯示區域立委資料
                         // 已用中斷點測試過
+                        FragmentProfile fragmentProfile = new FragmentProfile();
+                        fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
+                        // 進入 profile 頁面
+
 
 
                     }
@@ -85,6 +93,7 @@ public class MainActivity extends FragmentActivity
         switch (item.getItemId()) {
 
             case R.id.item_comedy:
+
                 Toast.makeText(this, "Comedy Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_movies:

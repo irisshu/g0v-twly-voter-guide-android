@@ -3,19 +3,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_con_1_1"
+        android:id="@+id/item_con_3_1"
         android:showAsAction="ifRoom|withText"
-        android:title="Movies"
+        android:title="魚池鄉 仁愛鄉 中寮鄉 草屯鎮 國姓鄉 埔里鎮"
         android:visible="true"/>
     <item
-        android:id="@+id/item_music"
+        android:id="@+id/item_con_3_2"
         android:showAsAction="ifRoom|withText"
-        android:title="Music"
+        android:title="竹山鎮 集集鎮 南投市 鹿谷鄉 名間鄉 信義鄉 水里鄉"
         android:visible="true"/>
-    <item
-        android:id="@+id/item_comedy"
-        android:showAsAction="ifRoom|withText"
-        android:title="Comedy"
-        android:visible="true"/>
+
 
 </menu>

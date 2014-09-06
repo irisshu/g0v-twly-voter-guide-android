@@ -1,5 +1,6 @@
 package g0v.ly.android.legislator;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import g0v.ly.android.MainActivity;
 import g0v.ly.android.R;
 import g0v.ly.android.rest.RESTMethods;
 import g0v.ly.android.utility.androidcharts.SpiderWebChart;
@@ -99,6 +101,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resources = getResources();
+
+
     }
 
 
@@ -116,6 +120,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
         restMethods.restGet(getUrl, FragmentProfile.this);
         setupOnclickListeners();
+
+
         return view;
     }
 
@@ -264,7 +270,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                     updateTextView(tvProfileCounty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_COUNTY], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
-                    Log.e("HI","HAHA");
+
                     updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[CONSCIENCE_VOTE_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[PRIMARY_PROPOSER_COUNT],
