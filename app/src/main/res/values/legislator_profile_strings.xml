@@ -21,11 +21,19 @@
     </string-array>
 
     <string-array name="legislator_profile_radar_chart_title">
-        <item>委員會缺席次數</item>
+        <item>沒投票次數</item>
         <item>脫黨投票次數</item>
         <item>主提案法案數</item>
         <item>全體院會缺席次數</item>
-        <item>沒投票次數</item>
+        <item>委員會缺席次數</item>
+    </string-array>
+
+    <string-array name="legislator_profile_radar_chart_api_key">
+        <item>not_vote_count</item>
+        <item>conscience_vote_count</item>
+        <item>primary_proposer_count</item>
+        <item>ly_absent_count</item>
+        <item>committee_absent_count</item>
     </string-array>
 
 </resources>

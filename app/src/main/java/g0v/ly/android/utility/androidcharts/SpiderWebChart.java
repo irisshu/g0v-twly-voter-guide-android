@@ -514,7 +514,7 @@ public class SpiderWebChart extends BaseChart {
 
         Paint mPaintFont = new Paint();
         mPaintFont.setColor(Color.BLACK);
-        mPaintFont.setTextSize(18);
+        mPaintFont.setTextSize(20);
 
         Path mPath = new Path();
         List<PointF> pointList = getWebAxisPoints(1);
@@ -538,7 +538,7 @@ public class SpiderWebChart extends BaseChart {
                 if (pt.x < position.x) {
                     realx = pt.x - mPaintFont.measureText(title) - 5;
                 } else if (pt.x > position.x) {
-                    realx = pt.x + 5;
+                    realx = pt.x + 1;
                 } else {
                     realx = pt.x - mPaintFont.measureText(title) / 2;
                 }
@@ -546,7 +546,7 @@ public class SpiderWebChart extends BaseChart {
                 if (pt.y > position.y) {
                     realy = pt.y + 10;
                 } else if (pt.y < position.y) {
-                    realy = pt.y - 2;
+                    realy = pt.y - 0.8f;
                 } else {
                     realy = pt.y - 5;
                 }
