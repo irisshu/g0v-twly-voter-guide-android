@@ -21,4 +21,7 @@
         <item>表決紀錄</item>
     </string-array>
 
+    <string name="title_activity_enter">EnterActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
