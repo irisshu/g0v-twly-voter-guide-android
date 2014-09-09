@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="header">
+        <item>僑居國外國民</item>
+        <item>全國不分區</item>
+        <item>南投縣</item>
+        <item>台中市</item>
+        <item>台北市</item>
+        <item>台南市</item>
+        <item>台東縣</item>
+        <item>嘉義市</item>
+        <item>嘉義縣</item>
+        <item>基隆市</item>
+        <item>宜蘭縣</item>
+        <item>屏東縣</item>
+        <item>山地原住民</item>
+        <item>平地原住民</item>
+        <item>彰化縣</item>
+        <item>新北市</item>
+        <item>新竹市</item>
+        <item>新竹縣</item>
+        <item>桃園縣</item>
+        <item>澎湖縣</item>
+        <item>花蓮縣</item>
+        <item>苗栗縣</item>
+        <item>連江縣</item>
+        <item>金門縣</item>
+        <item>雲林縣</item>
+        <item>高雄市</item>
+    </string-array>
+</resources>

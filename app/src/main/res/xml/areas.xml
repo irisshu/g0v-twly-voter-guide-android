@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<areas>
+    <area name="僑居國外國民" district="" index="0" />
+    <area name="全國不分區" district="" index="0" />
+    <area name="南投縣" district="竹山鎮 集集鎮 南投市 鹿谷鄉 名間鄉 信義鄉 水里鄉" index="0" />
+    <area name="南投縣" district="魚池鄉 仁愛鄉 中寮鄉 草屯鎮 國姓鄉 埔里鎮" index="1" />
+    <area name="台中市" district="后里區 神岡區 大雅區 潭子區" index="0" />
+    <area name="台中市" district="東勢區 新社區 石岡區 和平區 豐原區" index="1" />
+    <area name="台中市" district="北屯區 北區" index="2" />
+    <area name="台中市" district="西屯區 南屯區" index="3" />
+    <area name="台中市" district="大里區 霧峰區 大肚區 龍井區 烏日區 沙鹿區" index="4" />
+    <area name="台中市" district="大里區 太平區" index="5" />
+    <area name="台中市" district="東區 南區 中區 西區" index="6" />
+    <area name="台中市" district="外埔區 清水區 梧棲區 大甲區 大安區" index="7" />
+    <area name="台北市" district="士林區 北投區" index="0" />
+    <area name="台北市" district="萬華區 中正區" index="1" />
+    <area name="台北市" district="中山區 松山區" index="2" />
+    <area name="台北市" district="內湖區 南港區" index="3" />
+    <area name="台北市" district="大安區" index="4" />
+    <area name="台北市" district="松山區 信義區" index="5" />
+    <area name="台北市" district="中正區 文山區" index="6" />
+    <area name="台北市" district="大同區 士林區" index="7" />
+    <area name="台南市" district="" index="5" />
+    <area name="台東縣" district="" index="6" />
+    <area name="嘉義市" district="" index="7" />
+    <area name="嘉義縣" district="" index="8" />
+    <area name="基隆市" district="" index="9" />
+    <area name="宜蘭縣" district="" index="10" />
+    <area name="屏東縣" district="" index="11" />
+    <area name="山地原住民" district="" index="12" />
+    <area name="平地原住民" district="" index="13" />
+    <area name="彰化縣" district="" index="14" />
+    <area name="新北市" district="" index="15" />
+    <area name="新竹市" district="" index="16" />
+    <area name="新竹縣" district="" index="17" />
+    <area name="桃園縣" district="" index="18" />
+    <area name="澎湖縣" district="" index="19" />
+    <area name="花蓮縣" district="" index="20" />
+    <area name="苗栗縣" district="" index="21" />
+    <area name="連江縣" district="" index="22" />
+    <area name="金門縣" district="" index="23" />
+    <area name="雲林縣" district="" index="24" />
+    <area name="高雄市" district="" index="25" />
+</areas>
