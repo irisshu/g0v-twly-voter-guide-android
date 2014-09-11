@@ -5,12 +5,12 @@
     <item
         android:id="@+id/item_con_3_1"
         android:showAsAction="ifRoom|withText"
-        android:title="魚池鄉 仁愛鄉 中寮鄉 草屯鎮 國姓鄉 埔里鎮"
+        android:title="魚池 仁愛 中寮 草屯 國姓 埔里"
         android:visible="true"/>
     <item
         android:id="@+id/item_con_3_2"
         android:showAsAction="ifRoom|withText"
-        android:title="竹山鎮 集集鎮 南投市 鹿谷鄉 名間鄉 信義鄉 水里鄉"
+        android:title="竹山 集集 南投 鹿谷 名間 信義 水里"
         android:visible="true"/>
 
 
