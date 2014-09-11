@@ -23,14 +23,12 @@ public class ProfileActivity extends Activity{
         //resources = getResources();
 
         //接收 intent
-        try {
-            Intent it = parseUri("intent:", 0);
-            int iData_pos = it.getIntExtra("DATA_POS",0);
-            Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
 
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        Intent it =getIntent();
+        int iData_pos = it.getIntExtra("DATA_POS",0);
+        Toast.makeText(this, "Movies Clicked "+iData_pos, Toast.LENGTH_SHORT).show();
+
+
 
     }
 
