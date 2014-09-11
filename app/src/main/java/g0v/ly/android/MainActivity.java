@@ -38,6 +38,8 @@ public class MainActivity extends FragmentActivity
     private CharSequence mTitle;
     private final int country_num = 26;
 
+    final FragmentProfile fragmentProfile = new FragmentProfile();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,13 @@ public class MainActivity extends FragmentActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
+
+
         for ( int i= 0; i< country_num; i++){
 
             final int finalI = i;
+
+
             findViewById(R.id.btn_county1 +i).setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -65,15 +71,13 @@ public class MainActivity extends FragmentActivity
                     PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
                     popupMenu.setOnMenuItemClickListener(MainActivity.this);
                     popupMenu.inflate(R.menu.constituency_menu1 + finalI); //每個縣市都會分配到一個menu，有可能是空的
+
                     if (popupMenu.getMenu().size() == 0) { //表示這個縣市沒有更細的分類
                         // 直接判斷是哪一區，然後進入顯示區域立委資料
                         // 已用中斷點測試過
-                        FragmentProfile fragmentProfile = new FragmentProfile();
+
                         fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
                         // 進入 profile 頁面
-
-
-
                     }
                     else{
                         popupMenu.show();
@@ -91,11 +95,15 @@ public class MainActivity extends FragmentActivity
 
     public boolean onMenuItemClick(MenuItem item) {
 
+        final FragmentManager fragmentManager;
+        fragmentManager = getSupportFragmentManager();
+
         switch (item.getItemId()) {
 
-            case R.id.item_comedy:
-
-                Toast.makeText(this, "Comedy Clicked", Toast.LENGTH_SHORT).show();
+            case R.id.item_con_3_1:
+                fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
+                // 進入 profile 頁面
+                Toast.makeText(this, "item_con_3_1 Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_movies:
                 Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
