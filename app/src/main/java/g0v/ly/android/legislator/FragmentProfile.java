@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,16 +105,6 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resources = getResources();
-
-        //接收 intent
-        try {
-            Intent it = parseUri("intent:", 0);
-            iData_pos = it.getIntExtra("DATA_POS",0);
-
-
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -272,13 +261,14 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
     public void setupOnclickListeners() {
 
+        final int bundle_msg_id=((MainActivity)getActivity()).get_bundle_msg();
 
         legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                        long l) {
                 Toast.makeText(getActivity(),
-                        "你選的是 " + legislatorNameArray[iData_pos] + iData_pos, Toast.LENGTH_SHORT).show();
+                        "你選的是 " + legislatorNameArray[iData_pos] + bundle_msg_id, Toast.LENGTH_SHORT).show();
 
 
 
