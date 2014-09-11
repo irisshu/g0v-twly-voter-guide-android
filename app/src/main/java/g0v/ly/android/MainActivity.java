@@ -38,9 +38,15 @@ public class MainActivity extends FragmentActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private final int country_num = 26;
-
+    public int pos = 0;
     static final FragmentProfile fragmentProfile = new FragmentProfile();
     Intent it = new Intent();
+
+
+    public int get_bundle_msg()
+    {
+        return pos;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,15 +84,14 @@ public class MainActivity extends FragmentActivity
                         // 已用中斷點測試過
 
                         it.setClass(MainActivity.this , ProfileActivity.class);
-                        int iVal_pos = 3;
-                        it.putExtra("DATA_POS", iVal_pos);
-                        Log.w("message","HIHI");
-                        Log.w("it",it.toString());
-
+                        pos = 3;
+                        //it.putExtra("DATA_POS", iVal_pos);
+                        //startActivity(it);
                         fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
                         // 進入 profile 頁面
 
-                        startActivity(it);
+
+
                     }
                     else{
                         popupMenu.show();
