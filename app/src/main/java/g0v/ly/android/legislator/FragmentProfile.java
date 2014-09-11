@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ import g0v.ly.android.R;
 import g0v.ly.android.rest.RESTMethods;
 import g0v.ly.android.utility.androidcharts.SpiderWebChart;
 import g0v.ly.android.utility.androidcharts.TitleValueEntity;
+
+import static android.content.Intent.parseUri;
 
 public class FragmentProfile extends Fragment implements RESTMethods.RestApiCallback {
     private static final Logger logger = LoggerFactory.getLogger(FragmentProfile.class);
@@ -62,6 +65,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int LY_ABSENT_COUNT = 3;
     private static final int COMMITTEE_ABSENT_COUNT = 4;
 
+
+    private static int iData_pos = 0;
 
     private TextView tvResponse;
     private TextView tvProfileAd;
@@ -102,8 +107,18 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         super.onCreate(savedInstanceState);
         resources = getResources();
 
+        //接收 intent
+        try {
+            Intent it = parseUri("intent:", 0);
+            iData_pos = it.getIntExtra("DATA_POS",0);
+
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
     }
+
 
 
 
@@ -119,9 +134,10 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         restMethods = new RESTMethods();
         String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
         restMethods.restGet(getUrl, FragmentProfile.this);
+
+
+
         setupOnclickListeners();
-
-
         return view;
     }
 
@@ -236,6 +252,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         for (int i = 0; i < nameArraySize; i++) {
             legislatorNameArray[i] = NameObjArray[i].toString();
         }
+
+        // 這裡是更改立委的關鍵
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
         legislatorNameSpinner.setAdapter(arrayAdapter);
@@ -252,14 +270,15 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     }
 
 
-    private void setupOnclickListeners() {
+    public void setupOnclickListeners() {
+
 
         legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                        long l) {
                 Toast.makeText(getActivity(),
-                        "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
+                        "你選的是 " + legislatorNameArray[iData_pos] + iData_pos, Toast.LENGTH_SHORT).show();
 
 
 
@@ -407,6 +426,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         tvProfileEducationTitle.setText(legislatorProfileInfo[PROFILE_INFO_EDUCATION]);
         tvProfileExperienceTitle.setText(legislatorProfileInfo[PROFILE_INFO_EXPERIENCE]);
     }
+
+
 
     public enum TvUpdateType {
         APPEND,
