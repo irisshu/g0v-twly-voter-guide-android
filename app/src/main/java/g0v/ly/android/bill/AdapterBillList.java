@@ -111,7 +111,10 @@ public class AdapterBillList implements ExpandableListAdapter {
             holder = (ItemViewHolder) row.getTag();
         }
 
-        holder.itemTitle.setText("Item " + position);
+        // 子項目
+        //holder.itemTitle.setText("Item88888888888888888888000000000 " + position);
+        holder.itemTitle.setText(R.string.action_example + position);
+        //holder.itemTitle.setImeOptions(R.menu.constituency_menu3);
 
         return row;
 
@@ -119,12 +122,12 @@ public class AdapterBillList implements ExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i2) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean areAllItemsEnabled() {
-        return false;
+        return true;
     }
 
     @Override
