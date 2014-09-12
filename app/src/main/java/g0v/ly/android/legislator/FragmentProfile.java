@@ -65,9 +65,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int COMMITTEE_ABSENT_COUNT = 4;
 
 
-    private static int iData_pos = 0;
-
     private TextView tvResponse;
+    private TextView tvProfileName;
     private TextView tvProfileAd;
     private TextView tvProfileGender;
     private TextView tvProfileParty;
@@ -247,6 +246,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
         legislatorNameSpinner.setAdapter(arrayAdapter);
 
+
+
         // get rest profiles
         if (hasNextPage) {
             restMethods.restGet(
@@ -259,6 +260,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     }
 
 
+
+
     public void setupOnclickListeners() {
 
         final int bundle_msg_id=((MainActivity)getActivity()).get_bundle_msg();
@@ -267,12 +270,15 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                        long l) {
+
+                position = bundle_msg_id;
                 Toast.makeText(getActivity(),
-                        "你選的是 " + legislatorNameArray[iData_pos] + bundle_msg_id, Toast.LENGTH_SHORT).show();
+                        "你選的是 " + legislatorNameArray[position] + position, Toast.LENGTH_SHORT).show();
 
 
 
                 if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
+                    updateTextView(tvProfileName,legislatorNameArray[position], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileAd, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_AD], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileGender, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_GENDER], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileParty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PARTY], TvUpdateType.OVERWRITE);
@@ -334,8 +340,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         spiderWebChart.setLatitudeNum(5);
         spiderWebChart.refreshDrawableState();
         spiderWebChart.invalidate();
-        
-         //spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+
 
     }
 
@@ -382,6 +387,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     }
 
     private void setupUiComponents(View view) {
+        TextView tvProfileNameTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_name_title);
         TextView tvProfileAdTitle =
                 (TextView) view.findViewById(R.id.legislator_profile_info_ad_title);
         TextView tvProfileGenderTitle =
@@ -394,6 +401,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                 (TextView) view.findViewById(R.id.legislator_profile_info_education_title);
         TextView tvProfileExperienceTitle =
                 (TextView) view.findViewById(R.id.legislator_profile_info_experience_title);
+
+        tvProfileName = (TextView) view.findViewById(R.id.legislator_profile_info_name);
         tvProfileAd = (TextView) view.findViewById(R.id.legislator_profile_info_ad);
         tvProfileGender = (TextView) view.findViewById(R.id.legislator_profile_info_gender);
         tvProfileParty = (TextView) view.findViewById(R.id.legislator_profile_info_party);
@@ -409,6 +418,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
         // setup titles
         String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
+        tvProfileNameTitle.setText("姓名："); //暫時使用
         tvProfileAdTitle.setText(legislatorProfileInfo[PROFILE_INFO_AD]);
         tvProfileGenderTitle.setText(legislatorProfileInfo[PROFILE_INFO_GENDER]);
         tvProfilePartyTitle.setText(legislatorProfileInfo[PROFILE_INFO_PARTY]);

@@ -23,7 +23,7 @@ import com.crashlytics.android.Crashlytics;
 
 import g0v.ly.android.bill.FragmentBillList;
 import g0v.ly.android.legislator.FragmentProfile;
-import g0v.ly.android.legislator.ProfileActivity;
+
 import g0v.ly.android.navigate.FragmentViewPager;
 import g0v.ly.android.utility.FontManager;
 
@@ -83,7 +83,7 @@ public class MainActivity extends FragmentActivity
                         // 直接判斷是哪一區，然後進入顯示區域立委資料
                         // 已用中斷點測試過
 
-                        it.setClass(MainActivity.this , ProfileActivity.class);
+
                         pos = 3;
                         //it.putExtra("DATA_POS", iVal_pos);
                         //startActivity(it);
@@ -123,13 +123,7 @@ public class MainActivity extends FragmentActivity
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
                 // 進入 profile 頁面
 
-                //建立 Intent
-
-                it.setClass(MainActivity.this , FragmentActivity.class);
-                int iVal_pos = 3;
-                it.putExtra("DATA_POS", iVal_pos);
-                //startActivity(it);
-
+                pos = 4;
                 Toast.makeText(this, "item_con_3_1 Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_movies:

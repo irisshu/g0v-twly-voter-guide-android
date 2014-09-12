@@ -70,6 +70,20 @@
                 <TableRow android:layout_width="wrap_content"
                           android:layout_height="wrap_content">
 
+                    <TextView android:id="@+id/legislator_profile_info_name_title"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/legislator_profile_info_name"
+                        android:layout_weight="5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </TableRow>
+
+                <TableRow android:layout_width="wrap_content"
+                          android:layout_height="wrap_content">
+
                     <TextView android:id="@+id/legislator_profile_info_ad_title"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"/>
