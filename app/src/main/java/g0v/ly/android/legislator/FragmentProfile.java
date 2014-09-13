@@ -241,25 +241,29 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
             legislatorNameArray[i] = NameObjArray[i].toString();
         }
 
-        // 這裡是更改立委的關鍵
+        // 將立委資料放入 spinner
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-        //legislatorNameSpinner.setAdapter(arrayAdapter);
 
+        // 此方式可行，但要設結束條件，否則會一直抓下去
+        restMethods.restGet(
+                "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8", FragmentProfile.this
+        );
+        legislatorNameSpinner.setAdapter(arrayAdapter);
 
 
         // get rest profiles
-        if (hasNextPage) {
-            restMethods.restGet(
-                    "https://twly.herokuapp.com/api/legislator_terms/?page=" + (page + 1) +
-                            "&ad=8", FragmentProfile.this
-            );
-        } else {
-
-            // 全部下載完後，再顯示出來
-            legislatorNameSpinner.setAdapter(arrayAdapter);
-            logger.debug("[Profile] getDone hasNextPage = false");
-        }
+//        if (hasNextPage) {
+//            restMethods.restGet(
+//                    "https://twly.herokuapp.com/api/legislator_terms/?page=" + (page + 1) +
+//                            "&ad=8", FragmentProfile.this
+//            );
+//        } else {
+//
+//            // 全部下載完後，再顯示出來
+//            legislatorNameSpinner.setAdapter(arrayAdapter);
+//            logger.debug("[Profile] getDone hasNextPage = false");
+//        }
 
 
     }
