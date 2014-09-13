@@ -244,7 +244,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         // 這裡是更改立委的關鍵
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-        legislatorNameSpinner.setAdapter(arrayAdapter);
+        //legislatorNameSpinner.setAdapter(arrayAdapter);
 
 
 
@@ -255,8 +255,13 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                             "&ad=8", FragmentProfile.this
             );
         } else {
+
+            // 全部下載完後，再顯示出來
+            legislatorNameSpinner.setAdapter(arrayAdapter);
             logger.debug("[Profile] getDone hasNextPage = false");
         }
+
+
     }
 
 
