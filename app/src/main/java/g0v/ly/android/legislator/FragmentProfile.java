@@ -64,6 +64,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int LY_ABSENT_COUNT = 3;
     private static final int COMMITTEE_ABSENT_COUNT = 4;
 
+    private static int stopFlag = 0;
+
 
     private TextView tvResponse;
     private TextView tvProfileName;
@@ -245,11 +247,17 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
 
-        // 此方式可行，但要設結束條件，否則會一直抓下去
-        restMethods.restGet(
-                "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8", FragmentProfile.this
-        );
-        legislatorNameSpinner.setAdapter(arrayAdapter);
+
+        // 只抓對應到的那頁
+        if(stopFlag == 0){
+
+            restMethods.restGet(
+                    "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8", FragmentProfile.this
+            );
+            legislatorNameSpinner.setAdapter(arrayAdapter);
+            stopFlag = 1;
+        }
+
 
 
         // get rest profiles
