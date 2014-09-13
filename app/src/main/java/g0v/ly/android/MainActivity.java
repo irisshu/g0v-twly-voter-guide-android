@@ -43,6 +43,7 @@ public class MainActivity extends FragmentActivity
     Intent it = new Intent();
 
 
+
     public int get_bundle_msg()
     {
         return pos;
@@ -151,8 +152,9 @@ public class MainActivity extends FragmentActivity
                 //Log.d("MainActivity", "Title row clicked");
                 break;
             case 1:
-                FragmentProfile fragmentProfile = new FragmentProfile();
+
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
+
                 break;
             case 2:
                 FragmentViewPager fragmentViewPager = new FragmentViewPager();
@@ -167,9 +169,10 @@ public class MainActivity extends FragmentActivity
                 FragmentBillList fragmentBillList = new FragmentBillList();
                 fragmentManager.beginTransaction().replace(R.id.container, fragmentBillList).commit();
                 break;
-            case 6:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(
-                        position + 1)).commit();
+            case 6: // 表決紀錄 -> 回到主選單
+                fragmentManager.beginTransaction().remove(fragmentProfile).commit();
+                Toast.makeText(this, "重新選擇選區", Toast.LENGTH_SHORT).show();
+
                 break;
             case 7:
                 fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(

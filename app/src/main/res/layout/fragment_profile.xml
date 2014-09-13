@@ -18,7 +18,8 @@
                 android:id="@+id/spinner_legislator_name"
                 android:layout_width="wrap_content"
                 android:layout_height= "wrap_content"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/tv_response"
@@ -48,11 +49,13 @@
                     android:layout_centerVertical="true"
                     android:contentDescription="@null"/>
 
+
                 <g0v.ly.android.utility.androidcharts.SpiderWebChart
                     android:id="@+id/profile_radar_chart"
                     android:layout_width="fill_parent"
                     android:layout_height="160dp"
                     android:layout_toRightOf="@id/profile_img"/>
+
 
             </RelativeLayout>
 
@@ -62,7 +65,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
 
-                android:layout_below="@+id/profile_and_img_relative_layout">
+                android:layout_below="@+id/profile_and_img_relative_layout"
+                android:id="@+id/tableLayout">
 
 
 
@@ -169,6 +173,19 @@
                 </HorizontalScrollView>
 
             </TableLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="選擇其他選區"
+                android:id="@+id/choose_other_city"
+                android:layout_below="@+id/tableLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="2dp"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:textColor="@color/popup_menu1"
+                android:textStyle="bold"
+                android:enabled="true" />
 
 
         </RelativeLayout>

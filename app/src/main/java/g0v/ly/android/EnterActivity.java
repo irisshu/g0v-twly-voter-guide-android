@@ -26,7 +26,7 @@ public class EnterActivity extends Activity {
             public void run() {
                 // TODO Auto-generated method stub
                 try {
-                    Thread.sleep(3000);//這邊可以做你想預先載入的資料
+                    Thread.sleep(1000);//這邊可以做你想預先載入的資料
                     //接下來轉跳到app的主畫面
                     startActivity(new Intent().setClass(EnterActivity.this, MainActivity.class));
                 } catch (InterruptedException e) {

@@ -259,7 +259,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         }
 
 
-
+        //原本全部的立委都抓下來
         // get rest profiles
 //        if (hasNextPage) {
 //            restMethods.restGet(
@@ -343,8 +343,11 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
     private void updateSpiderWebChart(String nvc, String cvc, String pbc, String lac, String cac){
 
-        // tvProfileAd.setText("hi " + msg);
-        red_own.set(0,new TitleValueEntity(webChartTitle[0], Float.parseFloat(nvc)/10));  //沒投票次數 not_vote_count
+        float Fnvc = Float.parseFloat(nvc) ;
+        if(Fnvc > 10)Fnvc = 10; // 暫時讓他不要超出範圍
+
+
+        red_own.set(0,new TitleValueEntity(webChartTitle[0], Fnvc));  //沒投票次數 not_vote_count
         red_own.set(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
         red_own.set(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
         red_own.set(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
