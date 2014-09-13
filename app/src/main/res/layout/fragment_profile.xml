@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-
+                android:id="@+id/profile_info_table_layout"
                 android:layout_below="@+id/profile_and_img_relative_layout">
 
 
@@ -151,14 +151,36 @@
                                   android:layout_width="match_parent"
                                   android:layout_height="wrap_content"/>
                     </TableRow>
-
                 </HorizontalScrollView>
-
             </TableLayout>
 
+            <RelativeLayout
+                android:id="@+id/pie_chart_relative_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_info_table_layout">
 
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <g0v.ly.android.utility.androidcharts.PieChart
+                            android:id="@+id/profile_pie_chart_left"
+                            android:layout_width="fill_parent"
+                            android:layout_height="160dp"
+                            android:layout_weight="1"/>
+
+                        <g0v.ly.android.utility.androidcharts.PieChart
+                            android:id="@+id/profile_pie_chart_right"
+                            android:layout_width="fill_parent"
+                            android:layout_height="160dp"
+                            android:layout_weight="1"/>
+                    </TableRow>
+                </TableLayout>
+            </RelativeLayout>
         </RelativeLayout>
-
-
-
 </ScrollView>
