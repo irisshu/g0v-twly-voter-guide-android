@@ -41,12 +41,26 @@ public class MainActivity extends FragmentActivity
     public int pos = 0;
     static final FragmentProfile fragmentProfile = new FragmentProfile();
     Intent it = new Intent();
+    private View mProfile ;
 
 
 
     public int get_bundle_msg()
     {
         return pos;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mProfile.getVisibility()== View.VISIBLE){
+            mProfile.setVisibility(View.GONE);
+        }
+        else{
+            super.onBackPressed();
+        }
+
+
+
     }
 
     @Override
@@ -64,7 +78,7 @@ public class MainActivity extends FragmentActivity
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-
+        mProfile = findViewById(R.id.profile);
 
 
         for ( int i= 0; i< country_num; i++){
@@ -80,18 +94,13 @@ public class MainActivity extends FragmentActivity
                     popupMenu.setOnMenuItemClickListener(MainActivity.this);
                     popupMenu.inflate(R.menu.constituency_menu1 + finalI); //每個縣市都會分配到一個menu，有可能是空的
 
+                    // 用i 去給對應的數字，拿到新的api 後再重構，改成都是動態產生ListView
                     if (popupMenu.getMenu().size() == 0) { //表示這個縣市沒有更細的分類
                         // 直接判斷是哪一區，然後進入顯示區域立委資料
-                        // 已用中斷點測試過
-
-
                         pos = 3;
-                        //it.putExtra("DATA_POS", iVal_pos);
-                        //startActivity(it);
-                        fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
+                        fragmentManager.beginTransaction().replace(R.id.profile, fragmentProfile).commit();
+                        mProfile.setVisibility(View.VISIBLE);
                         // 進入 profile 頁面
-
-
 
                     }
                     else{
@@ -119,12 +128,11 @@ public class MainActivity extends FragmentActivity
         switch (item.getItemId()) {
 
             case R.id.item_con_3_1:
-
-                //fragmentProfile.setupOnclickListeners(position);
-                fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
+                pos = 6;
+                fragmentManager.beginTransaction().replace(R.id.profile, fragmentProfile).commit();
+                mProfile.setVisibility(View.VISIBLE);
                 // 進入 profile 頁面
 
-                pos = 4;
                 Toast.makeText(this, "item_con_3_1 Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_movies:
@@ -140,6 +148,8 @@ public class MainActivity extends FragmentActivity
 
 
     }
+
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {

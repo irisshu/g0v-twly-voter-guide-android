@@ -281,7 +281,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
     public void setupOnclickListeners() {
 
-        final int bundle_msg_id=((MainActivity)getActivity()).get_bundle_msg();
+        // Get the "pos" number from MainActivity
+        final int bundle_msg_id=((MainActivity)getActivity()).pos;
 
         legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

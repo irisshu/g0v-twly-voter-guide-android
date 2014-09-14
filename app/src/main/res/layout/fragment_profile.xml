@@ -174,20 +174,6 @@
 
             </TableLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="選擇其他選區"
-                android:id="@+id/choose_other_city"
-                android:layout_below="@+id/tableLayout"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="2dp"
-                android:textAppearance="?android:attr/textAppearanceButton"
-                android:textColor="@color/popup_menu1"
-                android:textStyle="bold"
-                android:enabled="true" />
-
-
         </RelativeLayout>
 
 
