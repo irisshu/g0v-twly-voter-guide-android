@@ -66,10 +66,11 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int LY_ABSENT_COUNT = 3;
     private static final int COMMITTEE_ABSENT_COUNT = 4;
 
+    private static int stopFlag = 0;
 
-    private static int iData_pos = 0;
 
     private TextView tvResponse;
+    private TextView tvProfileName;
     private TextView tvProfileAd;
     private TextView tvProfileGender;
     private TextView tvProfileParty;
@@ -250,37 +251,60 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
             legislatorNameArray[i] = NameObjArray[i].toString();
         }
 
-        // 這裡是更改立委的關鍵
+        // 將立委資料放入 spinner
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
-        legislatorNameSpinner.setAdapter(arrayAdapter);
 
-        // get rest profiles
-        if (hasNextPage) {
+
+        // 只抓對應到的那頁
+        if(stopFlag == 0){
+
             restMethods.restGet(
-                    "https://twly.herokuapp.com/api/legislator_terms/?page=" + (page + 1) +
-                            "&ad=8", FragmentProfile.this
+                    "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8", FragmentProfile.this
             );
-        } else {
-            logger.debug("[Profile] getDone hasNextPage = false");
+            legislatorNameSpinner.setAdapter(arrayAdapter);
+            stopFlag = 1;
         }
+
+
+        //原本全部的立委都抓下來
+        // get rest profiles
+//        if (hasNextPage) {
+//            restMethods.restGet(
+//                    "https://twly.herokuapp.com/api/legislator_terms/?page=" + (page + 1) +
+//                            "&ad=8", FragmentProfile.this
+//            );
+//        } else {
+//
+//            // 全部下載完後，再顯示出來
+//            legislatorNameSpinner.setAdapter(arrayAdapter);
+//            logger.debug("[Profile] getDone hasNextPage = false");
+//        }
+
+
     }
+
+
 
 
     public void setupOnclickListeners() {
 
-        final int bundle_msg_id=((MainActivity)getActivity()).get_bundle_msg();
+        // Get the "pos" number from MainActivity
+        final int bundle_msg_id=((MainActivity)getActivity()).pos;
 
         legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                        long l) {
+
+                position = bundle_msg_id;
                 Toast.makeText(getActivity(),
-                        "你選的是 " + legislatorNameArray[iData_pos] + bundle_msg_id, Toast.LENGTH_SHORT).show();
+                        "你選的是 " + legislatorNameArray[position] + position, Toast.LENGTH_SHORT).show();
 
 
 
                 if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
+                    updateTextView(tvProfileName,legislatorNameArray[position], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileAd, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_AD], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileGender, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_GENDER], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileParty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PARTY], TvUpdateType.OVERWRITE);
@@ -328,8 +352,11 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
     private void updateSpiderWebChart(String nvc, String cvc, String pbc, String lac, String cac){
 
-        // tvProfileAd.setText("hi " + msg);
-        red_own.set(0,new TitleValueEntity(webChartTitle[0], Float.parseFloat(nvc)/10));  //沒投票次數 not_vote_count
+        float Fnvc = Float.parseFloat(nvc) ;
+        if(Fnvc > 10)Fnvc = 10; // 暫時讓他不要超出範圍
+
+
+        red_own.set(0,new TitleValueEntity(webChartTitle[0], Fnvc));  //沒投票次數 not_vote_count
         red_own.set(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
         red_own.set(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
         red_own.set(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
@@ -342,8 +369,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         spiderWebChart.setLatitudeNum(5);
         spiderWebChart.refreshDrawableState();
         spiderWebChart.invalidate();
-        
-         //spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+
 
     }
 
@@ -409,6 +435,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     }
 
     private void setupUiComponents(View view) {
+        TextView tvProfileNameTitle =
+                (TextView) view.findViewById(R.id.legislator_profile_info_name_title);
         TextView tvProfileAdTitle =
                 (TextView) view.findViewById(R.id.legislator_profile_info_ad_title);
         TextView tvProfileGenderTitle =
@@ -421,6 +449,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                 (TextView) view.findViewById(R.id.legislator_profile_info_education_title);
         TextView tvProfileExperienceTitle =
                 (TextView) view.findViewById(R.id.legislator_profile_info_experience_title);
+
+        tvProfileName = (TextView) view.findViewById(R.id.legislator_profile_info_name);
         tvProfileAd = (TextView) view.findViewById(R.id.legislator_profile_info_ad);
         tvProfileGender = (TextView) view.findViewById(R.id.legislator_profile_info_gender);
         tvProfileParty = (TextView) view.findViewById(R.id.legislator_profile_info_party);
@@ -440,6 +470,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
         // setup titles
         String[] legislatorProfileInfo = resources.getStringArray(R.array.legislator_profile_info);
+        tvProfileNameTitle.setText("姓名："); //暫時使用
         tvProfileAdTitle.setText(legislatorProfileInfo[PROFILE_INFO_AD]);
         tvProfileGenderTitle.setText(legislatorProfileInfo[PROFILE_INFO_GENDER]);
         tvProfilePartyTitle.setText(legislatorProfileInfo[PROFILE_INFO_PARTY]);

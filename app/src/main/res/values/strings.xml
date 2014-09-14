@@ -18,7 +18,7 @@
         <item>政治獻金</item>
         <item>議案</item>
         <item>基本資料</item>
-        <item>表決紀錄</item>
+        <item>選擇選區</item>
     </string-array>
 
     <string name="title_activity_enter">EnterActivity</string>
