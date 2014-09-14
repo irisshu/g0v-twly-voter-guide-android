@@ -1,5 +1,6 @@
 package g0v.ly.android.legislator;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -33,10 +35,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import g0v.ly.android.MainActivity;
 import g0v.ly.android.R;
 import g0v.ly.android.rest.RESTMethods;
+import g0v.ly.android.utility.androidcharts.PieChart;
 import g0v.ly.android.utility.androidcharts.SpiderWebChart;
+import g0v.ly.android.utility.androidcharts.TitleValueColorEntity;
 import g0v.ly.android.utility.androidcharts.TitleValueEntity;
+
+import static android.content.Intent.parseUri;
 
 public class FragmentProfile extends Fragment implements RESTMethods.RestApiCallback {
     private static final Logger logger = LoggerFactory.getLogger(FragmentProfile.class);
@@ -60,6 +67,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int COMMITTEE_ABSENT_COUNT = 4;
 
 
+    private static int iData_pos = 0;
+
     private TextView tvResponse;
     private TextView tvProfileAd;
     private TextView tvProfileGender;
@@ -75,6 +84,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     List<TitleValueEntity> blue_ave = new ArrayList<TitleValueEntity>();
     List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 
+    List<TitleValueColorEntity> piechart_data = new ArrayList<TitleValueColorEntity>();
+
 
     private RESTMethods restMethods;
 
@@ -85,9 +96,13 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private boolean hasNextPage = true;
 
     private SpiderWebChart spiderWebChart;
+    private PieChart pieChartLeft;
+    private PieChart pieChartRight;
 
     private Resources resources;
     String[] webChartTitle;
+    String[] pieChartTitle;
+    int[] pieChartColor;
 
 
     // Key => legislator's name, Value => legislator's profile
@@ -98,7 +113,9 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resources = getResources();
+
     }
+
 
 
 
@@ -114,6 +131,9 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         restMethods = new RESTMethods();
         String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
         restMethods.restGet(getUrl, FragmentProfile.this);
+
+
+
         setupOnclickListeners();
         return view;
     }
@@ -229,6 +249,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         for (int i = 0; i < nameArraySize; i++) {
             legislatorNameArray[i] = NameObjArray[i].toString();
         }
+
+        // 這裡是更改立委的關鍵
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, legislatorNameArray);
         legislatorNameSpinner.setAdapter(arrayAdapter);
@@ -245,14 +267,16 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     }
 
 
-    private void setupOnclickListeners() {
+    public void setupOnclickListeners() {
+
+        final int bundle_msg_id=((MainActivity)getActivity()).get_bundle_msg();
 
         legislatorNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                        long l) {
                 Toast.makeText(getActivity(),
-                        "你選的是 " + legislatorNameArray[position], Toast.LENGTH_SHORT).show();
+                        "你選的是 " + legislatorNameArray[iData_pos] + bundle_msg_id, Toast.LENGTH_SHORT).show();
 
 
 
@@ -268,7 +292,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                             legislatorListWithAbsent.get(legislatorNameArray[position])[CONSCIENCE_VOTE_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[PRIMARY_PROPOSER_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[LY_ABSENT_COUNT],
-                            legislatorListWithAbsent.get(legislatorNameArray[position])[COMMITTEE_ABSENT_COUNT]     );
+                            legislatorListWithAbsent.get(legislatorNameArray[position])[COMMITTEE_ABSENT_COUNT]);
 
                     GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
                     getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);
@@ -352,6 +376,25 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     }
 
 
+    private void initPieChart() {
+        pieChartColor = resources.getIntArray(R.array.legislator_profile_pie_chart_color);
+
+        pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_left);
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[0], 2, pieChartColor[0]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[2], 6, pieChartColor[2]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[3], 2, pieChartColor[3]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4]));
+        pieChartLeft.setData(piechart_data);
+        piechart_data = new ArrayList<TitleValueColorEntity>();
+        pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_right);
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[0], 4, pieChartColor[0]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[2], 4, pieChartColor[2]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[3], 2, pieChartColor[3]));
+        piechart_data.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4]));
+        pieChartRight.setData(piechart_data);
+    }
 
 
     // =============================================================================================
@@ -388,7 +431,11 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         imgProfile = (ImageView) view.findViewById(R.id.profile_img);
         legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
         spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
+        pieChartLeft = (PieChart) view.findViewById(R.id.profile_pie_chart_left);
+        pieChartRight = (PieChart) view.findViewById(R.id.profile_pie_chart_right);
+
         initSpiderWebChart( );
+        initPieChart();
         view.setBackgroundColor(Color.WHITE);
 
         // setup titles
@@ -400,6 +447,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         tvProfileEducationTitle.setText(legislatorProfileInfo[PROFILE_INFO_EDUCATION]);
         tvProfileExperienceTitle.setText(legislatorProfileInfo[PROFILE_INFO_EXPERIENCE]);
     }
+
+
 
     public enum TvUpdateType {
         APPEND,

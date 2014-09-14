@@ -2,23 +2,28 @@ package g0v.ly.android;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
 import g0v.ly.android.bill.FragmentBillList;
 import g0v.ly.android.legislator.FragmentProfile;
+import g0v.ly.android.legislator.ProfileActivity;
 import g0v.ly.android.navigate.FragmentViewPager;
 import g0v.ly.android.utility.FontManager;
 
@@ -28,12 +33,20 @@ import g0v.ly.android.utility.FontManager;
 
 
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, PopupMenu.OnMenuItemClickListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+    private final int country_num = 26;
+    public int pos = 0;
+    static final FragmentProfile fragmentProfile = new FragmentProfile();
+    Intent it = new Intent();
 
 
+    public int get_bundle_msg()
+    {
+        return pos;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +54,96 @@ public class MainActivity extends FragmentActivity
         Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
+        final FragmentManager fragmentManager;
+        fragmentManager = getSupportFragmentManager();
+
         mNavigationDrawerFragment =
                 (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+
+        for ( int i= 0; i< country_num; i++){
+
+            final int finalI = i;
+
+
+            findViewById(R.id.btn_county1 +i).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
+                    popupMenu.setOnMenuItemClickListener(MainActivity.this);
+                    popupMenu.inflate(R.menu.constituency_menu1 + finalI); //每個縣市都會分配到一個menu，有可能是空的
+
+                    if (popupMenu.getMenu().size() == 0) { //表示這個縣市沒有更細的分類
+                        // 直接判斷是哪一區，然後進入顯示區域立委資料
+                        // 已用中斷點測試過
+
+                        it.setClass(MainActivity.this , ProfileActivity.class);
+                        pos = 3;
+                        //it.putExtra("DATA_POS", iVal_pos);
+                        //startActivity(it);
+                        fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
+                        // 進入 profile 頁面
+
+
+
+                    }
+                    else{
+                        popupMenu.show();
+
+                    }
+
+
+                }
+            });
+
+        }
+
+
+    }
+
+    public boolean onMenuItemClick(MenuItem item) {
+
+        final FragmentManager fragmentManager;
+        fragmentManager = getSupportFragmentManager();
+
+
+
+
+        switch (item.getItemId()) {
+
+            case R.id.item_con_3_1:
+
+                //fragmentProfile.setupOnclickListeners(position);
+                fragmentManager.beginTransaction().replace(R.id.container, fragmentProfile).commit();
+                // 進入 profile 頁面
+
+                //建立 Intent
+
+                it.setClass(MainActivity.this , FragmentActivity.class);
+                int iVal_pos = 3;
+                it.putExtra("DATA_POS", iVal_pos);
+                //startActivity(it);
+
+                Toast.makeText(this, "item_con_3_1 Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_movies:
+                Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_music:
+                Toast.makeText(this, "Music Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return false;
+        }
+
+
+
     }
 
     @Override

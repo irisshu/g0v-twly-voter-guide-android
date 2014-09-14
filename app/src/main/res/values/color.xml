@@ -5,4 +5,24 @@
     <color name="fragment_background_3">#FF0FFF00</color>
     <color name="fragment_background_4">#FF00FFF0</color>
     <color name="fragment_background_5">#FFF000FF</color>
+
+    <color name="popup_menu1">#ff5e08bb</color>
+    <color name="popup_menu2">#ffbb610c</color>
+    <color name="popup_menu3">#ff0d7999</color>
+    <color name="popup_menu_txt">#FFF</color>
+
+    <color name="red">#FFFF0000</color>
+    <color name="orange">#FFFF8D00</color>
+    <color name="yellow">#FFFFFF00</color>
+    <color name="green">#FF00FF00</color>
+    <color name="lightblue">#ff64d3fb</color>
+
+    <array name="legislator_profile_pie_chart_color">
+        <item>@color/red</item>
+        <item>@color/orange</item>
+        <item>@color/yellow</item>
+        <item>@color/green</item>
+        <item>@color/lightblue</item>
+    </array>
+
 </resources>
