@@ -176,48 +176,38 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_info_table_layout">
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal">
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        >
-                        <TextView android:id="@+id/legislator_profile_pie_chart_title_left"
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
-                                  android:layout_weight="1"
-                                  android:paddingLeft="35dp"
-                                  android:text="@string/pie_chart_title_left"
-                                  android:textSize="16sp"/>
-                        <TextView android:id="@+id/legislator_profile_pie_chart_title_right"
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
-                                  android:layout_weight="1"
-                                  android:paddingLeft="35dp"
-                                  android:text="@string/pie_chart_title_right"
-                                  android:textSize="16sp"/>
-                    </TableRow>
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
 
                         <g0v.ly.android.utility.androidcharts.PieChart
-                            android:id="@+id/profile_pie_chart_left"
+                            android:id="@+id/profile_pie_chart_in"
                             android:layout_width="fill_parent"
-                            android:layout_height="160dp"
-                            android:layout_weight="1"/>
+                            android:layout_height="350dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView android:id="@+id/legislator_profile_pie_chart_title_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="35dp"
+                            android:text="@string/pie_chart_title_in"
+                            android:textSize="16sp"
+                             />
 
                         <g0v.ly.android.utility.androidcharts.PieChart
-                            android:id="@+id/profile_pie_chart_right"
+                            android:id="@+id/profile_pie_chart_out"
                             android:layout_width="fill_parent"
-                            android:layout_height="160dp"
-                            android:layout_weight="1"/>
-                    </TableRow>
-                </TableLayout>
+                            android:layout_height="200dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_below="@id/profile_pie_chart_in"/>
+
+                        <TextView android:id="@+id/legislator_profile_pie_chart_title_out"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="35dp"
+                            android:text="@string/pie_chart_title_out"
+                            android:textSize="16sp"/>
+
             </RelativeLayout>
         </RelativeLayout>
 </ScrollView>

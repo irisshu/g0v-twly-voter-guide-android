@@ -10,8 +10,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="coming_soon">coming soon!</string>
     <string name="title_1">委員</string>
-    <string name="pie_chart_title_left">政治獻金收入</string>
-    <string name="pie_chart_title_right">政治獻金支出</string>
+    <string name="pie_chart_title_in">政治獻金收入</string>
+    <string name="pie_chart_title_out">政治獻金支出</string>
 
     <string-array name="navigation_drawer_list">
         <item>委員</item>

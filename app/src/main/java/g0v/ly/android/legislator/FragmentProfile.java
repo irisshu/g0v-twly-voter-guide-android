@@ -97,8 +97,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private boolean hasNextPage = true;
 
     private SpiderWebChart spiderWebChart;
-    private PieChart pieChartLeft;
-    private PieChart pieChartRight;
+    private PieChart pieChartIn;
+    private PieChart pieChartOut;
 
     private Resources resources;
     String[] webChartTitle;
@@ -405,21 +405,21 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private void initPieChart() {
         pieChartColor = resources.getIntArray(R.array.legislator_profile_pie_chart_color);
 
-        pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_left);
+        pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_in);
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[0], 2, pieChartColor[0]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[2], 6, pieChartColor[2]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[3], 2, pieChartColor[3]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4]));
-        pieChartLeft.setData(piechart_data);
+        pieChartIn.setData(piechart_data);
         piechart_data = new ArrayList<TitleValueColorEntity>();
-        pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_right);
+        pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_out);
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[0], 4, pieChartColor[0]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[2], 4, pieChartColor[2]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[3], 2, pieChartColor[3]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4]));
-        pieChartRight.setData(piechart_data);
+        pieChartOut.setData(piechart_data);
     }
 
 
@@ -461,8 +461,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         imgProfile = (ImageView) view.findViewById(R.id.profile_img);
         legislatorNameSpinner = (Spinner) view.findViewById(R.id.spinner_legislator_name);
         spiderWebChart = (SpiderWebChart) view.findViewById(R.id.profile_radar_chart);
-        pieChartLeft = (PieChart) view.findViewById(R.id.profile_pie_chart_left);
-        pieChartRight = (PieChart) view.findViewById(R.id.profile_pie_chart_right);
+        pieChartIn = (PieChart) view.findViewById(R.id.profile_pie_chart_in);
+        pieChartOut = (PieChart) view.findViewById(R.id.profile_pie_chart_out);
 
         initSpiderWebChart( );
         initPieChart();

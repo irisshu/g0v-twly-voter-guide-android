@@ -37,7 +37,7 @@ public class MainActivity extends FragmentActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
-    private final int country_num = 26;
+    private final int county_num = 26;
     public int pos = 0;
     static final FragmentProfile fragmentProfile = new FragmentProfile();
     Intent it = new Intent();
@@ -81,7 +81,7 @@ public class MainActivity extends FragmentActivity
         mProfile = findViewById(R.id.profile);
 
 
-        for ( int i= 0; i< country_num; i++){
+        for ( int i= 0; i< county_num; i++){
 
             final int finalI = i;
 

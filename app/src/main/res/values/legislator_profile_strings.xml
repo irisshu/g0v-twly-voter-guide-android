@@ -36,7 +36,7 @@
         <item>committee_absent_count</item>
     </string-array>
 
-    <string-array name="legislator_profile_pie_chart_title_left">
+    <string-array name="legislator_profile_pie_chart_title_in">
         <item>T1</item>
         <item>T2</item>
         <item>T3</item>
@@ -44,7 +44,7 @@
         <item>T5</item>
     </string-array>
 
-    <string-array name="legislator_profile_pie_chart_title_right">
+    <string-array name="legislator_profile_pie_chart_title_out">
         <item>Title1</item>
         <item>Title2</item>
         <item>Title3</item>
