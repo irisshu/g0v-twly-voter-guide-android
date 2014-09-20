@@ -412,6 +412,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[3], 2, pieChartColor[3]));
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4]));
         pieChartIn.setData(piechart_data);
+
         piechart_data = new ArrayList<TitleValueColorEntity>();
         pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_out);
         piechart_data.add(new TitleValueColorEntity(pieChartTitle[0], 4, pieChartColor[0]));
