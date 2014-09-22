@@ -42,7 +42,16 @@
         <item>政黨捐贈</item>  <!--in_party-->
         <item>人民團體捐贈</item>  <!--in_civil-->
         <item>匿名捐贈</item> <!--in_anonymous-->
-        <!--in_others-->
+        <item>其他</item><!--in_others-->
+    </string-array>
+
+    <string-array name="legislator_profile_pie_chart_api_key">
+        <item>in_individual</item>
+        <item>in_profit</item>
+        <item>in_party</item>
+        <item>in_civil</item>
+        <item>in_anonymous</item>
+        <item>in_others</item>
     </string-array>
 
     <string-array name="legislator_profile_pie_chart_title_out">

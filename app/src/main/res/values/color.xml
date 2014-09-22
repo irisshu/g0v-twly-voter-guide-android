@@ -15,14 +15,16 @@
     <color name="orange">#FFFF8D00</color>
     <color name="yellow">#FFFFFF00</color>
     <color name="green">#FF00FF00</color>
-    <color name="lightblue">#ff64d3fb</color>
+    <color name="lightBlue">#ff64d3fb</color>
+    <color name="lightPurple">#FFF000FF</color>
 
     <array name="legislator_profile_pie_chart_color">
         <item>@color/red</item>
         <item>@color/orange</item>
         <item>@color/yellow</item>
         <item>@color/green</item>
-        <item>@color/lightblue</item>
+        <item>@color/lightBlue</item>
+        <item>@color/lightPurple</item>
     </array>
 
 </resources>
