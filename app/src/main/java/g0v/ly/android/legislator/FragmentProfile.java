@@ -185,19 +185,21 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
                     for (int i = 0; i < results.length(); i++) {
                         // get legislator's name
-                        JSONObject legislator = results.getJSONObject(1);
+                        JSONObject legislator = results.getJSONObject(i);
                         legislatorNameArray[i] = legislator.getString("name");
                         legislatorProfileArray = new String[PROFILE_INFO_COUNT];
                         legislatorAbsentArray = new String[ABSENT_COUNT];
                         legislatorPoliticalContributionsArray = new String[PIE_CHART_IN];
-                        Log.d("HIHI", "HI");
 
-                        // 目前處於無窮迴圈，因為i 的值不會改變，也許想辦法判斷 POLI 的size，如果等於0 就跳出...
-                        // 現在抓得到 POLI 裡面的內容了
                         JSONArray POLI= legislator.getJSONArray("politicalcontributions");
-                        JSONObject whatever = POLI.getJSONObject(0);
-                        in_individual = whatever.getString("in_individual");
-                        Toast.makeText(getActivity(),"你選的是 " + in_individual, Toast.LENGTH_SHORT).show();
+                        if (POLI.length()== 0){
+                            // This legislator does not have any data about political contributions.
+                        }
+                        else{
+                            JSONObject whatever = POLI.getJSONObject(0);
+                            in_individual = whatever.getString("in_individual");
+                            Toast.makeText(getActivity(),"你選的是 " + in_individual, Toast.LENGTH_SHORT).show();
+                        }
 
                         // get legislator's profile
                         for (int j = 0; j < legislatorProfileArray.length; j++) {
