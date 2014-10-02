@@ -77,6 +77,11 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int IN_OTHERS = 5;
 
     String in_individual = "";
+    String in_profit = "";
+    String in_party = "";
+    String in_civil = "";
+    String in_anonymous = "";
+    String in_others = "";
 
 
     private static int stopFlag = 0;
@@ -189,16 +194,25 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                         legislatorNameArray[i] = legislator.getString("name");
                         legislatorProfileArray = new String[PROFILE_INFO_COUNT];
                         legislatorAbsentArray = new String[ABSENT_COUNT];
+
+                        //TODO: PIE_CHART_IN 應該改成 PIE_CHART_IN + PIE_CHART_OUT
                         legislatorPoliticalContributionsArray = new String[PIE_CHART_IN];
+                        JSONObject poli_in_out = null;
 
                         JSONArray POLI= legislator.getJSONArray("politicalcontributions");
                         if (POLI.length()== 0){
                             // This legislator does not have any data about political contributions.
                         }
                         else{
-                            JSONObject whatever = POLI.getJSONObject(0);
-                            in_individual = whatever.getString("in_individual");
-                            Toast.makeText(getActivity(),"你選的是 " + in_individual, Toast.LENGTH_SHORT).show();
+                            poli_in_out = POLI.getJSONObject(0);
+//                            in_individual = poli_in_out.getString("in_individual");
+//                            in_profit = poli_in_out.getString("in_profit");
+//                            in_party = poli_in_out.getString("in_party");
+//                            in_civil = poli_in_out.getString("in_civil");
+//                            in_anonymous = poli_in_out.getString("in_anonymous");
+//                            in_others = poli_in_out.getString("in_others");
+
+//                            Toast.makeText(getActivity(),"你選的是 " + in_individual, Toast.LENGTH_SHORT).show();
                         }
 
                         // get legislator's profile
@@ -262,40 +276,41 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                             }
                         }
 
-//                        // get legislator's political contributions.
-//                        for (int j = 0; j < legislatorPoliticalContributionsArray.length; j++) {
-//                            switch (j) {
-//                                case 0:
-//                                    legislatorPoliticalContributionsArray[j] =
-//                                            legislator.getString(legislatorProfilePieChartApiKey[IN_INDIVIDUAL]);
-//                                    break;
-//                                case 1:
-//                                    legislatorPoliticalContributionsArray[j] =
-//                                            legislator.getString(legislatorProfilePieChartApiKey[IN_PROFIT]);
-//                                    break;
-//                                case 2:
-//                                    legislatorPoliticalContributionsArray[j] =
-//                                            legislator.getString(legislatorProfilePieChartApiKey[IN_PARTY]);
-//                                    break;
-//                                case 3:
-//                                    legislatorPoliticalContributionsArray[j] =
-//                                            legislator.getString(legislatorProfilePieChartApiKey[IN_CIVIL]);
-//                                    break;
-//                                case 4:
-//                                    legislatorPoliticalContributionsArray[j] =
-//                                            legislator.getString(legislatorProfilePieChartApiKey[IN_ANONYMOUS]);
-//                                    break;
-//                                case 5:
-//                                    legislatorPoliticalContributionsArray[j] =
-//                                            legislator.getString(legislatorProfilePieChartApiKey[IN_OTHERS]);
-//                                    break;
-//
-//                            }
-//                        }
+                        // get legislator's political contributions.
+                        for (int j = 0; j < legislatorPoliticalContributionsArray.length; j++) {
+                            switch (j) {
+                                case 0:
+                                    legislatorPoliticalContributionsArray[j] =
+                                            poli_in_out != null ? poli_in_out.getString(legislatorProfilePieChartApiKey[IN_INDIVIDUAL]) : null;
+                                            // poli_in_out 有可能是null (有些人沒有政治獻金資料)
+                                    break;
+                                case 1:
+                                    legislatorPoliticalContributionsArray[j] =
+                                            poli_in_out != null ? poli_in_out.getString(legislatorProfilePieChartApiKey[IN_PROFIT]) : null;
+                                    break;
+                                case 2:
+                                    legislatorPoliticalContributionsArray[j] =
+                                            poli_in_out != null ? poli_in_out.getString(legislatorProfilePieChartApiKey[IN_PARTY]) : null;
+                                    break;
+                                case 3:
+                                    legislatorPoliticalContributionsArray[j] =
+                                            poli_in_out != null ? poli_in_out.getString(legislatorProfilePieChartApiKey[IN_CIVIL]) : null;
+                                    break;
+                                case 4:
+                                    legislatorPoliticalContributionsArray[j] =
+                                            poli_in_out != null ? poli_in_out.getString(legislatorProfilePieChartApiKey[IN_ANONYMOUS]) : null;
+                                    break;
+                                case 5:
+                                    legislatorPoliticalContributionsArray[j] =
+                                            poli_in_out != null ? poli_in_out.getString(legislatorProfilePieChartApiKey[IN_OTHERS]) : null;
+                                    break;
+
+                            }
+                        }
 
                         legislatorListWithProfile.put(legislatorNameArray[i], legislatorProfileArray);
                         legislatorListWithAbsent.put(legislatorNameArray[i], legislatorAbsentArray);
-                        //legislatorListWithPoliticalContributions.put(legislatorNameArray[i], legislatorPoliticalContributionsArray);
+                        legislatorListWithPoliticalContributions.put(legislatorNameArray[i], legislatorPoliticalContributionsArray);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -367,8 +382,6 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                 position = 5;
                 Toast.makeText(getActivity(),
                         "你選的是 " + legislatorNameArray[position] + position, Toast.LENGTH_SHORT).show();
-
-
 
                 if (legislatorListWithProfile.containsKey(legislatorNameArray[position])) {
                     updateTextView(tvProfileName,legislatorNameArray[position], TvUpdateType.OVERWRITE);
