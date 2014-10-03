@@ -2,6 +2,7 @@ g0v-twly-voter-guide-android
 ==============================
 
 此為 g0v [立委投票指南](http://vote.ly.g0v.tw/) Android 版 project
+
 開發環境: Android Studio
 
 立委投票指南 Android 版 project [trello] (https://trello.com/b/laylhlfd/legislative-yuan-log)
