@@ -76,16 +76,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     private static final int IN_ANONYMOUS = 4;
     private static final int IN_OTHERS = 5;
 
-    String in_individual = "";
-    String in_profit = "";
-    String in_party = "";
-    String in_civil = "";
-    String in_anonymous = "";
-    String in_others = "";
-
-
     private static int stopFlag = 0;
-
 
     private TextView tvResponse;
     private TextView tvProfileName;
@@ -103,8 +94,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
     List<TitleValueEntity> blue_ave = new ArrayList<TitleValueEntity>();
     List<List<TitleValueEntity>> data = new ArrayList<List<TitleValueEntity>>();
 
-    List<TitleValueColorEntity> piechart_data = new ArrayList<TitleValueColorEntity>();
-
+    List<TitleValueColorEntity> piechart_data_in = new ArrayList<TitleValueColorEntity>();
+    List<TitleValueColorEntity> piechart_data_out = new ArrayList<TitleValueColorEntity>();
 
     private RESTMethods restMethods;
 
@@ -378,8 +369,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
             public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                        long l) {
 
-                position = bundle_msg_id;
-                position = 5;
+                position = bundle_msg_id; // 傳 "選區編號" 資料
+                position = 5; //test
                 Toast.makeText(getActivity(),
                         "你選的是 " + legislatorNameArray[position] + position, Toast.LENGTH_SHORT).show();
 
@@ -398,6 +389,14 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                             legislatorListWithAbsent.get(legislatorNameArray[position])[PRIMARY_PROPOSER_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[LY_ABSENT_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[COMMITTEE_ABSENT_COUNT]);
+
+                    updatePieChart(legislatorListWithPoliticalContributions.get(legislatorNameArray[position])[IN_INDIVIDUAL],
+                            legislatorListWithPoliticalContributions.get(legislatorNameArray[position])[IN_PROFIT],
+                            legislatorListWithPoliticalContributions.get(legislatorNameArray[position])[IN_PARTY],
+                            legislatorListWithPoliticalContributions.get(legislatorNameArray[position])[IN_CIVIL],
+                            legislatorListWithPoliticalContributions.get(legislatorNameArray[position])[IN_ANONYMOUS],
+                            legislatorListWithPoliticalContributions.get(legislatorNameArray[position])[IN_OTHERS]
+                    );
 
                     GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
                     getImageFromUrl.execute(legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_PHOTO]);
@@ -431,29 +430,6 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         }
     }
 
-    private void updateSpiderWebChart(String nvc, String cvc, String pbc, String lac, String cac){
-
-        float Fnvc = Float.parseFloat(nvc) ;
-        if(Fnvc > 10)Fnvc = 10; // 暫時讓他不要超出範圍
-
-
-        red_own.set(0,new TitleValueEntity(webChartTitle[0], Fnvc));  //沒投票次數 not_vote_count
-        red_own.set(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
-        red_own.set(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
-        red_own.set(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
-        red_own.set(4,new TitleValueEntity(webChartTitle[4], Float.parseFloat(cac)));  //委員會缺席次數 committee_absent_count
-
-        //data.add(red_own);
-        data.set(0,red_own);
-
-        addRadarChartData(data);
-        spiderWebChart.setLatitudeNum(5);
-        spiderWebChart.refreshDrawableState();
-        spiderWebChart.invalidate();
-
-
-    }
-
     // Put data in SpiderWebChart.
     public void initSpiderWebChart() {
 
@@ -482,27 +458,62 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         spiderWebChart.setLatitudeNum(5);//XXX method useless, check lib
     }
 
+    private void updateSpiderWebChart(String nvc, String cvc, String pbc, String lac, String cac){
+
+        float Fnvc = Float.parseFloat(nvc) ;
+        if(Fnvc > 10)Fnvc = 10; // 暫時讓他不要超出範圍
+
+        red_own.set(0,new TitleValueEntity(webChartTitle[0], Fnvc));  //沒投票次數 not_vote_count
+        red_own.set(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
+        red_own.set(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
+        red_own.set(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
+        red_own.set(4,new TitleValueEntity(webChartTitle[4], Float.parseFloat(cac)));  //委員會缺席次數 committee_absent_count
+
+        data.set(0,red_own);
+
+        addRadarChartData(data);
+        spiderWebChart.setLatitudeNum(5);
+        spiderWebChart.refreshDrawableState();
+        spiderWebChart.invalidate(); // 強制更新圖表
+    }
 
     private void initPieChart() {
         pieChartColor = resources.getIntArray(R.array.legislator_profile_pie_chart_color);
 
         pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_in);
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[0], 2, pieChartColor[0])); //個人捐贈 in_individual
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1])); //營利事業捐贈 in_profit
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[2], 5, pieChartColor[2])); //政黨捐贈 in_party
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[3], 4, pieChartColor[3])); //人民團體捐贈 in_civil
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4])); //匿名捐贈 in_anonymous
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[5], 2, pieChartColor[5])); //其他 in_others
-        pieChartIn.setData(piechart_data);
+        piechart_data_in.add(new TitleValueColorEntity(pieChartTitle[0], 2, pieChartColor[0])); //個人捐贈 in_individual
+        piechart_data_in.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1])); //營利事業捐贈 in_profit
+        piechart_data_in.add(new TitleValueColorEntity(pieChartTitle[2], 5, pieChartColor[2])); //政黨捐贈 in_party
+        piechart_data_in.add(new TitleValueColorEntity(pieChartTitle[3], 4, pieChartColor[3])); //人民團體捐贈 in_civil
+        piechart_data_in.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4])); //匿名捐贈 in_anonymous
+        piechart_data_in.add(new TitleValueColorEntity(pieChartTitle[5], 2, pieChartColor[5])); //其他 in_others
+        pieChartIn.setData(piechart_data_in);
 
-        piechart_data = new ArrayList<TitleValueColorEntity>();
+        piechart_data_out = new ArrayList<TitleValueColorEntity>();
         pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_out);
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[0], 4, pieChartColor[0]));
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1]));
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[2], 4, pieChartColor[2]));
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[3], 2, pieChartColor[3]));
-        piechart_data.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4]));
-        pieChartOut.setData(piechart_data);
+        piechart_data_out.add(new TitleValueColorEntity(pieChartTitle[0], 4, pieChartColor[0]));
+        piechart_data_out.add(new TitleValueColorEntity(pieChartTitle[1], 3, pieChartColor[1]));
+        piechart_data_out.add(new TitleValueColorEntity(pieChartTitle[2], 4, pieChartColor[2]));
+        piechart_data_out.add(new TitleValueColorEntity(pieChartTitle[3], 2, pieChartColor[3]));
+        piechart_data_out.add(new TitleValueColorEntity(pieChartTitle[4], 2, pieChartColor[4]));
+        pieChartOut.setData(piechart_data_out);
+    }
+
+    private void updatePieChart(String in_individual, String in_profit, String in_party, String in_civil, String in_anonymous, String in_others) {
+        pieChartColor = resources.getIntArray(R.array.legislator_profile_pie_chart_color);
+
+        pieChartTitle = resources.getStringArray(R.array.legislator_profile_pie_chart_title_in);
+        piechart_data_in.set(0,new TitleValueColorEntity(pieChartTitle[0], Float.parseFloat(in_individual),pieChartColor[0])); //個人捐贈 in_individual
+        piechart_data_in.set(1,new TitleValueColorEntity(pieChartTitle[1], Float.parseFloat(in_profit),pieChartColor[1])); //營利事業捐贈 in_profit
+        piechart_data_in.set(2,new TitleValueColorEntity(pieChartTitle[2], Float.parseFloat(in_civil),pieChartColor[2])); //政黨捐贈 in_party
+        piechart_data_in.set(3,new TitleValueColorEntity(pieChartTitle[3], Float.parseFloat(in_party),pieChartColor[3])); //人民團體捐贈 in_civil
+        piechart_data_in.set(4,new TitleValueColorEntity(pieChartTitle[4], Float.parseFloat(in_anonymous),pieChartColor[4])); //匿名捐贈 in_anonymous
+        piechart_data_in.set(5,new TitleValueColorEntity(pieChartTitle[5], Float.parseFloat(in_others),pieChartColor[5])); //其他 in_others
+        pieChartIn.setData(piechart_data_in);
+        pieChartIn.invalidate();
+
+        //TODO pieChartOut
+
     }
 
 
