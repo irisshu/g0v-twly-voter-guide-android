@@ -111,10 +111,6 @@ public class AdapterBillList implements ExpandableListAdapter {
             holder = (ItemViewHolder) row.getTag();
         }
 
-        // 子項目
-        //holder.itemTitle.setText("Item88888888888888888888000000000 " + position);
-        holder.itemTitle.setText(R.string.action_example + position);
-        //holder.itemTitle.setImeOptions(R.menu.constituency_menu3);
 
         return row;
 

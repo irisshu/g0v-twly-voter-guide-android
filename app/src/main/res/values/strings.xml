@@ -4,7 +4,6 @@
     <string name="app_name">LegislativeYuanLog</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
     <string name="btn_get_text">REST GET</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
