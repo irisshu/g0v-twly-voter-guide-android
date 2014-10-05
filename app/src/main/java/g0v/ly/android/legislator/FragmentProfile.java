@@ -143,7 +143,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 		/* TODO ad selectable */
         restMethods = new RESTMethods();
         String getUrl = "http://vote.ly.g0v.tw/api/legislator_terms/?ad=8&county=%E5%8D%97%E6%8A%95%E7%B8%A3";
-
+        // url 的中文字要編碼過才可以用
 
         restMethods.restGet(getUrl, FragmentProfile.this);
 

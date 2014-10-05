@@ -408,7 +408,7 @@
         android:layout_gravity="left"
         android:name="g0v.ly.android.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer"
-        />
+        android:visibility="gone" />
 
 
 </android.support.v4.widget.DrawerLayout>
