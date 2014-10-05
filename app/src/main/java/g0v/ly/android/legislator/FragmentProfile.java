@@ -196,14 +196,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                         }
                         else{
                             poli_in_out = POLI.getJSONObject(0);
-//                            in_individual = poli_in_out.getString("in_individual");
-//                            in_profit = poli_in_out.getString("in_profit");
-//                            in_party = poli_in_out.getString("in_party");
-//                            in_civil = poli_in_out.getString("in_civil");
-//                            in_anonymous = poli_in_out.getString("in_anonymous");
-//                            in_others = poli_in_out.getString("in_others");
 
-//                            Toast.makeText(getActivity(),"你選的是 " + in_individual, Toast.LENGTH_SHORT).show();
                         }
 
                         // get legislator's profile
@@ -382,8 +375,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                     updateTextView(tvProfileCounty, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_COUNTY], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
-                    //updateTextView(tvProfileEducation, String.valueOf(in_individual), TvUpdateType.OVERWRITE);
-
+                    
                     updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[CONSCIENCE_VOTE_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[PRIMARY_PROPOSER_COUNT],
