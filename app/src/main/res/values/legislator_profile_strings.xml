@@ -36,15 +36,25 @@
         <item>committee_absent_count</item>
     </string-array>
 
-    <string-array name="legislator_profile_pie_chart_title_left">
-        <item>T1</item>
-        <item>T2</item>
-        <item>T3</item>
-        <item>T4</item>
-        <item>T5</item>
+    <string-array name="legislator_profile_pie_chart_title_in">
+        <item>個人捐贈</item>  <!--in_individual-->
+        <item>營利事業捐贈</item>  <!--in_profit-->
+        <item>政黨捐贈</item>  <!--in_party-->
+        <item>人民團體捐贈</item>  <!--in_civil-->
+        <item>匿名捐贈</item> <!--in_anonymous-->
+        <item>其他</item><!--in_others-->
     </string-array>
 
-    <string-array name="legislator_profile_pie_chart_title_right">
+    <string-array name="legislator_profile_pie_chart_api_key">
+        <item>in_individual</item>
+        <item>in_profit</item>
+        <item>in_party</item>
+        <item>in_civil</item>
+        <item>in_anonymous</item>
+        <item>in_others</item>
+    </string-array>
+
+    <string-array name="legislator_profile_pie_chart_title_out">
         <item>Title1</item>
         <item>Title2</item>
         <item>Title3</item>
