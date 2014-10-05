@@ -16,7 +16,7 @@
             android:layout_width="368dp"
             android:layout_height="match_parent"
                       android:contentDescription="@null"
-            android:src="@drawable/legislation2"
+            android:src="@drawable/legislative_yuan"
 
             android:adjustViewBounds="false"
             android:alpha="50"

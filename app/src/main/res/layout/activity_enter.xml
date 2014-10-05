@@ -12,6 +12,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/legislation2" />
+        android:src="@drawable/legislative_yuan" />
 
 </RelativeLayout>
