@@ -61,8 +61,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
     // RadarChart number
     private static final int ABSENT_COUNT = 5;
-    private static final int NOT_VOTE_COUNT = 0;
-    private static final int CONSCIENCE_VOTE_COUNT = 1;
+    private static final int NOT_VOTE_PERCENTAGE = 0;
+    private static final int CONSCIENCE_VOTE_PERCENTAGE = 1;
     private static final int PRIMARY_PROPOSER_COUNT = 2;
     private static final int LY_ABSENT_COUNT = 3;
     private static final int COMMITTEE_ABSENT_COUNT = 4;
@@ -142,7 +142,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
 		/* TODO ad selectable */
         restMethods = new RESTMethods();
-        String getUrl = "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8";
+        String getUrl = "http://vote.ly.g0v.tw/api/legislator_terms/?ad=8&county=%E5%8D%97%E6%8A%95%E7%B8%A3";
 
 
         restMethods.restGet(getUrl, FragmentProfile.this);
@@ -238,11 +238,11 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                             switch (j) {
                                 case 0:
                                     legislatorAbsentArray[j] =
-                                            legislator.getString(legislatorProfileRadarChartApiKey[NOT_VOTE_COUNT]);
+                                            legislator.getString(legislatorProfileRadarChartApiKey[NOT_VOTE_PERCENTAGE]);
                                     break;
                                 case 1:
                                     legislatorAbsentArray[j] =
-                                            legislator.getString(legislatorProfileRadarChartApiKey[CONSCIENCE_VOTE_COUNT]);
+                                            legislator.getString(legislatorProfileRadarChartApiKey[CONSCIENCE_VOTE_PERCENTAGE]);
                                     break;
                                 case 2:
                                     legislatorAbsentArray[j] =
@@ -325,7 +325,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         if(stopFlag == 0){
 
             restMethods.restGet(
-                    "https://twly.herokuapp.com/api/legislator_terms/?page=1&ad=8", FragmentProfile.this
+                    "http://vote.ly.g0v.tw/api/legislator_terms/?ad=8&county=%E5%8D%97%E6%8A%95%E7%B8%A3", FragmentProfile.this
             );
             legislatorNameSpinner.setAdapter(arrayAdapter);
             stopFlag = 1;
@@ -363,7 +363,7 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                                        long l) {
 
                 position = bundle_msg_id; // 傳 "選區編號" 資料
-                position = 5; //test
+                position = 1;
                 Toast.makeText(getActivity(),
                         "你選的是 " + legislatorNameArray[position] + position, Toast.LENGTH_SHORT).show();
 
@@ -376,8 +376,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
                     updateTextView(tvProfileEducation, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EDUCATION], TvUpdateType.OVERWRITE);
                     updateTextView(tvProfileExperience, legislatorListWithProfile.get(legislatorNameArray[position])[PROFILE_INFO_EXPERIENCE], TvUpdateType.OVERWRITE);
 
-                    updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_COUNT],
-                            legislatorListWithAbsent.get(legislatorNameArray[position])[CONSCIENCE_VOTE_COUNT],
+                    updateSpiderWebChart(legislatorListWithAbsent.get(legislatorNameArray[position])[NOT_VOTE_PERCENTAGE],
+                            legislatorListWithAbsent.get(legislatorNameArray[position])[CONSCIENCE_VOTE_PERCENTAGE],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[PRIMARY_PROPOSER_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[LY_ABSENT_COUNT],
                             legislatorListWithAbsent.get(legislatorNameArray[position])[COMMITTEE_ABSENT_COUNT]);
@@ -429,8 +429,8 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
 
         // TODO create with class
 
-        red_own.add(new TitleValueEntity(webChartTitle[0], 2));  //沒投票次數 not_vote_count
-        red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票次數 conscience_vote_count
+        red_own.add(new TitleValueEntity(webChartTitle[0], 2));  //投票率 (100-not_vote_percentage)/10，因為雷達圖最大是10單位
+        red_own.add(new TitleValueEntity(webChartTitle[1], 4));  //脫黨投票率  conscience_vote_percentage/10
         red_own.add(new TitleValueEntity(webChartTitle[2], 1));  //主提案法案數 primary_biller_count
         red_own.add(new TitleValueEntity(webChartTitle[3], 5));  //全體院會缺席次數 ly_absent_count
         red_own.add(new TitleValueEntity(webChartTitle[4], 8));  //委員會缺席次數 committee_absent_count
@@ -450,16 +450,19 @@ public class FragmentProfile extends Fragment implements RESTMethods.RestApiCall
         spiderWebChart.setLatitudeNum(5);//XXX method useless, check lib
     }
 
-    private void updateSpiderWebChart(String nvc, String cvc, String pbc, String lac, String cac){
+    private void updateSpiderWebChart(String nvp, String cvp, String pbc, String lac, String cac){
 
-        float Fnvc = Float.parseFloat(nvc) ;
-        if(Fnvc > 10)Fnvc = 10; // 暫時讓他不要超出範圍
+        //TODO: 去要真實資料的最大值，設範圍
 
-        red_own.set(0,new TitleValueEntity(webChartTitle[0], Fnvc));  //沒投票次數 not_vote_count
-        red_own.set(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvc)));  //脫黨投票次數 conscience_vote_count
-        red_own.set(2,new TitleValueEntity(webChartTitle[2], Float.parseFloat(pbc)/10));  //主提案法案數 primary_biller_count
-        red_own.set(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));  //全體院會缺席次數 ly_absent_count
-        red_own.set(4,new TitleValueEntity(webChartTitle[4], Float.parseFloat(cac)));  //委員會缺席次數 committee_absent_count
+        // 暫時讓指標不要超出圖表範圍
+        float Fpbc = Float.parseFloat(pbc);
+        if(Fpbc > 10)Fpbc = 10;
+
+        red_own.set(0,new TitleValueEntity(webChartTitle[0], (100-Float.parseFloat(nvp)) /10 ));    //投票率 (100-not_vote_percentage)/10
+        red_own.set(1,new TitleValueEntity(webChartTitle[1], Float.parseFloat(cvp)/10 ));           //脫黨投票率 conscience_vote_percentage/10
+        red_own.set(2,new TitleValueEntity(webChartTitle[2], Fpbc));                    //主提案法案數 primary_biller_count
+        red_own.set(3,new TitleValueEntity(webChartTitle[3], Float.parseFloat(lac)));   //全體院會缺席次數 ly_absent_count
+        red_own.set(4,new TitleValueEntity(webChartTitle[4], Float.parseFloat(cac)));   //委員會缺席次數 committee_absent_count
 
         data.set(0,red_own);
 
